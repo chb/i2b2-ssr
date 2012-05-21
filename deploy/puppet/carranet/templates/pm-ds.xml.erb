@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  JBoss Server Configuration                                           -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+
+<!-- $Id: pm-ds.xml,v 1.4 2010/02/04 21:12:34 lcp5 Exp $ -->
+
+<datasources>
+  <!-- sample oracle PMBootStrapDS  -->
+  <local-tx-datasource>
+    <jndi-name>PMBootStrapDS</jndi-name>
+    <driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+    <connection-url><%= db_conn_string %></connection-url>      
+    <user-name><%= db_username %></user-name>
+    <password><%= db_password %></password>
+</local-tx-datasource>
+
+</datasources>
+
+
+

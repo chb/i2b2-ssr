@@ -1,0 +1,21 @@
+<ClinicalData StudyOID="CRN_REGST" MetaDataVersionOID="CRN_REGST 1.1.7 en-US">
+    <SubjectData SubjectKey="15808" TransactionType="Upsert">
+        <SiteRef LocationOID="15186"/>
+        <StudyEventData StudyEventOID="evBASE">
+            <FormData FormOID="frMEDHX">
+                <ItemGroupData ItemGroupOID="frMEDHX.stMEDHX2">
+                    <ItemData ItemOID="frMEDHX.stMEDHX2.BLINDMED.BLINDMED.cpSTUDY.CURBLND.1.CURBLDSP"
+                              Value="justin's magic hot sauce phase 1 trial">
+                        <AuditRecord>
+                            <UserRef UserOID="crc1"/>
+                            <LocationRef LocationOID="15186"/>
+                            <DateTimeStamp>2010-07-07T21:10:29+00:00</DateTimeStamp>
+                            <ReasonForChange>Initial Entry</ReasonForChange>
+                            <SourceID>INFORMDEV</SourceID>
+                        </AuditRecord>
+                    </ItemData>
+                </ItemGroupData>
+            </FormData>
+        </StudyEventData>
+    </SubjectData>
+</ClinicalData>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+    <name>Import Pipeline - ${version}</name>
+    <artifactId>ImportPipeline</artifactId>
+		<groupId>edu.chip.carranet</groupId>
+		
+
+		<parent>
+        <artifactId>carranet-data-import</artifactId>
+        <groupId>edu.chip.carranet</groupId>
+        <version>1.2</version>
+    </parent>
+
+    <repositories>
+        <repository>
+            <id>open.med.harvard.edu</id>
+            <name>Nexus Repo</name>
+            <url>http://repo.open.med.harvard.edu/nexus/content/repositories/releases</url>
+        </repository>
+        <repository>
+            <id>repo.open.med.harvard.edu-SNAPSHOTS</id>
+            <name>open.med snapshots</name>
+            <url>http://repo.open.med.harvard.edu/nexus/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>edu.chip.carranet</groupId>
+            <artifactId>InformClient</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.spin</groupId>
+            <artifactId>tools</artifactId>
+            <version>${spin.tools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,224 @@
+<xs:schema targetNamespace="http://www.cdisc.org/ns/odm/v1.3"
+	elementFormDefault="qualified" xmlns="http://www.cdisc.org/ns/odm/v1.3"
+	xmlns:pf="http://www.phaseforward.com/InFormAdapter/ODM/Extensions/2.0"
+	xmlns:odm="http://www.cdisc.org/ns/odm/v1.3"
+	xmlns:mstns="http://www.phaseforward.com/InFormAdapter/ODM/Extensions/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:import schemaLocation="PhaseForward_ODM.xsd" namespace="http://www.phaseforward.com/InFormAdapter/ODM/Extensions/2.0" />
+
+
+
+	<xs:redefine schemaLocation="ODM.xsd" >
+		<xs:attributeGroup name="StudyEventDataAttributeExtension">
+			<xs:attribute ref="pf:Deleted" />
+			<xs:attributeGroup ref="odm:StudyEventDataAttributeExtension" />
+	    </xs:attributeGroup>  
+		<xs:attributeGroup name="AnnotationAttributeExtension">
+			<xs:attribute ref="pf:DBUID" />
+			<xs:attribute ref="pf:GUID" />
+			<xs:attributeGroup ref="odm:AnnotationAttributeExtension" />
+	    </xs:attributeGroup>  
+		<xs:attributeGroup name="AssociationAttributeExtension">
+			<xs:attribute ref="pf:Revision" />
+			<xs:attributeGroup ref="odm:AssociationAttributeExtension" />
+	    </xs:attributeGroup>  
+		<xs:attributeGroup name="SubjectDataAttributeExtension">
+			<xs:attribute ref="pf:GUID" />
+			<xs:attributeGroup ref="odm:SubjectDataAttributeExtension" />
+	    </xs:attributeGroup>  
+		<xs:attributeGroup name="UserAttributeExtension">
+			<xs:attribute ref="pf:DBUID" />
+			<xs:attribute ref="pf:GUID" />
+			<xs:attribute ref="pf:StudyLocale" />
+			<xs:attributeGroup ref="odm:UserAttributeExtension" />
+	    </xs:attributeGroup>  
+		<xs:attributeGroup name="MeasurementUnitAttributeExtension">
+			<xs:attribute ref="pf:DBUID" />
+			<xs:attribute ref="pf:GUID" />
+			<xs:attribute ref="pf:Revision" />
+			<xs:attributeGroup ref="odm:MeasurementUnitAttributeExtension" />
+	    </xs:attributeGroup>  
+		<xs:attributeGroup name="ClinicalDataAttributeExtension">
+			<xs:attribute ref="pf:TransactionGuid" />
+			<xs:attribute ref="pf:Revision" />
+			<xs:attributeGroup ref="odm:ClinicalDataAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="FormDefAttributeExtension">
+			<xs:attribute ref="pf:Dynamic" />
+			<xs:attribute ref="pf:DBUID" />
+			<xs:attribute ref="pf:GUID" />
+			<xs:attribute ref="pf:Revision" />
+			<xs:attribute ref="pf:UUID" />
+			<xs:attributeGroup ref="odm:FormDefAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="FormRefAttributeExtension">
+			<xs:attribute ref="pf:AltFormOID" />
+			<xs:attributeGroup ref="odm:FormRefAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="ItemDataAttributeExtension">
+			<xs:attribute ref="pf:NormalizedValue" />
+			<xs:attribute ref="pf:FormattedDateValue" />
+			<xs:attributeGroup ref="odm:ItemDataAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="ItemDefAttributeExtension">
+			<xs:attribute ref="pf:CheckboxGroupRefName" />
+			<xs:attribute ref="pf:InFormDateTime" />
+			<xs:attribute ref="pf:PFVarName" />
+			<xs:attribute ref="pf:DBUID" />
+			<xs:attribute ref="pf:GUID" />
+			<xs:attribute ref="pf:Revision" />
+			<xs:attribute ref="pf:ItemDefType" />
+			<xs:attribute ref="pf:ParentOID" />
+			<xs:attribute ref="pf:ParentType" />
+			<xs:attribute ref="pf:SelectionOwner" />
+			<xs:attribute ref="pf:UUID" />
+			<xs:attributeGroup ref="odm:ItemDefAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="ItemGroupDefAttributeExtension">
+			<xs:attribute ref="pf:ItemSetRefName" />
+			<xs:attribute ref="pf:SVRequired" />
+			<xs:attribute ref="pf:DBUID" />
+			<xs:attribute ref="pf:GUID" />
+			<xs:attribute ref="pf:Revision" />
+			<xs:attribute ref="pf:UUID" />
+			<xs:attributeGroup ref="odm:ItemGroupDefAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="LocationAttributeExtension">
+			<xs:attribute ref="pf:Mnemonic" />
+			<xs:attribute ref="pf:SiteCountry" />
+			<xs:attribute ref="pf:SiteTimezone" />
+			<xs:attribute ref="pf:GUID" />
+			<xs:attribute ref="pf:Revision" />
+			<xs:attribute ref="pf:Locale" />
+			<xs:attributeGroup ref="odm:LocationAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="MeasurementUnitRefAttributeExtension">
+			<xs:attribute ref="pf:NormalizationUnit" />
+			<xs:attributeGroup ref="odm:MeasurementUnitRefAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="MetaDataVersionAttributeExtension">
+			<xs:attribute ref="pf:ApprovalDate" />
+			<xs:attribute ref="pf:DBUID" />
+			<xs:attribute ref="pf:GUID" />
+			<xs:attribute ref="pf:Revision" />
+			<xs:attributeGroup ref="odm:MetaDataVersionAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="ODMAttributeExtension">
+			<xs:attribute ref="pf:MappingVersion" />
+			<xs:attribute ref="pf:HierarchicalOIDs" />
+			<xs:attribute ref="pf:InFormAdapterVersion" />
+			<xs:attributeGroup ref="odm:ODMAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="SignatureDefAttributeExtension">
+			<xs:attribute ref="pf:GroupName" />
+			<xs:attributeGroup ref="odm:SignatureDefAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="StudyEventDefAttributeExtension">
+			<xs:attribute ref="pf:Dynamic" />
+			<xs:attribute ref="pf:Optional" />
+			<xs:attribute ref="pf:DBUID" />
+			<xs:attribute ref="pf:GUID" />
+			<xs:attribute ref="pf:Revision" />
+			<xs:attribute ref="pf:UUID" />
+			<xs:attributeGroup ref="odm:StudyEventDefAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:attributeGroup name="CodeListItemAttributeExtension">
+			<xs:attribute ref="pf:SelectionOID" />
+			<xs:attributeGroup ref="odm:CodeListItemAttributeExtension" />
+		</xs:attributeGroup>
+		<xs:group name="AnnotationElementExtension">
+			<xs:sequence>
+				<xs:element ref="pf:AnnotationAuditData" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="pf:AnnotationAuditRecord" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="pf:ReasonIncomplete" minOccurs="0" maxOccurs="1" />
+				<xs:group ref="AnnotationElementExtension" />
+			</xs:sequence>
+		</xs:group>
+		<xs:group name="FormDataElementExtension">
+			<xs:sequence>
+				<xs:element ref="pf:FormAuditData" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="pf:PFFormSignatures" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="pf:FormStatus" minOccurs="0" maxOccurs="1" />
+				<xs:group ref="FormDataElementExtension" />
+			</xs:sequence>
+		</xs:group>     
+		<xs:group name="FormDefElementExtension">
+			<xs:sequence>
+				<xs:element ref="pf:Mnemonic" minOccurs="0" maxOccurs="1" />
+				<xs:group ref="FormDefElementExtension" />
+			</xs:sequence>
+		</xs:group>   
+		<xs:group name="ItemDataElementExtension">
+			<xs:sequence>
+				<xs:element ref="pf:ItemAuditData" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="pf:ReasonIncomplete" minOccurs="0" maxOccurs="1" />
+				<xs:group ref="ItemDataElementExtension" />
+			</xs:sequence>
+		</xs:group>   
+		<xs:group name="ItemGroupDataElementExtension">
+			<xs:sequence>
+				<xs:element ref="pf:InFormItemData" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="pf:ItemStatus" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="pf:Query" minOccurs="0" maxOccurs="unbounded" />
+				<xs:group ref="ItemGroupDataElementExtension" />
+			</xs:sequence>
+		</xs:group>   
+		<xs:group name="ItemGroupDefElementExtension">
+			<xs:sequence>
+				<xs:element ref="pf:InFormItemRef" minOccurs="0" maxOccurs="unbounded" />
+				<xs:group ref="ItemGroupDefElementExtension" />
+			</xs:sequence>
+		</xs:group>   
+		<xs:group name="LocationElementExtension">
+			<xs:sequence>
+				<xs:element ref="pf:Mnemonic" minOccurs="0" maxOccurs="1" />
+				<xs:group ref="LocationElementExtension" />
+			</xs:sequence>
+		</xs:group>   
+		<xs:group name="MetaDataVersionElementExtension">
+			<xs:sequence>
+				<xs:element ref="pf:InFormItemDef" minOccurs="0" maxOccurs="unbounded" />
+				<xs:group ref="MetaDataVersionElementExtension" />
+			</xs:sequence>
+		</xs:group>   
+		<xs:group name="StudyEventDefElementExtension">
+			<xs:sequence>
+				<xs:element ref="pf:Mnemonic" minOccurs="0" maxOccurs="1" />
+				<xs:group ref="StudyEventDefElementExtension" />
+			</xs:sequence>
+		</xs:group>   
+		<xs:group name="SubjectDataElementExtension">
+			<xs:sequence>
+				<xs:element ref="pf:Candidate" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="pf:SubjectStatus" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="pf:StudyEventStatus" minOccurs="0" maxOccurs="1" />
+				<xs:group ref="SubjectDataElementExtension"/>
+			</xs:sequence>
+		</xs:group>
+		<xs:group name="AssociationElementExtension">
+			<xs:sequence>
+				<xs:element ref="odm:AuditRecord" minOccurs="0" maxOccurs="unbounded" />
+				<xs:group ref="AssociationElementExtension" />
+			</xs:sequence>
+		</xs:group>
+		<xs:group name="SignatureDefElementExtension">
+			<xs:sequence>
+				<xs:element ref="pf:Meaning" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="pf:LegalReason" minOccurs="0" maxOccurs="1" />
+				<xs:group ref="SignatureDefElementExtension" />
+			</xs:sequence>
+		</xs:group>
+		<xs:group name="AdminDataElementExtension">
+		  <xs:sequence>
+			<xs:element ref="pf:GroupDef" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element ref="pf:ProductLocale" minOccurs="0" maxOccurs="unbounded" />
+			<xs:group ref="AdminDataElementExtension" />
+		  </xs:sequence>
+		</xs:group>
+		<xs:group name="UserElementExtension">
+		  <xs:sequence>
+			<xs:element ref="pf:GroupRef" minOccurs="0" maxOccurs="unbounded" />
+			<xs:group ref="UserElementExtension" />
+		  </xs:sequence>
+		</xs:group>
+	</xs:redefine>
+</xs:schema>

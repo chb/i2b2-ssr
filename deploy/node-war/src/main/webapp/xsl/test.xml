@@ -1,0 +1,80 @@
+<?xml-stylesheet type="text/xsl" href="HappyShrine.xsl"?>
+<HappyShrine>
+    <test>test</test>
+    <report>
+        <title>Keystore</title>
+        <entry>
+            <label>File</label>
+            <value>/home/local/Work/shrine-trunk/integration/war/shrine.keystore</value>
+
+        </entry>
+        <entry>
+            <label>Password</label>
+            <value>*****</value>
+        </entry>
+        <entry>
+            <label>My X509 Certificate Name</label>
+
+            <value>CN=localhost,OU=Harvard Medical School,O=SPIN Network,L=BOSTON,ST=MA,C=US</value>
+        </entry>
+        <entry>
+            <label>My X509 Certificate Serial</label>
+            <value>1250788272</value>
+        </entry>
+    </report>
+
+    <report>
+        <title>BroadCaster Aggregator</title>
+        <entry>
+            <label>is broadcast enabled?</label>
+            <value>true</value>
+        </entry>
+        <entry>
+
+            <label>Authenticated identities Expire In (ms)</label>
+            <value>3600000</value>
+        </entry>
+        <entry>
+            <label>Cached Queries Expire In (ms)</label>
+            <value>3600000</value>
+        </entry>
+
+        <entry>
+            <label>URL Aggregator</label>
+        </entry>
+        <entry>
+            <label>URL PM Service</label>
+        </entry>
+        <entry>
+            <label>Current PeerGroup</label>
+
+        </entry>
+        <entry>
+            <label>Current PeerGroup</label>
+        </entry>
+    </report>
+    <report>
+        <title>Routing Table</title>
+        <entry>
+
+            <label>Is a member of peer group</label>
+            <value>LOCAL</value>
+        </entry>
+    </report>
+    <report>
+        <title>Adapter</title>
+        <entry>
+
+            <label>Is adapter enabled?</label>
+            <value>true</value>
+        </entry>
+        <entry>
+            <label>CRC URL</label>
+        </entry>
+        <entry>
+
+            <label>Lockout</label>
+        </entry>
+        <exception>AdapterMappings.xml was not found on the classpath or file system.</exception>
+    </report>
+</HappyShrine>

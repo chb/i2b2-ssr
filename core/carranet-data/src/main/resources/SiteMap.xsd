@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="SiteMapping">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="site" type="siteType" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="siteType">
+        <xs:sequence>
+            <xs:element name="siteid" type="xs:string"/>
+            <xs:element name="connectionString" type="xs:string"/>
+            <xs:element name="username" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

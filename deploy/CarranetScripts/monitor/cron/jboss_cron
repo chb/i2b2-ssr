@@ -1,0 +1,2 @@
+*/15 * * * * carra /usr/bin/ruby /home/carra/monitoring/jboss_checker.rb
+0 0 * * * carra find ~/jboss-4.2.2.GA/server/default/log/server* -mtime +6 -exec rm {} \;

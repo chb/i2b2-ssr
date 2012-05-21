@@ -1,0 +1,21 @@
+<ui:UiBinder
+        xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <g:HTMLPanel>
+        <g:PopupPanel modal="false"
+                      animationEnabled="true" ui:field="newMachinePopup">
+
+            <g:HTMLPanel>
+                <g:Label text="MachineId"/>
+                <g:TextBox ui:field="machineIdField" visibleLength="60"/>
+                <g:Label text="endpoint URI" />
+                <g:TextBox ui:field="uriField" visibleLength="60"/>
+                <g:Button ui:field="submitNewMachine" text="Submit" />
+                <g:Button ui:field="cancel" text="Cancel"/>
+            </g:HTMLPanel>
+        </g:PopupPanel>
+    </g:HTMLPanel>
+
+
+</ui:UiBinder>

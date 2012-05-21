@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:CarraUsers xmlns:ns2="http://carranet.edu/CreateUserMessage">
+    <ns2:userName>dave</ns2:userName>
+    <ns2:password>testPassword</ns2:password>
+</ns2:CarraUsers>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>shrine-integration</artifactId>
+        <groupId>edu.chip.carranet</groupId>
+        <version>1.2</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>edu.chip.carranet</groupId>
+    <artifactId>core-war</artifactId>
+    <packaging>war</packaging>
+    <name>SHRINE core broadcaster/aggregator</name>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.shrine</groupId>
+            <artifactId>shrine-app</artifactId>
+            <version>${shrine.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.9</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>edu.chip.carranet</groupId>
+            <artifactId>carra-core-app</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.1.1</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>shrine-cell</finalName>
+    </build>
+</project>

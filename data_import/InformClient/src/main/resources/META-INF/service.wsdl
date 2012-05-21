@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s3="http://www.phaseforward.com/AdapterFramework/Export/1.0" xmlns:s2="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://www.phaseforward.com/InFormAdapter/ODM/1.0" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" targetNamespace="http://www.phaseforward.com/InFormAdapter/ODM/1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.phaseforward.com/InFormAdapter/ODM/1.0">
+      <s:element name="node">
+        <s:complexType>
+          <s:sequence>
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DownloadMetadataODMResult">
+        <s:complexType>
+          <s:sequence>
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LocalizationHeader" type="tns:LocalizationHeader" />
+      <s:complexType name="LocalizationHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="CultureName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="WebServiceResponseVersionHeader" type="tns:WebServiceResponseVersionHeader" />
+      <s:complexType name="WebServiceResponseVersionHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SchemaVersion" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DownloadAdminDataODMResult">
+        <s:complexType>
+          <s:sequence>
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DownloadPatientDataODMResult">
+        <s:complexType>
+          <s:sequence>
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSiteListResult">
+        <s:complexType>
+          <s:sequence>
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatientListResult">
+        <s:complexType>
+          <s:sequence>
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatientFormsResult">
+        <s:complexType>
+          <s:sequence>
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTransactionsResult">
+        <s:complexType>
+          <s:sequence>
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTransactionStatusResult">
+        <s:complexType>
+          <s:sequence>
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+      <s:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" />
+      <s:element name="Security" type="s1:SecurityHeader" />
+      <s:complexType name="SecurityHeader">
+        <s:annotation>
+          <s:appinfo>
+            <keepNamespaceDeclarations>xmlns</keepNamespaceDeclarations>
+          </s:appinfo>
+        </s:annotation>
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" ref="s2:Timestamp" />
+          <s:any minOccurs="0" maxOccurs="unbounded" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+      <s:element name="Timestamp">
+        <s:complexType mixed="true">
+          <s:sequence>
+            <s:any maxOccurs="unbounded" />
+          </s:sequence>
+          <s:anyAttribute />
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.phaseforward.com/AdapterFramework/Export/1.0">
+      <s:element name="requestParams">
+        <s:complexType>
+          <s:sequence>
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RetrieveDataResult">
+        <s:complexType>
+          <s:sequence>
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="DownloadMetadataODMSoapIn">
+    <wsdl:part name="node" element="tns:node" />
+  </wsdl:message>
+  <wsdl:message name="DownloadMetadataODMSoapOut">
+    <wsdl:part name="DownloadMetadataODMResult" element="tns:DownloadMetadataODMResult" />
+  </wsdl:message>
+  <wsdl:message name="DownloadMetadataODMLocalizationHeader">
+    <wsdl:part name="LocalizationHeader" element="tns:LocalizationHeader" />
+  </wsdl:message>
+  <wsdl:message name="DownloadMetadataODMWebServiceResponseVersionHeader">
+    <wsdl:part name="WebServiceResponseVersionHeader" element="tns:WebServiceResponseVersionHeader" />
+  </wsdl:message>
+  <wsdl:message name="DownloadMetadataODMSecurity">
+    <wsdl:part name="Security" element="s1:Security" />
+  </wsdl:message>
+  <wsdl:message name="DownloadAdminDataODMSoapIn">
+    <wsdl:part name="node" element="tns:node" />
+  </wsdl:message>
+  <wsdl:message name="DownloadAdminDataODMSoapOut">
+    <wsdl:part name="DownloadAdminDataODMResult" element="tns:DownloadAdminDataODMResult" />
+  </wsdl:message>
+  <wsdl:message name="DownloadAdminDataODMLocalizationHeader">
+    <wsdl:part name="LocalizationHeader" element="tns:LocalizationHeader" />
+  </wsdl:message>
+  <wsdl:message name="DownloadAdminDataODMWebServiceResponseVersionHeader">
+    <wsdl:part name="WebServiceResponseVersionHeader" element="tns:WebServiceResponseVersionHeader" />
+  </wsdl:message>
+  <wsdl:message name="DownloadAdminDataODMSecurity">
+    <wsdl:part name="Security" element="s1:Security" />
+  </wsdl:message>
+  <wsdl:message name="DownloadPatientDataODMSoapIn">
+    <wsdl:part name="node" element="tns:node" />
+  </wsdl:message>
+  <wsdl:message name="DownloadPatientDataODMSoapOut">
+    <wsdl:part name="DownloadPatientDataODMResult" element="tns:DownloadPatientDataODMResult" />
+  </wsdl:message>
+  <wsdl:message name="DownloadPatientDataODMLocalizationHeader">
+    <wsdl:part name="LocalizationHeader" element="tns:LocalizationHeader" />
+  </wsdl:message>
+  <wsdl:message name="DownloadPatientDataODMWebServiceResponseVersionHeader">
+    <wsdl:part name="WebServiceResponseVersionHeader" element="tns:WebServiceResponseVersionHeader" />
+  </wsdl:message>
+  <wsdl:message name="DownloadPatientDataODMSecurity">
+    <wsdl:part name="Security" element="s1:Security" />
+  </wsdl:message>
+  <wsdl:message name="GetSiteListSoapIn">
+    <wsdl:part name="node" element="tns:node" />
+  </wsdl:message>
+  <wsdl:message name="GetSiteListSoapOut">
+    <wsdl:part name="GetSiteListResult" element="tns:GetSiteListResult" />
+  </wsdl:message>
+  <wsdl:message name="GetSiteListLocalizationHeader">
+    <wsdl:part name="LocalizationHeader" element="tns:LocalizationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetSiteListWebServiceResponseVersionHeader">
+    <wsdl:part name="WebServiceResponseVersionHeader" element="tns:WebServiceResponseVersionHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetSiteListSecurity">
+    <wsdl:part name="Security" element="s1:Security" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientListSoapIn">
+    <wsdl:part name="node" element="tns:node" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientListSoapOut">
+    <wsdl:part name="GetPatientListResult" element="tns:GetPatientListResult" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientListLocalizationHeader">
+    <wsdl:part name="LocalizationHeader" element="tns:LocalizationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientListWebServiceResponseVersionHeader">
+    <wsdl:part name="WebServiceResponseVersionHeader" element="tns:WebServiceResponseVersionHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientListSecurity">
+    <wsdl:part name="Security" element="s1:Security" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientFormsSoapIn">
+    <wsdl:part name="node" element="tns:node" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientFormsSoapOut">
+    <wsdl:part name="GetPatientFormsResult" element="tns:GetPatientFormsResult" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientFormsLocalizationHeader">
+    <wsdl:part name="LocalizationHeader" element="tns:LocalizationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientFormsWebServiceResponseVersionHeader">
+    <wsdl:part name="WebServiceResponseVersionHeader" element="tns:WebServiceResponseVersionHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientFormsSecurity">
+    <wsdl:part name="Security" element="s1:Security" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsSoapIn">
+    <wsdl:part name="node" element="tns:node" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsSoapOut">
+    <wsdl:part name="GetTransactionsResult" element="tns:GetTransactionsResult" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsLocalizationHeader">
+    <wsdl:part name="LocalizationHeader" element="tns:LocalizationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsWebServiceResponseVersionHeader">
+    <wsdl:part name="WebServiceResponseVersionHeader" element="tns:WebServiceResponseVersionHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsSecurity">
+    <wsdl:part name="Security" element="s1:Security" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionStatusSoapIn">
+    <wsdl:part name="node" element="tns:node" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionStatusSoapOut">
+    <wsdl:part name="GetTransactionStatusResult" element="tns:GetTransactionStatusResult" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionStatusLocalizationHeader">
+    <wsdl:part name="LocalizationHeader" element="tns:LocalizationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionStatusWebServiceResponseVersionHeader">
+    <wsdl:part name="WebServiceResponseVersionHeader" element="tns:WebServiceResponseVersionHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionStatusSecurity">
+    <wsdl:part name="Security" element="s1:Security" />
+  </wsdl:message>
+  <wsdl:message name="RetrieveDataSoapIn">
+    <wsdl:part name="requestParams" element="s3:requestParams" />
+  </wsdl:message>
+  <wsdl:message name="RetrieveDataSoapOut">
+    <wsdl:part name="RetrieveDataResult" element="s3:RetrieveDataResult" />
+  </wsdl:message>
+  <wsdl:message name="RetrieveDataLocalizationHeader">
+    <wsdl:part name="LocalizationHeader" element="tns:LocalizationHeader" />
+  </wsdl:message>
+  <wsdl:message name="RetrieveDataWebServiceResponseVersionHeader">
+    <wsdl:part name="WebServiceResponseVersionHeader" element="tns:WebServiceResponseVersionHeader" />
+  </wsdl:message>
+  <wsdl:message name="RetrieveDataSecurity">
+    <wsdl:part name="Security" element="s1:Security" />
+  </wsdl:message>
+  <wsdl:portType name="InFormODMSoap">
+    <wsdl:operation name="DownloadMetadataODM">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets InForm metadata in ODM format</documentation>
+      <wsdl:input message="tns:DownloadMetadataODMSoapIn" />
+      <wsdl:output message="tns:DownloadMetadataODMSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadAdminDataODM">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets InForm admin edu.chip.carranet.data in ODM format</documentation>
+      <wsdl:input message="tns:DownloadAdminDataODMSoapIn" />
+      <wsdl:output message="tns:DownloadAdminDataODMSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadPatientDataODM">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets InForm patient in ODM format</documentation>
+      <wsdl:input message="tns:DownloadPatientDataODMSoapIn" />
+      <wsdl:output message="tns:DownloadPatientDataODMSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteList">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets list of sites for a trial</documentation>
+      <wsdl:input message="tns:GetSiteListSoapIn" />
+      <wsdl:output message="tns:GetSiteListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatientList">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets list of patients for a site</documentation>
+      <wsdl:input message="tns:GetPatientListSoapIn" />
+      <wsdl:output message="tns:GetPatientListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatientForms">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets list of visits/forms for a patient</documentation>
+      <wsdl:input message="tns:GetPatientFormsSoapIn" />
+      <wsdl:output message="tns:GetPatientFormsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactions">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets list of visits/forms for a patient</documentation>
+      <wsdl:input message="tns:GetTransactionsSoapIn" />
+      <wsdl:output message="tns:GetTransactionsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionStatus">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets the status of the ODM transaction interface</documentation>
+      <wsdl:input message="tns:GetTransactionStatusSoapIn" />
+      <wsdl:output message="tns:GetTransactionStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveData">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets edu.chip.carranet.data using LSID values to determine what edu.chip.carranet.data is returned.</documentation>
+      <wsdl:input message="tns:RetrieveDataSoapIn" />
+      <wsdl:output message="tns:RetrieveDataSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="InFormODMHttpGet" />
+  <wsdl:portType name="InFormODMHttpPost" />
+  <wsdl:binding name="InFormODMSoap" type="tns:InFormODMSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <wsdl:operation name="DownloadMetadataODM">
+      <soap:operation soapAction="http://www.phaseforward.com/InFormAdapter/ODM/1.0/DownloadMetadataODM" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:DownloadMetadataODMLocalizationHeader" part="LocalizationHeader" use="literal" />
+        <soap:header message="tns:DownloadMetadataODMWebServiceResponseVersionHeader" part="WebServiceResponseVersionHeader" use="literal" />
+        <soap:header message="tns:DownloadMetadataODMSecurity" part="Security" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadAdminDataODM">
+      <soap:operation soapAction="http://www.phaseforward.com/InFormAdapter/ODM/1.0/DownloadAdminDataODM" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:DownloadAdminDataODMLocalizationHeader" part="LocalizationHeader" use="literal" />
+        <soap:header message="tns:DownloadAdminDataODMWebServiceResponseVersionHeader" part="WebServiceResponseVersionHeader" use="literal" />
+        <soap:header message="tns:DownloadAdminDataODMSecurity" part="Security" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadPatientDataODM">
+      <soap:operation soapAction="http://www.phaseforward.com/InFormAdapter/ODM/1.0/DownloadPatientDataODM" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:DownloadPatientDataODMLocalizationHeader" part="LocalizationHeader" use="literal" />
+        <soap:header message="tns:DownloadPatientDataODMWebServiceResponseVersionHeader" part="WebServiceResponseVersionHeader" use="literal" />
+        <soap:header message="tns:DownloadPatientDataODMSecurity" part="Security" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteList">
+      <soap:operation soapAction="http://www.phaseforward.com/InFormAdapter/ODM/1.0/GetSiteList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetSiteListLocalizationHeader" part="LocalizationHeader" use="literal" />
+        <soap:header message="tns:GetSiteListWebServiceResponseVersionHeader" part="WebServiceResponseVersionHeader" use="literal" />
+        <soap:header message="tns:GetSiteListSecurity" part="Security" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatientList">
+      <soap:operation soapAction="http://www.phaseforward.com/InFormAdapter/ODM/1.0/GetPatientList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetPatientListLocalizationHeader" part="LocalizationHeader" use="literal" />
+        <soap:header message="tns:GetPatientListWebServiceResponseVersionHeader" part="WebServiceResponseVersionHeader" use="literal" />
+        <soap:header message="tns:GetPatientListSecurity" part="Security" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatientForms">
+      <soap:operation soapAction="http://www.phaseforward.com/InFormAdapter/ODM/1.0/GetPatientForms" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetPatientFormsLocalizationHeader" part="LocalizationHeader" use="literal" />
+        <soap:header message="tns:GetPatientFormsWebServiceResponseVersionHeader" part="WebServiceResponseVersionHeader" use="literal" />
+        <soap:header message="tns:GetPatientFormsSecurity" part="Security" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactions">
+      <soap:operation soapAction="http://www.phaseforward.com/InFormAdapter/ODM/1.0/GetTransactions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetTransactionsLocalizationHeader" part="LocalizationHeader" use="literal" />
+        <soap:header message="tns:GetTransactionsWebServiceResponseVersionHeader" part="WebServiceResponseVersionHeader" use="literal" />
+        <soap:header message="tns:GetTransactionsSecurity" part="Security" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactionStatus">
+      <soap:operation soapAction="http://www.phaseforward.com/InFormAdapter/ODM/1.0/GetTransactionStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetTransactionStatusLocalizationHeader" part="LocalizationHeader" use="literal" />
+        <soap:header message="tns:GetTransactionStatusWebServiceResponseVersionHeader" part="WebServiceResponseVersionHeader" use="literal" />
+        <soap:header message="tns:GetTransactionStatusSecurity" part="Security" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveData">
+      <soap:operation soapAction="http://www.phaseforward.com/AdapterFramework/Export/1.0/RetrieveData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:RetrieveDataLocalizationHeader" part="LocalizationHeader" use="literal" />
+        <soap:header message="tns:RetrieveDataWebServiceResponseVersionHeader" part="WebServiceResponseVersionHeader" use="literal" />
+        <soap:header message="tns:RetrieveDataSecurity" part="Security" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="InFormODMHttpGet" type="tns:InFormODMHttpGet">
+    <http:binding verb="GET" />
+  </wsdl:binding>
+  <wsdl:binding name="InFormODMHttpPost" type="tns:InFormODMHttpPost">
+    <http:binding verb="POST" />
+  </wsdl:binding>
+  <wsdl:service name="InFormODM">
+    <wsdl:port name="InFormODMSoap" binding="tns:InFormODMSoap">
+      <soap:address location="http://informadapterdev.chboston.org/informadapter/odm/informodm.asmx" />
+    </wsdl:port>
+    <wsdl:port name="InFormODMHttpGet" binding="tns:InFormODMHttpGet">
+      <http:address location="http://informadapterdev.chboston.org/informadapter/odm/informodm.asmx" />
+    </wsdl:port>
+    <wsdl:port name="InFormODMHttpPost" binding="tns:InFormODMHttpPost">
+      <http:address location="http://informadapterdev.chboston.org/informadapter/odm/informodm.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

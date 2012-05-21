@@ -1,0 +1,20 @@
+<ClinicalData StudyOID="CRN_REGST" MetaDataVersionOID="CRN_REGST 1.1.7 en-US">
+    <SubjectData SubjectKey="15808" TransactionType="Upsert">
+        <SiteRef LocationOID="15186"/>
+        <StudyEventData StudyEventOID="evBASE">
+            <FormData FormOID="frVIS">
+                <ItemGroupData ItemGroupOID="frVIS.frVIS">
+                    <ItemData ItemOID="frVIS.frVIS.VISDT.VISDT" Value="2011-07-07T-:-:-+00:00">
+                        <AuditRecord>
+                            <UserRef UserOID="crc1"/>
+                            <LocationRef LocationOID="15186"/>
+                            <DateTimeStamp>2010-07-07T21:06:48+00:00</DateTimeStamp>
+                            <ReasonForChange>Initial Entry</ReasonForChange>
+                            <SourceID>INFORMDEV</SourceID>
+                        </AuditRecord>
+                    </ItemData>
+                </ItemGroupData>
+            </FormData>
+        </StudyEventData>
+    </SubjectData>
+</ClinicalData>

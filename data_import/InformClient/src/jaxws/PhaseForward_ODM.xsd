@@ -1,0 +1,385 @@
+<xs:schema targetNamespace="http://www.phaseforward.com/InFormAdapter/ODM/Extensions/2.0"
+	elementFormDefault="qualified" xmlns="http://www.phaseforward.com/InFormAdapter/ODM/Extensions/2.0"
+	xmlns:odm="http://www.cdisc.org/ns/odm/v1.3"
+	xmlns:mstns="http://www.phaseforward.com/InFormAdapter/ODM/Extensions/2.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	>
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd"/>
+	<xs:import schemaLocation="PFExtensions.xsd" namespace="http://www.cdisc.org/ns/odm/v1.3" />
+	<xs:simpleType name="QueryState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Open" />
+			<xs:enumeration value="Answered" />
+			<xs:enumeration value="Closed" />
+			<xs:enumeration value="Candidate" />
+			<xs:enumeration value="Deleted" />
+			<xs:enumeration value="Sponsor Conflict" />
+			<xs:enumeration value="Site Conflict" />
+			<xs:enumeration value="Reissued" />
+			<xs:maxLength value="15" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SubjectState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Screened" />
+			<xs:enumeration value="ScreenFailed" />
+			<xs:enumeration value="Enrolled" />
+			<xs:enumeration value="EnrollmentFailed" />
+			<xs:enumeration value="EnrollmentOverride" />
+			<xs:enumeration value="Randomized" />
+			<xs:enumeration value="DroppedOut" />
+			<xs:enumeration value="Complete" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QueryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="User" />
+			<xs:enumeration value="Autoquery" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GroupType">
+		<xs:restriction   base="xs:string">
+		    <xs:enumeration value="Site"/>
+			<xs:enumeration value="Query"/>
+			<xs:enumeration value="Rights"/>
+			<xs:enumeration value="Signature"/>
+			<xs:enumeration value="Manager_User"/>
+			<xs:enumeration value="ItemGroup"/>
+			<xs:enumeration value="ReportingGroup"/>
+			<xs:enumeration value="UnknownGroupType"/>
+			<xs:maxLength   value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ItemDefType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RadioGroup" />
+			<xs:enumeration value="CheckBox" />
+			<xs:enumeration value="Text" />
+			<xs:enumeration value="Calculated" />
+			<xs:enumeration value="PullDown" />
+			<xs:enumeration value="DateTime" />
+			<xs:enumeration value="UnknownItemDefType" />
+			<xs:maxLength   value="18" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ParentType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ItemDef" />
+			<xs:enumeration value="CodeListItem" />
+			<xs:enumeration value="NoParent" />
+			<xs:maxLength   value="12" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="AnnotationAuditRecord">
+		<xs:sequence>
+			<xs:element ref="odm:UserRef" minOccurs="0"/>
+			<xs:element ref="odm:DateTimeStamp" minOccurs="0"/>
+			<xs:element ref="UserRef" minOccurs="0"/>
+			<xs:element ref="DateTimeStamp" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AnnotationAuditRecord" type="AnnotationAuditRecord"/>
+	<xs:complexType name="AnnotationAuditData">
+		<xs:sequence>
+			<xs:element ref="odm:Comment" />
+			<xs:element ref="AnnotationAuditRecord" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AnnotationAuditData" type="AnnotationAuditData" />
+	<xs:complexType name="ReasonIncomplete">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="CodeListOID" type="odm:oidref" use="required" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="ReasonIncomplete" type="ReasonIncomplete" />
+	<xs:complexType name="FormAuditData">
+		<xs:sequence>
+			<xs:element ref="odm:AuditRecord" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element ref="AuditRecord" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="FormOID" type="xs:string" />
+	</xs:complexType>
+	<xs:element name="FormAuditData" type="FormAuditData" />
+	<xs:complexType name="PFFormSignatures">
+		<xs:sequence>
+			<xs:element ref="odm:Signature" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element ref="DO_NOT_USE_ForceCodeGen" minOccurs="0" maxOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PFFormSignatures" type="PFFormSignatures" />
+	<xs:complexType name="FormStatus">
+		<xs:sequence>
+			<xs:element ref="odm:AuditRecord"/>
+		</xs:sequence>
+		<xs:attribute name="Activated" type="odm:YesOrNo" use="optional" />
+		<xs:attribute name="Frozen" type="odm:YesOrNo" use="optional" />
+		<xs:attribute name="Locked" type="odm:YesOrNo" use="optional" />
+		<xs:attribute name="Deleted" type="odm:YesOrNo" use="optional" />
+		<xs:attribute name="SVReady" type="odm:YesOrNo" use="optional" />
+		<xs:attribute name="SVPartial" type="odm:YesOrNo" use="optional" />
+		<xs:attribute name="SVComplete" type="odm:YesOrNo" use="optional" />
+		<xs:attribute name="Signed" type="odm:YesOrNo" use="optional" />
+	</xs:complexType>
+	<xs:element name="FormStatus" type="FormStatus" />
+	<xs:complexType name="ItemAuditData">
+		<xs:sequence>
+			<xs:element ref="odm:AuditRecord" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element ref="AuditRecord" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="ItemOID" type="xs:string" />
+	</xs:complexType>
+	<xs:element name="ItemAuditData" type="ItemAuditData" />
+	<xs:complexType name="Mnemonic">
+		<xs:sequence>
+			<xs:element ref="odm:TranslatedText" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element ref="DO_NOT_USE_ForceCodeGen" minOccurs="0" maxOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Mnemonic" type="Mnemonic" />
+	<xs:complexType name="InFormItemData">
+		<xs:sequence>
+			<xs:element ref="Query" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element ref="ItemStatus" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="InFormItemOID" type="odm:oid" use="required" />
+		<xs:attribute name="Name" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:element name="InFormItemData" type="InFormItemData" />
+	<xs:complexType name="ItemStatus">
+		<xs:sequence>
+			<xs:element ref="odm:AuditRecord"/>
+		</xs:sequence>
+		<xs:attribute name="SourceVerified" type="odm:YesOrNo" use="optional" />
+		<xs:attribute name="Deleted" type="odm:YesOrNo" use="optional" />
+	</xs:complexType>
+	<xs:element name="ItemStatus" type="ItemStatus" />
+	<xs:complexType name="Query">
+		<xs:sequence>
+			<xs:element ref="QueryStatus"/>
+		</xs:sequence>
+		<xs:attribute name="OID" type="odm:oid" />
+		<xs:attribute name="Text" type="xs:string" />
+		<xs:attribute name="Type" type="QueryType" use="required" />
+		<xs:attribute ref="DBUID" />
+		<xs:attribute ref="Revision" />
+	</xs:complexType>
+	<xs:element name="Query" type="Query" />
+	<xs:complexType name="InFormItemRef">
+		<xs:attribute name="InFormItemOId" type="odm:oid" use="required" />
+		<xs:attribute name="OrderNumber" type="odm:integer" />
+		<xs:attribute name="Mandatory" type="odm:YesOrNo" use="required" />
+	</xs:complexType>
+	<xs:element name="InFormItemRef" type="InFormItemRef" />
+	<xs:complexType name="InFormItemDef">
+		<xs:sequence>
+			<xs:element ref="odm:ItemRef" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="OID" type="odm:oid" use="required" />
+		<xs:attribute name="Name" type="odm:text" use="required" />
+		<xs:attribute name="SVRequired" type="odm:YesOrNo" use="optional" />
+		<xs:attribute ref="DBUID" />
+		<xs:attribute ref="GUID" />
+		<xs:attribute ref="Revision" />
+		<xs:attribute ref="UUID" />
+	</xs:complexType>
+	<xs:element name="InFormItemDef" type="InFormItemDef" />
+	<xs:complexType name="Candidate">
+		<xs:sequence>
+			<xs:element ref="odm:AuditRecord"/>
+		</xs:sequence>
+		<xs:attribute name="SubjectInitials" type="xs:string" use="optional" />
+		<xs:attribute name="EnrollmentNumber" type="xs:string" use="optional" />
+		<xs:attribute name="ScreeningNumber" type="xs:string" use="optional" />
+		<xs:attribute name="ScreeningFailure" type="xs:string" use="optional" />
+		<xs:attribute name="EnrollmentFailure" type="xs:string" use="optional" />
+		<xs:attribute name="EnrollmentOverride" type="xs:string" use="optional" />
+		<xs:attribute name="DateOfBirth" type="odm:text" use="optional" />
+		<xs:attribute name="ScreeningDate" type="odm:text" use="optional" />
+		<xs:attribute name="PatientNumber" type="xs:string" use="optional" />
+		<xs:attribute name="PatientRevision" type="xs:string" use="optional" />
+	</xs:complexType>
+	<xs:element name="Candidate" type="Candidate" />
+
+	<xs:complexType name="SubjectStatus">
+		<xs:sequence>
+			<xs:element ref="odm:AuditRecord" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="Frozen" type="odm:YesOrNo" use="optional"/>
+		<xs:attribute name="Locked" type="odm:YesOrNo" use="optional"/>
+		<xs:attribute name="SVReady" type="odm:YesOrNo" use="optional"/>
+		<xs:attribute name="State" type="SubjectState" use="optional"/>
+		<xs:attribute name="ScreenFailReason" type="xs:string" use="optional"/>
+		<xs:attribute name="EnrollFailReason" type="xs:string" use="optional"/>
+		<xs:attribute name="EnrollOverrideReason" type="xs:string" use="optional"/>
+		<xs:attribute name="DropOutReason" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:element name="SubjectStatus" type="SubjectStatus" />
+
+
+	<xs:complexType name="StudyEventStatus">
+		<xs:sequence>
+			<xs:element ref="odm:AuditRecord"/>
+		</xs:sequence>
+		<xs:attribute name="StudyEventOID" type="odm:oid" />
+		<xs:attribute name="DynamicRepeatingActivated" type="odm:YesOrNo" use="optional"/>
+	</xs:complexType>
+	<xs:element name="StudyEventStatus" type="StudyEventStatus" />
+
+	<xs:complexType name="UserRef">
+		<xs:attribute name="UserOID" type="odm:oidref" use="required" />
+	</xs:complexType>
+	<xs:element name="UserRef" type="UserRef" />  
+	<xs:complexType name="AuditRecord">
+		<xs:sequence>
+			<xs:element ref="UserRef" />
+			<xs:element ref="LocationRef" />
+			<xs:element ref="DateTimeStamp" />
+			<xs:element ref="ReasonForChange" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="Value" type="xs:string" />
+	</xs:complexType>
+	<xs:element name="AuditRecord" type="AuditRecord" />
+	<xs:complexType name="ReasonForChange">
+		<xs:simpleContent>
+			<xs:extension base="odm:text">
+				<xs:anyAttribute namespace="##other" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="ReasonForChange" type="ReasonForChange" />  
+	<xs:complexType name="DateTimeStamp">
+		<xs:simpleContent>
+			<xs:extension base="odm:text">
+				<xs:anyAttribute namespace="##other" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="DateTimeStamp" type="DateTimeStamp" /> 
+	<xs:complexType name="LocationRef">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="LocationOID" type="odm:oidref" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="LocationRef" type="LocationRef" /> 
+
+	<xs:complexType name="QueryStatus">
+		<xs:sequence>
+			<xs:element ref="odm:AuditRecord"/>
+		</xs:sequence>
+		<xs:attribute name="Status" type="QueryState" use="required"/>
+	</xs:complexType>
+	<xs:element name="QueryStatus" type="QueryStatus" />
+
+	<xs:complexType name="Meaning">
+		<xs:sequence>
+			<xs:element ref="odm:TranslatedText" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="DO_NOT_USE_ForceCodeGen" minOccurs="0" maxOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Meaning" type="Meaning" />
+
+	<xs:complexType name="LegalReason">
+		<xs:sequence>
+			<xs:element ref="odm:TranslatedText" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="DO_NOT_USE_ForceCodeGen" minOccurs="0" maxOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LegalReason" type="LegalReason" />
+	
+	<xs:complexType name="GroupDef">
+		<xs:sequence>
+			<xs:element ref="Right" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="GroupDefAttributeDefinition"/>
+	</xs:complexType>
+	<xs:element name="GroupDef" type="GroupDef" />
+	
+	<xs:complexType name="GroupRef">
+		<xs:attributeGroup ref="GroupRefAttributeDefinition"/>
+	</xs:complexType>
+	<xs:element name="GroupRef" type="GroupRef" />
+		
+	<xs:complexType name="Right">
+		<xs:attributeGroup ref="RightAttributeDefinition"/>
+	</xs:complexType>
+	<xs:element name="Right" type="Right" />
+	
+	<xs:attributeGroup name="GroupDefAttributeDefinition">
+		<xs:attribute  name="OID" type="odm:oid" use="required"/>
+		<xs:attribute  name="Name" type="odm:name" use="required"/>
+		<xs:attribute  name="GroupType" type="GroupType" use="required"/>
+	</xs:attributeGroup>
+			
+	<xs:attributeGroup name="GroupRefAttributeDefinition">
+		<xs:attribute  name="GroupOID" type="odm:oidref" use="required"/>
+	</xs:attributeGroup>
+	
+	<xs:attributeGroup name="RightAttributeDefinition">
+		<xs:attribute  name="Description" type="odm:text" use="required"/>
+	</xs:attributeGroup>
+
+    <xs:attribute name="TransactionGuid" type="xs:string" />
+    <xs:attribute name="AltFormOID" type="xs:string" />
+    <xs:attribute name="NormalizedValue" type="odm:value" />
+    <xs:attribute name="FormattedDateValue" type="xs:string" />
+    <xs:attribute name="CheckboxGroupRefName" type="xs:string" />
+    <xs:attribute name="InFormDateTime" type="xs:boolean" />
+    <xs:attribute name="PFVarName" type="xs:string" />
+    <xs:attribute name="ItemSetRefName" type="xs:string" />
+    <xs:attribute name="SVRequired" type="odm:YesOrNo" />
+    <xs:attribute name="Mnemonic" type="xs:string" />
+    <xs:attribute name="SiteCountry" type="xs:string" />
+    <xs:attribute name="SiteTimezone" type="xs:string" />
+    <xs:attribute name="NormalizationUnit" type="odm:YesOrNo" />
+    <xs:attribute name="ApprovalDate" type="odm:text" />
+    <xs:attribute name="MappingVersion" type="xs:string" />
+    <xs:attribute name="HierarchicalOIDs" type="xs:string" />
+    <xs:attribute name="InFormAdapterVersion" type="xs:string" />
+    <xs:attribute name="GroupName" type="xs:string" />
+    <xs:attribute name="Dynamic" type="odm:YesOrNo" />
+    <xs:attribute name="Optional" type="odm:YesOrNo" />
+    <xs:attribute name="DBUID" type="xs:unsignedLong" />
+    <xs:attribute name="Revision" type="xs:decimal" />
+    <xs:attribute name="GUID" type="xs:string" />
+	<xs:attribute name="ItemDefType" type="ItemDefType" />
+	<xs:attribute name="ParentOID" type="odm:oidref" />
+	<xs:attribute name="ParentType" type="ParentType" />
+	<xs:attribute name="SelectionOwner" type="odm:oidref" />
+	<xs:attribute name="SelectionOID" type="odm:oid" />
+	<xs:attribute name="UUID" type="xs:string" />
+	<xs:attribute name="Deleted" type="odm:YesOrNo" />
+
+  
+  	<xs:group name="AnnotationElementExtension"><xs:sequence /></xs:group>
+	<xs:group name="FormDataElementExtension"><xs:sequence /></xs:group>
+	<xs:group name="FormDefElementExtension"><xs:sequence /></xs:group>
+	<xs:group name="ItemDataElementExtension"><xs:sequence /></xs:group>
+	<xs:group name="ItemGroupDataElementExtension"><xs:sequence /></xs:group>
+	<xs:group name="ItemGroupDefElementExtension"><xs:sequence /></xs:group>
+	<xs:group name="LocationElementExtension"><xs:sequence /></xs:group>
+	<xs:group name="MetaDataVersionElementExtension"><xs:sequence /></xs:group>
+	<xs:group name="StudyEventDefElementExtension"><xs:sequence /></xs:group>
+	<xs:group name="SubjectDataElementExtension"><xs:sequence /></xs:group>
+	<xs:group name="AssociationElementExtension"><xs:sequence/> </xs:group>
+	<xs:group name="SignatureDefElementExtension"><xs:sequence/></xs:group>
+	<xs:group name="AdminDataElementExtension"><xs:sequence/></xs:group>
+	<xs:group name="UserElementExtension"><xs:sequence/></xs:group>
+
+  <!-- Product Locale definition under AdminData -->
+  <xs:complexType name="ProductLocale">
+      <xs:attribute ref="xml:lang"/>
+  </xs:complexType>
+  <xs:element name="ProductLocale" type="ProductLocale"/>
+
+  <!-- User Study Locale definition-->
+  <xs:attribute name="StudyLocale" type="xs:language"/>
+
+  <!-- Site Study Locale definition-->
+  <xs:attribute name="Locale" type="xs:language"/>
+
+  <xs:element name="DO_NOT_USE_ForceCodeGen" />
+</xs:schema>

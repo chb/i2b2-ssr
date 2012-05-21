@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>carranet-data-import</artifactId>
+        <groupId>edu.chip.carranet</groupId>
+        <version>1.2</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <name>Inform Client - ${version}</name>
+    <artifactId>InformClient</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.spin</groupId>
+            <artifactId>tools</artifactId>
+            <version>${spin.tools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ws.security</groupId>
+            <artifactId>wss4j</artifactId>
+            <version>1.5.11</version>
+        </dependency>
+        <dependency>
+            <groupId>jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <plugins>
+
+            <!--&lt;!&ndash;uncomment and use the plugin below if you want to regenerate the jaxb generated files.&ndash;&gt;-->
+            <!--&lt;!&ndash;be warned, that we added XmlRootElements to some files after generation&ndash;&gt;-->
+
+            <!--<plugin>-->
+                <!--<groupId>org.codehaus.mojo</groupId>-->
+                <!--<artifactId>jaxws-maven-plugin</artifactId>-->
+                <!--<version>1.10</version>-->
+                <!--<configuration>-->
+                    <!--&lt;!&ndash;used for binding generation to dispatch off of the soap action&ndash;&gt;-->
+                    <!--<extension>true</extension>-->
+                    <!--<bindingFiles>-->
+                        <!--&lt;!&ndash;old stuff&ndash;&gt;-->
+                        <!--&lt;!&ndash;<bindingFile>PhaseForward_ODM121.xsd</bindingFile>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<bindingFile>PFExtensions121.xsd</bindingFile>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<bindingFile>ODMParameters.xsd</bindingFile>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<bindingFile>ODMParameters2.xsd</bindingFile>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<bindingFile>ODM130.xsd</bindingFile>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<bindingFile>ODM1-3-0-foundation.xsd</bindingFile>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<bindingFile>PhaseForward_ODM130.xsd</bindingFile>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<bindingFile>PFExtensions130.xsd</bindingFile>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<bindingFile>xlink.xsd</bindingFile>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<bindingFile>xml.xsd</bindingFile>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<bindingFile>xmldsig-core-schema.xsd</bindingFile>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;new stuff&ndash;&gt;-->
+                        <!--<bindingFile>ODM.xsd</bindingFile>-->
+                        <!--&lt;!&ndash;<bindingFile>ODM1-2-0.xsd</bindingFile>&ndash;&gt;-->
+                        <!--<bindingFile>ODMParameters.xsd</bindingFile>-->
+                        <!--<bindingFile>ODMParameters2.xsd</bindingFile>-->
+                        <!--<bindingFile>PFExtensions.xsd</bindingFile>-->
+                        <!--<bindingFile>PhaseForward_ODM.xsd</bindingFile>-->
+                        <!--<bindingFile>ResponseODM.xsd</bindingFile>-->
+                    <!--</bindingFiles>-->
+                    <!--<verbose>true</verbose>-->
+                    <!--&lt;!&ndash;<wsdlUrls>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<url>http://informadapterdev.chboston.org/informadapter/odm/informodm.asmx?wsdl</url>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</wsdlUrls>&ndash;&gt;-->
+                    <!--<wsdlDirectory>${basedir}/src/main/resources/META-INF</wsdlDirectory>-->
+                    <!--<catalog>${basedir}/src/main/resources/META-INF/jax-ws-catalog.xml</catalog>-->
+                    <!--<wsdlFiles>-->
+                        <!--<wsdlFile>service.wsdl</wsdlFile>-->
+                    <!--</wsdlFiles>-->
+                    <!--<wsdlLocation>http://informadapterdev.chboston.org/informadapter/odm/informodm.asmx?wsdl</wsdlLocation>-->
+                    <!--<sei />-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>wsimport</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2-beta-5</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <!-- this is used for inheritance merges -->
+                        <phase>package</phase>
+                        <!-- append to the packaging phase. -->
+                        <goals>
+                            <goal>single</goal>
+                            <!-- goals == mojos -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

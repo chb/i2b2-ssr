@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://carranet.edu/OLS"
+            elementFormDefault="qualified" targetNamespace="http://carranet.edu/OLS">
+
+    <xsd:complexType name="MachineEntry">
+        <xsd:sequence>
+            <xsd:element name="machineId" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="locator" minOccurs="1" maxOccurs="1" type="xsd:anyURI"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="Machine">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="machineEntry" minOccurs="1" maxOccurs="1" type="tns:MachineEntry"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="Machines">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="MachineList" minOccurs="0" maxOccurs="unbounded" type="tns:MachineEntry"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="StudyEntry">
+        <xsd:sequence>
+            <xsd:element name="studyId" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="machineIds" minOccurs="1" maxOccurs="unbounded" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="Study">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="studyEntry" minOccurs="1" maxOccurs="1" type="tns:StudyEntry"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="Studies">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="StudyList" minOccurs="0" maxOccurs="unbounded" type="tns:StudyEntry"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="UserEntry">
+        <xsd:sequence>
+            <xsd:element name="userId" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="studyIds" minOccurs="1" maxOccurs="unbounded" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:element name="User">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="userEntry" minOccurs="1" maxOccurs="1" type="tns:UserEntry"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+    <xsd:element name="Users">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="UserList" minOccurs="0" maxOccurs="unbounded" type="tns:UserEntry"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+$Id: data_build.xml,v 1.6 2010/06/01 18:13:30 rk903 Exp $
+-->
+<project name="CarraTestDataloader" basedir=".">
+
+    <property environment="env" />
+
+    <property file="./db.properties" />
+
+    <!-- =================================================================== -->
+    <!-- 								INIT 								 -->
+    <!-- =================================================================== -->
+    <target name="init"  description="Prepare for build">
+        <path id="classpath">
+            <pathelement location="../ojdbc14.jar" />
+            <pathelement location="../sqljdbc.jar"/>
+        </path>
+    </target>
+
+
+
+    <!-- =================================================================== -->
+    <!-- 			DATABASE SETUP TARGETS						 			 -->
+    <!-- =================================================================== -->
+    <target name="loadcarrademo" depends="init">
+        <sql driver="${db.driver}" url="${db.url}" userid="${db.username}" password="${db.password}" classpathref="classpath" onerror="continue" print="true">
+            <!-- <transaction src="./scripts/${db.type}/concept_dimension_insert.sql" /> -->
+            <transaction src="./scripts/${db.type}/patient_dimension_insert.sql" />
+            <transaction src="./scripts/${db.type}/visit_dimension_insert.sql" />
+            <transaction src="./scripts/${db.type}/observation_fact_insert.sql" />
+        </sql>
+    </target>
+    <target name="loadcarraont" depends="init">
+        <sql driver="${db.driver}" url="${db.url}" userid="${db.username}" password="${db.password}" classpathref="classpath" onerror="continue" print="true">
+            <transaction src="./scripts/${db.type}/carranet_ontology_tablecreate.sql" />
+            <transaction src="./scripts/${db.type}/carranet_ontology_insert.sql" />
+            <transaction src="./scripts/${db.type}/carranet_ontology_tableaccess_insert.sql" />
+        </sql>
+    </target>
+
+</project>
+
+

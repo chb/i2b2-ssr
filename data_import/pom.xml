@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>edu.chip.carranet</groupId>
+    <artifactId>carranet-data-import</artifactId>
+    <packaging>pom</packaging>
+    <version>1.2</version>
+    <name>carranet-edu.chip.carranet.data</name>
+		
+		<parent>
+        <artifactId>carranet</artifactId>
+        <groupId>edu.chip.carranet</groupId>
+        <version>1.2</version>
+    </parent>
+
+
+    <properties>
+        <!--<jaxb.version>2.1.12</jaxb.version>-->
+        <log4j.version>1.2.14</log4j.version>
+        <junit.version>4.8.1</junit.version>
+    </properties>
+
+    <scm>
+        <connection>https://scm.chip.org/svn/repos/carranet/tags/carranet-1.2/carranet/trunk</connection>
+        <developerConnection>scm:svn:https://scm.chip.org/svn/repos/carranet/tags/carranet-1.2/carranet/trunk</developerConnection>
+        <url>https://scm.chip.org/svn/repos/carranet/tags/carranet-1.2/carranet/trunk</url>
+    </scm>
+
+    <repositories>
+        <!--isn't this standard??  Explicitly adding it--><!--<repository>--><!--<id>maven repo</id>--><!--<name>default maven repo</name>--><!--<url>http://repo1.maven.org/maven2/</url>--><!--</repository>--><!--this repo seems to be implicitly included sometimes, but i fear it may be because of my local .m2.  spelling it out--><!--makes for a better situation.  Also this is a required repo for the jaxb plugin-->
+        <repository>
+            <id>java.net.1</id>
+            <name>Java Net 1</name>
+            <url>http://download.java.net/maven/1/</url>
+        </repository>
+        <!--this repo is required because the java.net.1 has some corrupt packages, which are usually clean in java.net.2-->
+        <repository>
+            <id>java.net.2</id>
+            <name>Java Net 2</name>
+            <url>http://download.java.net/maven/2/</url>
+        </repository>
+
+        <repository>
+            <id>maven-restlet</id>
+            <name>Public online Restlet repository</name>
+            <url>http://maven.restlet.org</url>
+        </repository>
+        <repository>
+            <id>open.med.harvard.edu</id>
+            <name>Nexus Repo</name>
+            <url>http://repo.open.med.harvard.edu/nexus/content/repositories/releases</url>
+        </repository>
+        <repository>
+            <id>repo.open.med.harvard.edu-SNAPSHOTS</id>
+            <name>open.med snapshots</name>
+            <url>http://repo.open.med.harvard.edu/nexus/content/repositories/snapshots</url>
+        </repository>
+        <!--metric (profiler)-->
+        <repository>
+            <id>repo.codahale.com</id>
+            <url>http://repo.codahale.com</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>Nexus Repo</name>
+            <url>http://carra-nexus:8081/nexus/content/repositories/snapshots</url>
+            <!-- Don't append timestamps to snapshot jars -->
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Repo</name>
+            <url>http://carra-nexus:8081/nexus/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.8</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <fork>true</fork>
+                    <meminitial>128m</meminitial>
+                    <maxmem>512m</maxmem>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <tagBase>https://scm.chip.org/svn/repos/carranet/releases</tagBase>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <modules>
+        <module>ImportPipeline</module>
+        <module>InformClient</module>
+        <module>ODMConverter</module>
+        <module>CarranetDataPipeline</module>
+    </modules>
+</project>
+

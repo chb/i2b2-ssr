@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="GetSql.xslt"?>
+<GetTransactionsResult xmlns="http://www.phaseforward.com/InFormAdapter/ODM/1.0">
+    <ResponseODM xmlns="http://www.phaseforward.com/InFormAdapter/ODM/2.0"
+                 xmlns:pf="http://www.phaseforward.com/InFormAdapter/ODM/Extensions/2.0">
+        <Status>END</Status>
+        <Bookmark>{18D54782-1DD7-4BAA-8E6B-F692EB8F7C33}</Bookmark>
+        <TransactionsProcessed>500</TransactionsProcessed>
+    </ResponseODM>
+</GetTransactionsResult>

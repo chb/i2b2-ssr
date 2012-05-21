@@ -1,0 +1,26 @@
+<!--                                                                       -->
+<!-- ===================================================================== -->
+
+<!-- $Id: crc-jms-ds.xml,v 1.4 2010/02/08 19:37:07 mem61 Exp $ -->
+<!-- ==================================================================== -->
+<!--  Datasource config for Oracle originally from Steven Coy             -->
+<!-- ==================================================================== -->
+
+
+<datasources>
+  <!-- sample oracle jms data source -->
+  <local-tx-datasource>
+    <jndi-name>DefaultDS</jndi-name>
+    <connection-url><%= db_conn_string %></connection-url>
+    <driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+<user-name><%= db_username %></user-name>    
+    <password><%= db_password %></password>
+    <idle-timeout-minutes>1</idle-timeout-minutes>
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
+      <metadata>
+         <type-mapping>Oracle9i</type-mapping>
+      </metadata>
+  </local-tx-datasource>
+  
+</datasources>
+

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Carranet" company="" webLink="" view-date="2010-12-19" view-index="0" gantt-divider-location="470" resource-divider-location="300" version="2.0">
+    <description/>
+    <view zooming-state="default:4" id="gantt-chart"/>
+    <view id="resource-table">
+        <field id="0" name="Name" width="55" order="0"/>
+        <field id="1" name="Default role" width="44" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <calendar id="1" name="default">
+                <default-week sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+                <overriden-day-types/>
+                <days/>
+            </calendar>
+        </day-types>
+    </calendars>
+    <tasks color="#8cb6ce">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="7" name="Griffin XSLT Adapter" color="#8cb6ce" meeting="false" start="2011-01-24" duration="18" complete="0" priority="1" expand="true">
+            <depend id="10" type="2" difference="0" hardness="Strong"/>
+            <depend id="36" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="5" name="dcri data input pipeline" color="#8cb6ce" meeting="false" start="2011-01-24" duration="5" complete="5" priority="1" expand="true">
+            <depend id="10" type="2" difference="0" hardness="Strong"/>
+            <depend id="43" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="43" name="Justin Adapter" color="#8cb6ce" meeting="false" start="2011-01-31" duration="5" complete="0" priority="1" expand="true"/>
+        <task id="36" name="XSLT integration" color="#8cb6ce" meeting="false" start="2011-02-17" duration="5" complete="0" priority="1" expand="true">
+            <depend id="10" type="2" difference="0" hardness="Strong"/>
+            <depend id="42" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="33" name="VPN" color="#8cb6ce" meeting="false" start="2011-01-24" duration="18" complete="0" priority="1" expand="true">
+            <depend id="10" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="42" name="Data pipeline Integration" color="#8cb6ce" meeting="false" start="2011-02-24" duration="5" complete="0" priority="1" expand="true">
+            <depend id="10" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="10" name="Milestone Demo: Carranet thusfar with real data" color="#10e825" meeting="true" start="2011-03-03" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="39" name="Cincinnati visualizations" color="#8cb6ce" meeting="false" start="2011-01-24" duration="25" complete="0" priority="1" expand="true">
+            <depend id="38" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="38" name="Milestone Demo: Dataset Comparison" color="#29ff00" meeting="true" start="2011-02-28" duration="1" complete="0" priority="1" expand="true">
+            <depend id="35" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="35" name="Sharing Network Prototype" color="#8cb6ce" meeting="false" start="2011-03-01" duration="20" complete="0" priority="1" expand="true">
+            <depend id="41" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="41" name="Milestone Demo: Sharing and Approvals" color="#00ff13" meeting="true" start="2011-03-29" duration="1" complete="0" priority="1" expand="true"/>
+    </tasks>
+    <resources>
+        <resource id="0" name="Justin" function="SoftwareDevelopment:2" contacts="" phone=""/>
+        <resource id="1" name="David" function="SoftwareDevelopment:2" contacts="" phone=""/>
+        <resource id="2" name="Marc" function="SoftwareDevelopment:10" contacts="" phone=""/>
+        <resource id="3" name="shrine-dev" function="Default:0" contacts="" phone=""/>
+    </resources>
+    <allocations/>
+    <vacations/>
+    <taskdisplaycolumns>
+        <displaycolumn property-id="tpd3" order="0" width="292"/>
+        <displaycolumn property-id="tpd4" order="1" width="36"/>
+        <displaycolumn property-id="tpd5" order="2" width="35"/>
+    </taskdisplaycolumns>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+</project>

@@ -1,0 +1,64 @@
+@CHARSET "UTF-8";
+
+table {
+    vertical-align: text-top;
+    border-width: 1px 1px 1px 1px;
+    border-spacing: 2px;
+    border-style: none none none none;
+    border-color: black black black black;
+    border-collapse: collapse;
+    background-color: white;
+    margin: 10px 10px 10px 10px;
+}
+
+tr.okay {
+    vertical-align: text-top;
+    border-width: 1px 1px 1px 1px;
+    padding: 1px 1px 1px 1px;
+    border-style: inset inset inset inset;
+    border-color: black black black black;
+    -moz-border-radius: 0px 0px 0px 0px;
+    background-color: #008000;
+}
+
+td.okay {
+    vertical-align: text-top;
+    border-width: 1px 1px 1px 1px;
+    padding: 1px 1px 1px 1px;
+    border-style: inset inset inset inset;
+    border-color: black black black black;
+    -moz-border-radius: 0px 0px 0px 0px;
+    background-color: #008000;
+}
+
+tr.error {
+    vertical-align: text-top;
+    border-width: 1px 1px 1px 1px;
+    padding: 1px 1px 1px 1px;
+    border-style: inset inset inset inset;
+    border-color: black black black black;
+    -moz-border-radius: 0px 0px 0px 0px;
+    background-color: #800000;
+}
+
+td.error {
+    vertical-align: text-top;
+    border-width: 1px 1px 1px 1px;
+    padding: 1px 1px 1px 1px;
+    border-style: inset inset inset inset;
+    border-color: black black black black;
+    -moz-border-radius: 0px 0px 0px 0px;
+    background-color: #800000;
+}
+
+tr.fill {
+    vertical-align: text-top;
+    border-style: none none none none;
+    background-color: white;
+}
+
+td.fill {
+    vertical-align: text-top;
+    border-style: none none none none;
+    background-color: white;
+}

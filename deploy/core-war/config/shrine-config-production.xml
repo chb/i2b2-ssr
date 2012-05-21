@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context swallowOutput="true">
+    <Resource name="jdbc/shrineDB" auth="Container" type="javax.sql.DataSource"
+              maxActive="100" maxIdle="30" maxWait="10000"
+              username="shrine" password="shrine" driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost/shrine"
+              testOnBorrow="true" validationQuery="SELECT 1"
+            />
+    <Environment name="shrine/aggregatorEndpoint"
+                 override="true"
+                 type="java.lang.String"
+                 value="https://carra-core-production:8081/shrine-cell/soap/aggregate?wsdl"/>
+    <Environment name="carranet/olsAddress"
+                 override="true"
+                 type="java.lang.String"
+                 value="http://carra-core-production:8183/machines/"/>
+    <Environment name="carranet/graphiteHost"
+                 override="true"
+                 type="java.lang.String"
+                 value="carra-i2b2-production"/>
+</Context>

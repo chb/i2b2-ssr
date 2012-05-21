@@ -1,0 +1,47 @@
+<ClinicalData StudyOID="CRN_REGST" MetaDataVersionOID="CRN_REGST 1.1.7 en-US">
+    <SubjectData SubjectKey="15332" TransactionType="Upsert">
+        <SiteRef LocationOID="15186"/>
+        <StudyEventData StudyEventOID="evHIST">
+            <FormData FormOID="frDEM">
+                <ItemGroupData ItemGroupOID="frDEM.stDEM1">
+                    <ItemData ItemOID="frDEM.stDEM1.SGENDER.SGENDER" Value="2">
+                        <AuditRecord>
+                            <UserRef UserOID="crc1"/>
+                            <LocationRef LocationOID="15186"/>
+                            <DateTimeStamp>2010-06-09T20:07:21+00:00</DateTimeStamp>
+                            <ReasonForChange>Item copied from previous form</ReasonForChange>
+                            <SourceID>INFORMDEV</SourceID>
+                        </AuditRecord>
+                    </ItemData>
+                    <ItemData ItemOID="frDEM.stDEM1.SBIRTHDT.SBIRTHDT" Value="2001-01-01T-:-:-+00:00">
+                        <AuditRecord>
+                            <UserRef UserOID="crc1"/>
+                            <LocationRef LocationOID="15186"/>
+                            <DateTimeStamp>2010-06-09T20:07:21+00:00</DateTimeStamp>
+                            <ReasonForChange>Item copied from previous form</ReasonForChange>
+                            <SourceID>INFORMDEV</SourceID>
+                        </AuditRecord>
+                    </ItemData>
+                </ItemGroupData>
+            </FormData>
+        </StudyEventData>
+    </SubjectData>
+    <SubjectData SubjectKey="15332" TransactionType="Upsert">
+        <SiteRef LocationOID="15186"/>
+        <StudyEventData StudyEventOID="evHIST">
+            <FormData FormOID="frDEM">
+                <ItemGroupData ItemGroupOID="frDEM.stDEM1">
+                    <ItemData ItemOID="frDEM.stDEM1.SBIRTHDT.SBIRTHDT" Value="2011-01-01T-:-:-+00:00">
+                        <AuditRecord>
+                            <UserRef UserOID="crc1"/>
+                            <LocationRef LocationOID="15186"/>
+                            <DateTimeStamp>2010-06-09T20:07:21+00:00</DateTimeStamp>
+                            <ReasonForChange>Item copied from previous form</ReasonForChange>
+                            <SourceID>INFORMDEV</SourceID>
+                        </AuditRecord>
+                    </ItemData>
+                </ItemGroupData>
+            </FormData>
+        </StudyEventData>
+    </SubjectData>
+</ClinicalData>

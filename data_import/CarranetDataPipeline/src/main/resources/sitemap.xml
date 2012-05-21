@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SiteMapping>
+    <site>
+        <siteid>15186</siteid>
+        <connectionString>jdbc:oracle:thin:@chdev1:1521/CHRACDEV</connectionString>
+        <username>rc_carra_vm002</username>
+        <password>chracdev</password>
+    </site>
+    <site>
+        <siteid>15212</siteid>
+        <connectionString>jdbc:oracle:thin:@chdev1:1521/CHRACDEV</connectionString>
+        <username>rc_carra_vm003</username>
+        <password>chracdev</password>
+    </site>
+</SiteMapping>

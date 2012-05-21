@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress JdkProxiedBeanTypeInspection, InjectionValueTypeInspection -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+            http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+
+
+    <bean id="top" class="org.restlet.ext.spring.SpringComponent">
+        <property name="server">
+            <bean class="org.restlet.ext.spring.SpringServer">
+                <constructor-arg value="http"/>
+                <constructor-arg value="3000"/>
+            </bean>
+        </property>
+        <property name="defaultTarget" ref="filter"/>
+    </bean>
+
+
+    <bean id="userStore" class="edu.chip.carranet.auth.backend.HsqldbUserStore">
+        <constructor-arg index="0" ref="store"/>
+    </bean>
+
+    <bean id="authenticator" class="edu.chip.carranet.auth.backend.LDAPAuthenticator"/>
+
+    <bean id="store" class="hu.netmind.beankeeper.Store" destroy-method="close">
+        <constructor-arg index="0" ref="dataSource"/>
+    </bean>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost/carranet"/>
+        <property name="user" value="carranet"/>
+        <property name="password" value="carranet"/>
+    </bean>
+</beans>

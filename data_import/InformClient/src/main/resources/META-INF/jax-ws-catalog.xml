@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+The sole purpose of this file is to allow us to use local wsdls to generate our proxies.  This insulates us from having to
+rebuild or regenerate the wsdl bindings every time we want to point it to a new service endpoint.  This effectively just works as
+a piece of indirection.  The only reason we're down this road is because the default mechanism that wsimport uses
+that takes in a 'local wsdl location' only knows how to look for the wsdl via absolute paths which will croak if you
+try to deploy it.  You'd assume there'd be some nice facility to do classpath searches or relative paths, but you would be wrong.
+/rant
+-->
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://informadapterdev.chboston.org/informadapter/odm/informodm.asmx?wsdl" uri="service.wsdl" />
+</catalog>

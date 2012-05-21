@@ -1,0 +1,34 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:resp2="http://www.phaseforward.com/InFormAdapter/ODM/2.0"
+	targetNamespace="http://www.phaseforward.com/InFormAdapter/ODM/2.0" 
+	elementFormDefault="qualified"
+	xmlns:odm13="http://www.cdisc.org/ns/odm/v1.3"
+	xmlns:mstns="http://PhaseForward.com/InFormAdapter/ODM/PhaseForward_ODM.xsd">
+	<xs:import schemaLocation="PFExtensions.xsd" namespace="http://www.cdisc.org/ns/odm/v1.3" />
+	<xs:simpleType name="OutputStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK" />
+			<xs:enumeration value="END" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResponseODM">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="1">
+				<xs:element ref="odm13:ODM" minOccurs="0" maxOccurs="1" />
+			</xs:choice>
+			<xs:element name="Status" type="resp2:OutputStatus" default="OK" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Bookmark" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="TransactionsProcessed" type="xs:integer" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TransactionStatus">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TotalTransactionCount" type="xs:integer" minOccurs="0" maxOccurs="1" />
+				<xs:element name="TransactionXmlCount" type="xs:integer" minOccurs="0" maxOccurs="1" />
+				<xs:element name="TransactionXmlRemaining" type="xs:integer" minOccurs="0" maxOccurs="1" />
+				<xs:element name="LastTransactionXmlTime" type="xs:string" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ResponseODM" type="resp2:ResponseODM" />
+</xs:schema>

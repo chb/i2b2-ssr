@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://carranet.edu/CarraUserInfo"
+            xmlns="http://carranet.edu/CarraUserInfo">
+
+    <xsd:element name="CarraUsers">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Users" type="CarraUserInfo" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- Data Types -->
+    <xsd:complexType name="CarraUserInfo">
+        <xsd:sequence>
+            <xsd:element name="username" type="xsd:string" maxOccurs="1"/>
+            <xsd:element name="assertions" type="xsd:string" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>
+
+

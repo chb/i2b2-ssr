@@ -1,0 +1,21 @@
+<ClinicalData StudyOID="CRN_REGST" MetaDataVersionOID="CRN_REGST 1.1.7 en-US">
+    <SubjectData SubjectKey="15808" TransactionType="Upsert">
+        <SiteRef LocationOID="15186"/>
+        <StudyEventData StudyEventOID="evBASE">
+            <FormData FormOID="frMEDHX2">
+                <ItemGroupData ItemGroupOID="frMEDHX2.frMEDHX2">
+                    <ItemData ItemOID="frMEDHX2.frMEDHX2.HOTHBIO1.HOTHBIO1.GC_HOTHBIO11.HOTH1SP"
+                              Value="hot sauce">
+                        <AuditRecord>
+                            <UserRef UserOID="crc1"/>
+                            <LocationRef LocationOID="15186"/>
+                            <DateTimeStamp>2010-08-16T19:39:45+00:00</DateTimeStamp>
+                            <ReasonForChange>Initial Entry</ReasonForChange>
+                            <SourceID>INFORMDEV</SourceID>
+                        </AuditRecord>
+                    </ItemData>
+                </ItemGroupData>
+            </FormData>
+        </StudyEventData>
+    </SubjectData>
+</ClinicalData>

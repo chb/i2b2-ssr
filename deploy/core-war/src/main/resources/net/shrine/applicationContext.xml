@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+            http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+    <context:component-scan base-package="net.shrine"/>
+
+    <bean id="olsURI" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/carranet/olsAddress"/>
+        <property name="defaultObject" value="http://carra-core:8183/machines/"/>
+    </bean>
+
+    <bean id="pmEndpoint" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/shrine/pmEndpoint"/>
+        <property name="defaultObject" value="http://webservices.i2b2.org/i2b2/rest/PMService/getServices"/>
+    </bean>
+
+    <bean id="realCRCEndpoint" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/shrine/realCRCEndpoint"/>
+        <property name="defaultObject" value="http://localhost:9090/i2b2/rest/QueryToolService/"/>
+    </bean>
+
+    <bean id="aggregatorEndpoint" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/shrine/aggregatorEndpoint"/>
+        <property name="defaultObject"
+                  value="https://carra-core-production:8081/shrine-cell/QueryToolService/aggregate?wsdl"/>
+    </bean>
+
+    <bean id="shrineEndpoint" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/shrine/shrineEndpoint"/>
+        <property name="defaultObject" value="https://localhost:8081/shrine-cell/QueryToolService/"/>
+    </bean>
+
+    <bean id="humanReadableNodeName" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/shrine/humanReadableNodeName"/>
+        <property name="defaultObject" value="Children's Hospital Boston"/>
+    </bean>
+
+    <bean id="i2b2HiveDomain" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/shrine/i2b2HiveDomain"/>
+        <property name="defaultObject" value="i2b2demo"/>
+    </bean>
+
+    <bean id="i2b2HiveUsername" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/shrine/i2b2HiveUsername"/>
+        <property name="defaultObject" value="demo"/>
+    </bean>
+
+    <bean id="i2b2HivePassword" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/shrine/i2b2HivePassword"/>
+        <property name="defaultObject" value="demouser"/>
+    </bean>
+
+    <bean id="passwordType" class="edu.harvard.i2b2.crc.datavo.i2b2message.PasswordType">
+        <property name="value" ref="i2b2HivePassword"/>
+    </bean>
+
+    <bean id="setSizeObfuscation" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/shrine/setSizeObfuscation"/>
+        <property name="defaultObject" value="false"/>
+    </bean>
+
+    <bean id="i2b2HiveCredentials" class="net.shrine.config.I2B2HiveCredentials">
+        <property name="domain" ref="i2b2HiveDomain"/>
+        <property name="username" ref="i2b2HiveUsername"/>
+        <property name="password" ref="passwordType"/>
+        <property name="project" value="Demo"/>
+    </bean>
+
+    <bean id="identityService" class="net.shrine.identity.CarraIdentityService"/>
+
+    <bean id="pmHttpClient" class="net.shrine.serializers.pm.PMHttpClient">
+        <constructor-arg index="0" ref="pmEndpoint"/>
+    </bean>
+
+    <bean id="shrineConfig" class="net.shrine.config.ShrineConfig">
+        <property name="adapter" value="false"/>
+        <property name="adapterLockoutAttemptsThreshold" value="0"/>
+        <property name="adapterRequireExplicitMappings" value="false"/>
+        <property name="broadcasterAggregator" value="true"/>
+        <property name="cacheTTL" value="3600000"/>
+        <property name="certificationTTL" value="3600000"/>
+        <property name="queryTTL" value="3600000"/>
+        <property name="databasePropertiesFile" value="jdbc-derby.properties"/>
+        <property name="humanReadableNodeName" ref="humanReadableNodeName"/>
+        <property name="pmEndpoint" ref="pmEndpoint"/>
+        <property name="realCRCEndpoint" ref="realCRCEndpoint"/>
+        <property name="aggregatorEndpoint" ref="aggregatorEndpoint"/>
+        <property name="shrineEndpoint" ref="shrineEndpoint"/>
+        <property name="ontEndpoint" value=""/>
+        <property name="sheriffEndpoint" value=""/>
+        <property name="queryActionMapClassName" value="net.shrine.adapter.query.ShrineQueryActionMap"/>
+        <property name="setSizeObfuscationEnabled" ref="setSizeObfuscation"/>
+    </bean>
+
+    <bean id="authservice" class="net.shrine.authorization.AllowsAllAuthorizationService"/>
+
+
+    <bean id="agentConfig" factory-bean="shrineConfig" factory-method="generateAgentConfig"/>
+
+    <bean id="nodeConfig" factory-bean="shrineConfig" factory-method="generateNodeConfig"/>
+
+    <bean id="spinClient" class="org.spin.query.message.agent.Agent">
+        <constructor-arg index="0" ref="agentConfig"/>
+    </bean>
+
+    <bean id="spinNode" class="org.spin.node.SpinNodeImpl">
+        <constructor-arg ref="shrineQueryActionMap"/>
+        <constructor-arg ref="nodeConfig"/>
+    </bean>
+
+    <!--note that the implementer value references an already defined bean.  the bean is loaded via annotation config-->
+    <!--<jaxws:endpoint-->
+    <!--id="broadcasterAggregatorSOAPEndpoint"-->
+    <!--implementor="#broadcasterAggregatorSOAP"-->
+    <!--address="/">-->
+    <!--<jaxws:properties>-->
+    <!--<entry key="jaxb.additionalContextClasses">-->
+    <!--<bean class="net.shrine.broadcaster.JAXBContextResolver"/>-->
+    <!--</response>-->
+    <!--</jaxws:properties>-->
+    <!--</jaxws:endpoint>-->
+
+    <jaxws:endpoint
+            id="spinNodeEndpoint"
+            implementor="#spinNode"
+            address="/aggregate">
+    </jaxws:endpoint>
+
+    <!-- DAO management-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/shrineDB"/>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="annotatedClasses">
+            <list>
+                <value>net.shrine.broadcaster.dao.hibernate.AuditEntry</value>
+            </list>
+        </property>
+
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="shrineService" class="net.shrine.service.CarranetShrineService">
+        <constructor-arg index="0" ref="hibernateAuditDAO"/>
+        <constructor-arg index="1" ref="authservice"/>
+        <constructor-arg index="2" ref="identityService"/>
+        <constructor-arg index="3" ref="shrineConfig"/>
+        <constructor-arg index="4" ref="spinClient"/>
+        <constructor-arg index="5" ref="olsURI"/>
+        <constructor-arg index="6" ref="graphiteHost"/>
+    </bean>
+
+
+    <bean id="shrineQueryActionMap" class="net.shrine.adapter.query.ShrineQueryActionMap">
+        <constructor-arg>
+            <map>
+                <entry key="RunQueryInstanceFromQueryDefinition" value-ref="nullQueryAction"/>
+                <entry key="GetRequestXml" value-ref="nullQueryAction"/>
+                <entry key="UserRequestType" value-ref="nullQueryAction"/>
+                <entry key="MasterRequestType" value-ref="nullQueryAction"/>
+                <entry key="InstanceRequestType" value-ref="nullQueryAction"/>
+                <entry key="ResultRequestType" value-ref="nullQueryAction"/>
+                <entry key="GetPDOFromInputListRequestType" value-ref="nullQueryAction"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <!--Map this query to something stupid since the broadcaster won't call it anyways -->
+    <bean id="nullQueryAction" class="org.spin.node.actions.EchoQueryAction"/>
+
+</beans>

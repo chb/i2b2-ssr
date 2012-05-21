@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://carranet.edu/CreateUserMessage"
+            elementFormDefault="qualified"
+            targetNamespace="http://carranet.edu/CreateUserMessage">
+
+    <xsd:element name="CreateUserMessage">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="userName" type="xsd:string"/>
+                <xsd:element name="password" type="xsd:string"/>
+                <xsd:element name="assertions" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

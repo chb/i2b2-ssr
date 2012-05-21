@@ -1,0 +1,9 @@
+Just a file of base64 encoded auth strings
+These can be used as auth_strings for retrieving users in case...
+
+
+dave:password
+ZGF2ZTpwYXNzd29yZA==
+
+fred:samplePass
+ZnJlZDpzYW1wbGVQYXNz
