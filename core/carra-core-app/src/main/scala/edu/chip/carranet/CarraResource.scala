@@ -251,13 +251,14 @@ class StudyResource @Autowired()(val resourceStore: ResourceStore) {
 @Component
 class PM @Autowired()(var authenticator: IAuthenticator) {
 
+  @Path("/getServices")
   @Consumes(Array("text/xml", "text/plain"))
   @POST
   def pmAuthorizationCall(post: String): Response = {
     val xml = XML.load(new StringReader(post))
-    val userName: String = (xml \ "i2b2:request" \ "message_header" \ "security" \ "username").text
-    val password: String = (xml \ "i2b2:request" \ "message_header" \ "security" \ "password").text
-    val domain: String = (xml \ "i2b2:equest" \ "message_header" \ "security" \ "domain").text
+    val userName: String = (xml \ "message_header" \ "security" \ "username").text
+    val password: String = (xml \ "message_header" \ "security" \ "password").text
+    val domain: String = (xml \ "message_header" \ "security" \ "domain").text
     val id: Identity = authenticator.authenticate(userName, password)
     Response.ok(new AuthResponse(id).toi2b2XML).build()
 

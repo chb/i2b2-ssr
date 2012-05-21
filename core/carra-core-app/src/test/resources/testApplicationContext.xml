@@ -46,10 +46,9 @@
 
 
     <bean id="userStore" class="edu.chip.carranet.auth.backend.HibernateUserStore"/>
-
     <bean id="auditLogger" class="edu.chip.carranet.auth.backend.HibernateAuditLogger"/>
 
-    <bean id="i2b2PmResource" class="edu.chip.carranet.auth.resource.impl.I2B2PmResourceImpl"/>
+
     <bean id="tokenResourceImpl" class="edu.chip.carranet.auth.resource.impl.TokenResourceImpl"/>
     <bean id="userResourceImpl" class="edu.chip.carranet.auth.resource.impl.UserResourceImpl"/>
     <bean id="userManagementResourceImpl" class="edu.chip.carranet.auth.resource.impl.UserManagementResourceImpl"/>

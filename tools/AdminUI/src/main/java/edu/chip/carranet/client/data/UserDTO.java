@@ -50,7 +50,7 @@ public class UserDTO implements Serializable {
 
         for (String s : homeSites) {
             if (s != null) {
-                assertions.add("role:" + s);
+                assertions.add("homesite:" + s);
 
             }
         }

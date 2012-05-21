@@ -80,6 +80,9 @@ public class LDAPAuthenticator extends AbstractBaseAuthenticator{
             SearchResult sr = ldap.search(basedn,
                     SearchScope.SUB, (userIdentifier + "=" + username));
 
+            if(sr.getSearchEntries().size() < 1){
+                throw new PermissionException("No such user");
+            }
             String dn = sr.getSearchEntries().get(0).getDN();
 
             DN userDN = new DN(dn);
