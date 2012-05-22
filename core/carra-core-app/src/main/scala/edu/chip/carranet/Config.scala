@@ -6,7 +6,11 @@ import com.typesafe.config.ConfigFactory
 
 object Config {
 
-  val config = ConfigFactory.load
+
+
+  val config = {
+    ConfigFactory.load
+  }
 
 
   def ontologyURI : URL = {

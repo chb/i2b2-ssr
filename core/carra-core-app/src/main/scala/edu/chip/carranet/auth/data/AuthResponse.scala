@@ -89,23 +89,9 @@ class AuthResponse(val id: Identity) {
                     <method>REST</method>
                     <can_override>true</can_override>
                 </cell_data>
-                <cell_data id="FRC">
-                    <name>File Repository </name>
-                    <url>http://webservices.i2b2.org/i2b2/services/FRService/</url>
-                    <project_path>/</project_path>
-                    <method>SOAP</method>
-                    <can_override>true</can_override>
-                </cell_data>
                 <cell_data id="ONT">
                     <name>Ontology Cell</name>
                     <url>{Config.ontologyURI}</url>
-                    <project_path>/</project_path>
-                    <method>REST</method>
-                    <can_override>true</can_override>
-                </cell_data>
-                <cell_data id="WORK">
-                    <name>Workplace Cell</name>
-                    <url>http://webservices.i2b2.org/i2b2/rest/WorkplaceService/</url>
                     <project_path>/</project_path>
                     <method>REST</method>
                     <can_override>true</can_override>

@@ -14,8 +14,6 @@
             http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
 
-
-
     <bean id="userStore" class="edu.chip.carranet.auth.backend.HibernateUserStore"/>
     <bean id="authenticator" class="edu.chip.carranet.auth.backend.LDAPAuthenticator">
         <constructor-arg index="0" type="java.lang.String">
@@ -40,11 +38,9 @@
         <property name="adminDNs">
             <list>
                 <value>cn=ch8655309,ou=users,dc=chbdir,dc=org</value>
-
             </list>
         </property>
     </bean>
-
 
 
     <bean id="transactionManager"
@@ -78,6 +74,11 @@
         <property name="minPoolSize" value="10"/>
         <property name="maxPoolSize" value="25"/>
         <property name="maxIdleTime" value="300"/>
-
     </bean>
+
+    <bean id="tokenResourceImpl" class="edu.chip.carranet.auth.resource.impl.TokenResourceImpl"/>
+    <bean id="userResourceImpl" class="edu.chip.carranet.auth.resource.impl.UserResourceImpl"/>
+    <bean id="userManagementResourceImpl" class="edu.chip.carranet.auth.resource.impl.UserManagementResourceImpl"/>
+    <bean id="passwordResourceImpl" class="edu.chip.carranet.auth.resource.impl.PasswordResourceImpl"/>
+    <bean id="auditLogger" class="edu.chip.carranet.auth.backend.HibernateAuditLogger"/>
 </beans>
