@@ -3,8 +3,8 @@ package edu.chip.carranet.auth.data
 import scala.collection.JavaConversions._
 import xml.Utility
 import org.spin.tools.crypto.signature.Identity
-import edu.chip.carranet.auth.backend.{UserPermissions, UserUtil}
 import edu.chip.carranet.Config
+import edu.chip.carranet.auth.backend.{TokenUtil, UserPermissions, UserUtil}
 
 /**
  * @author Dave Ortiz
@@ -64,7 +64,7 @@ class AuthResponse(val id: Identity) {
             <user>
                 <full_name>i2b2 User</full_name>
                 <user_name>{id.getUsername}</user_name>
-                <password token_ms_timeout="1800000" is_token="true">SessionKey:dvxxLweTUjphcmaIi9tY</password>
+                <password token_ms_timeout="1800000" is_token="true">{TokenUtil.IdentityToString(id)}</password>
                 <domain>{id.getDomain}</domain>
                 <is_admin></is_admin>
                 {UserUtil.getStudiesFromIdentity(id).map {x =>
