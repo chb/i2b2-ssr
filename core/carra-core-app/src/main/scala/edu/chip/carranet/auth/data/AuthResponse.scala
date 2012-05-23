@@ -104,9 +104,4 @@ class AuthResponse(val id: Identity) {
 
   }
 
-
-  def toCarraXml: String = {
-    "hi"
-  }
-
 }
