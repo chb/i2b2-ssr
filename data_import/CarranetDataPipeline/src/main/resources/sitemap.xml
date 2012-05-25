@@ -2,14 +2,8 @@
 <SiteMapping>
     <site>
         <siteid>15186</siteid>
-        <connectionString>jdbc:oracle:thin:@chdev1:1521/CHRACDEV</connectionString>
-        <username>rc_carra_vm002</username>
-        <password>chracdev</password>
-    </site>
-    <site>
-        <siteid>15212</siteid>
-        <connectionString>jdbc:oracle:thin:@chdev1:1521/CHRACDEV</connectionString>
-        <username>rc_carra_vm003</username>
-        <password>chracdev</password>
+        <connectionString>conn_string</connectionString>
+        <username>username</username>
+        <password>pass</password>
     </site>
 </SiteMapping>

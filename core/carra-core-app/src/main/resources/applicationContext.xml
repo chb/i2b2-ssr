@@ -17,19 +17,19 @@
     <bean id="userStore" class="edu.chip.carranet.auth.backend.HibernateUserStore"/>
     <bean id="authenticator" class="edu.chip.carranet.auth.backend.LDAPAuthenticator">
         <constructor-arg index="0" type="java.lang.String">
-            <value>ldap.chboston.org</value>
+            <value>ldapaddress</value>
         </constructor-arg>
         <constructor-arg index="1" type="int">
             <value>389</value>
         </constructor-arg>
         <constructor-arg index="2" type="java.lang.String">
-            <value>CN=NotReallyALogin,OU=Special Accounts,DC=CHBDir,DC=Org</value>
+            <value>CN=NotReallyALogin</value>
         </constructor-arg>
         <constructor-arg index="3" type="java.lang.String">
             <value>blah</value>
         </constructor-arg>
         <constructor-arg index="4" type="java.lang.String">
-            <value>ou=users,dc=chbdir,dc=org</value>
+            <value>ou=users</value>
         </constructor-arg>
         <constructor-arg index="5" type="java.lang.String">
             <value>cn</value>
@@ -37,7 +37,7 @@
 
         <property name="adminDNs">
             <list>
-                <value>cn=ch8655309,ou=users,dc=chbdir,dc=org</value>
+                <value>cn=testuser</value>
             </list>
         </property>
     </bean>
