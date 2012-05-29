@@ -3,7 +3,7 @@
     <groupId>edu.chip.carranet</groupId>
     <artifactId>carranet</artifactId>
     <packaging>pom</packaging>
-    <version>1.2</version>
+    <version>1.3-SNAPSHOT</version>
     <name>Carranet</name>
 
     <properties>

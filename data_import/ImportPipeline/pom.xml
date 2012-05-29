@@ -8,9 +8,9 @@
 		
 
 		<parent>
-        <artifactId>carranet-data-import</artifactId>
+        <artifactId>data-import</artifactId>
         <groupId>edu.chip.carranet</groupId>
-        <version>1.2</version>
+        <version>1.3-SNAPSHOT</version>
     </parent>
 
     <repositories>
@@ -37,7 +37,7 @@
         <dependency>
             <groupId>edu.chip.carranet</groupId>
             <artifactId>InformClient</artifactId>
-            <version>1.2</version>
+            <version>1.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.spin</groupId>

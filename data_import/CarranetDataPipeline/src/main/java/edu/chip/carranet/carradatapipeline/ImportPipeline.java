@@ -74,6 +74,8 @@ public class ImportPipeline {
                 TimeUnit.valueOf(config.getString(PipelineConfig.FETCHER_TIMEUNIT)));
         SiteMap siteMap = new SiteMap(config.getString(PipelineConfig.SITEMAP_FILENAME));
 
+
+
         String formIgnoreListFilename = config.getString(PipelineConfig.ODM_IGNORE_LIST_FORM_FILENAME);
         String itemIgnoreListFilename = config.getString(PipelineConfig.ODM_IGNORE_LIST_ITEM_FILENAME);
 
