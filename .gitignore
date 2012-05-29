@@ -25,3 +25,6 @@ build.log
 
 # misc
 .DS_Store
+pipeline.log
+*.db
+*.lg
