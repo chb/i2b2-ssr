@@ -34,6 +34,12 @@
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
             <useProjectArtifact>true</useProjectArtifact>
+            <excludes>
+                <!-- Pulling in the newer JAXB jar from carranet-data messes with default JAXB-->
+                <exclude>com.sun.xml.bind:jaxb-impl:jar:2.1.9</exclude>
+                <exclude>javax.xml.bind:jaxb-api:jar:2.1</exclude>
+            </excludes>
         </dependencySet>
+
     </dependencySets>
 </assembly>
