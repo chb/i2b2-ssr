@@ -68,7 +68,7 @@ public class SqlOutputterTest {
             File formIgnoreList = new File(getClass().getClassLoader().getResource("odmFormIgnoreList.txt").toURI());
             File itemIgnoreList = new File(getClass().getClassLoader().getResource("odmItemIgnoreList.txt").toURI());
             OdmIgnoreList odmIgnoreList = new OdmIgnoreList(formIgnoreList, itemIgnoreList);
-            InformI2b2Processor processor = new InformI2b2Processor(odmIgnoreList, connectionString, userName, password);
+            InformI2b2Processor processor = new InformI2b2Processor(odmIgnoreList, connectionString, userName, password, false);
 
             List<MockSiteMap.MockConnectionInfo> connectionsList = new ArrayList<MockSiteMap.MockConnectionInfo>();
             connectionsList.add(new MockSiteMap.MockConnectionInfo(connectionString, "rc_carra_vm002", password));

@@ -96,7 +96,7 @@ public class PipelineTest {
         File itemIgnoreList = new File(getClass().getClassLoader().getResource("odmItemIgnoreList.txt").toURI());
         OdmIgnoreList odmIgnoreList = new OdmIgnoreList(formIgnoreList, itemIgnoreList);
         Processor processor = new DelegatingTestProcessor(
-                new InformI2b2Processor(odmIgnoreList, connectionString, userName, password),
+                new InformI2b2Processor(odmIgnoreList, connectionString, userName, password, false),
                 processorLatch);
 
 
