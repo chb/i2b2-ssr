@@ -1,0 +1,18 @@
+<ui:UiBinder
+        xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'
+        xmlns:c='urn:import:edu.chip.carranet.client.ui'>
+
+    <ui:style src="CarraTable.css" field="tableStyle"
+              type="edu.chip.carranet.client.ui.style.TableStyle"/>
+
+    <g:HTMLPanel>
+         <h2>Manage Cluster Machines</h2>
+        <c:NewMachineWindow ui:field="newMachineWindow" visible="false"/>
+        <c:UpdateMachineWindow ui:field="editMachineWindow" visible="false"/>
+        <g:FlexTable ui:field="machinesTable" styleName=".FlexTable"/>
+        <br/>
+        <br/>
+        <g:Button ui:field="addNewMachine" text="New Machine"/>
+    </g:HTMLPanel>
+</ui:UiBinder>

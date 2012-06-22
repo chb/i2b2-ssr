@@ -1,0 +1,21 @@
+<ui:UiBinder
+        xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <g:HTMLPanel>
+        <g:PopupPanel modal="false"
+                      animationEnabled="true" ui:field="newStudyPopup">
+
+            <g:HTMLPanel>
+                <g:Label text="Study Group"/>
+                <g:TextBox ui:field="studyNameField"/>
+                <g:Label text="Machines"/>
+                <g:ListBox ui:field="machineList" multipleSelect="true"/>
+                <g:Button ui:field="submitNewStudy" text="Submit"/>
+                <g:Button ui:field="cancel" text="Cancel"/>
+            </g:HTMLPanel>
+        </g:PopupPanel>
+    </g:HTMLPanel>
+
+
+</ui:UiBinder>

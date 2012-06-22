@@ -1,0 +1,17 @@
+<ui:UiBinder
+        xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+
+    <ui:style src="CarraTable.css" field="tableStyle"
+              type="edu.chip.carranet.client.ui.style.TableStyle"/>
+
+    <g:HTMLPanel>
+        <h2>Cluster Status</h2>
+        <g:FlexTable ui:field="statusTable">
+
+        </g:FlexTable>
+
+    </g:HTMLPanel>
+
+</ui:UiBinder>

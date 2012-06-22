@@ -1,0 +1,51 @@
+<ui:UiBinder
+        xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'
+        xmlns:application='urn:import:edu.chip.carranet.client.Application'>
+
+
+    <g:FlowPanel ui:field="layout">
+
+        <g:FlowPanel>
+            <g:HorizontalPanel>
+                    <g:Image ui:field="logo" url="images/logo.png"/>
+                    <g:HTMLPanel>
+                        <h1>CARRA<i>net</i> Admin</h1>
+                    </g:HTMLPanel>
+            </g:HorizontalPanel>
+
+            <g:MenuBar ui:field="menuBar" autoOpen="true">
+                <g:MenuItem>
+                    Manage Users
+                    <g:MenuBar vertical="true">
+                        <g:MenuItem ui:field="addRemUser">Add/Remove User</g:MenuItem>
+                        <g:MenuItem>Reset User Password</g:MenuItem>
+                    </g:MenuBar>
+                </g:MenuItem>
+                <g:MenuItem>
+                    Manage Studies
+                    <g:MenuBar vertical="true">
+                        <g:MenuItem ui:field="manageStudies">Manage Study Groups</g:MenuItem>
+                        <g:MenuItem ui:field="manageMachines">Manage Machines</g:MenuItem>
+                    </g:MenuBar>
+                </g:MenuItem>
+                <g:MenuItem>
+                    Status
+                    <g:MenuBar vertical="true">
+                        <g:MenuItem ui:field="clusterStatus">Cluster Status</g:MenuItem>
+                        <g:MenuItem>Data import status</g:MenuItem>
+                        <g:MenuItem>Logs</g:MenuItem>
+                    </g:MenuBar>
+                </g:MenuItem>
+                <g:MenuItem ui:field="logout">
+                    Logout
+                </g:MenuItem>
+            </g:MenuBar>
+        </g:FlowPanel>
+
+
+        <g:FlowPanel ui:field="content">
+        </g:FlowPanel>
+    </g:FlowPanel>
+
+</ui:UiBinder>

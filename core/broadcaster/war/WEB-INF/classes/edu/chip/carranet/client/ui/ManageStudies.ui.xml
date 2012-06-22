@@ -1,0 +1,18 @@
+<ui:UiBinder
+        xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'
+        xmlns:c='urn:import:edu.chip.carranet.client.ui'>
+
+    <ui:style src="CarraTable.css" field="tableStyle"
+              type="edu.chip.carranet.client.ui.style.TableStyle"/>
+
+    <g:HTMLPanel>
+         <h2>Manage Study Groups</h2>
+        <c:NewStudyWindow ui:field="newStudyWindow" visible="false"/>
+        <c:UpdateStudyWindow ui:field="editStudyWindow" visible="false"/>
+        <g:FlexTable ui:field="studiesTable" styleName=".FlexTable"/>
+        <br/>
+        <br/>
+        <g:Button ui:field="addNewStudy" text="New study group"/>
+    </g:HTMLPanel>
+</ui:UiBinder>

@@ -1,0 +1,22 @@
+<ui:UiBinder
+        xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <g:HTMLPanel>
+        <g:DialogBox autoHide="false" modal="true"
+                     glassEnabled="true" animationEnabled="true" ui:field="box">
+            <g:caption>
+                <b>Please Login</b>
+            </g:caption>
+            <g:HTMLPanel>
+                <g:Label text="Login"/>
+                <g:TextBox ui:field="loginBox"/>
+                <g:Label text="Password"/>
+
+                <g:PasswordTextBox ui:field="passwordBox"/>
+                <br/>
+                <g:Button ui:field="buttonSubmit" text="Submit"/>
+            </g:HTMLPanel>
+        </g:DialogBox>
+    </g:HTMLPanel>
+
+</ui:UiBinder>
