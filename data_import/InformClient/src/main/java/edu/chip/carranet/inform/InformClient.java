@@ -31,6 +31,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.handler.Handler;
 import javax.xml.ws.soap.AddressingFeature;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.security.KeyManagementException;
@@ -225,44 +227,45 @@ public class InformClient implements InformClientAPI {
     public static void main(String[] args) throws Exception {
         disableSSLTrust();
 //        InformClient client = new InformClient("carranet", "http://informadapterdev.chboston.org/informadapter/odm/informodm.asmx");
-        InformClient client = new InformClient("crnt_regst", "https://adapter.dcri.duke.edu/informadapter/odm/informodm.asmx");
+        InformClient client = new InformClient("test", "adapter_test", "adapter_test", "http://informadapterqa/informadapter/odm/informodm.asmx");
 
-//        System.out.println(client.getSiteList());
-//        System.out.println(client.getPatientList("15186"));
-//        System.out.println(client.getPatientForms("15808"));
+       //System.out.println(client.getSiteList());
+       //System.out.println(client.getPatientList("1"));
+//        System.out.println(client.getPatientForms("1"));
 //        System.out.println(client.getMetadata());
 //        System.out.println(client.getAdminMetadata());
 
         String oldBookmark = "";
         String nextBookmark = "";
 
-        ResponseODM response = client.getTransaction(args[0]);
-        Marshaller m = InformJAXBContext.getInstance().getContext().createMarshaller();
-        m.setProperty("jaxb.formatted.output", true);
-        StringWriter sw = new StringWriter();
-        m.marshal(response, sw);
-        System.out.println(sw.toString());
+
+//        ResponseODM response = client.getTransaction("");
+//        Marshaller m = InformJAXBContext.getInstance().getContext().createMarshaller();
+//        m.setProperty("jaxb.formatted.output", true);
+//        StringWriter sw = new StringWriter();
+//        m.marshal(response, sw);
+//        System.out.println(sw.toString());
 
 
-//        int i = 0;
-//        do {
-//            System.out.println("querying with bookmark: " + nextBookmark);
-//            ResponseODM response = client.getTransaction(nextBookmark);
-//            Marshaller m = InformJAXBContext.getInstance().getContext().createMarshaller();
-//            m.setProperty("jaxb.formatted.output", true);
-//            StringWriter sw = new StringWriter();
-//            m.marshal(response, sw);
-////            System.out.println(sw.toString());
-//            File f = new File("/tmp/inform-"+i);
-//            FileWriter fw = new FileWriter(f);
-//            fw.write(sw.toString());
-//            fw.flush();
-//            fw.close();
-//            ++i;
-//            oldBookmark = nextBookmark;
-//            nextBookmark = response.getBookmark();
-//            System.out.println("response contains bookmark: " + nextBookmark);
-//        } while (!oldBookmark.equals(nextBookmark));
+        int i = 0;
+        do {
+            System.out.println("querying with bookmark: " + nextBookmark);
+            ResponseODM response = client.getTransaction(nextBookmark);
+            Marshaller m = InformJAXBContext.getInstance().getContext().createMarshaller();
+            m.setProperty("jaxb.formatted.output", true);
+            StringWriter sw = new StringWriter();
+            m.marshal(response, sw);
+            System.out.println(sw.toString());
+            File f = new File("/tmp/inform-"+i);
+            FileWriter fw = new FileWriter(f);
+            fw.write(sw.toString());
+            fw.flush();
+            fw.close();
+            ++i;
+            oldBookmark = nextBookmark;
+            nextBookmark = response.getBookmark();
+            System.out.println("response contains bookmark: " + nextBookmark);
+        } while (!oldBookmark.equals(nextBookmark));
 
     }
 }

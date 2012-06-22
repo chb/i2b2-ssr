@@ -1,5 +1,6 @@
 package edu.chip.carranet.carradatapipeline.pipeline;
 
+import edu.chip.carranet.carradatapipeline.PipelineConfig;
 import edu.chip.carranet.data.ODMImporter;
 import edu.chip.carranet.data.ODMXSLT;
 import edu.chip.carranet.importpipeline.process.ProcessException;
@@ -36,12 +37,14 @@ public class InformI2b2Processor implements Processor<InformODMData, SqlCommands
     private ODMXSLT odmxslt;
     private ODMImporter odmImporter;
     private OdmIgnoreList ignoreLists;
+    private boolean ignoreUmappedFacts;
 
-    public InformI2b2Processor(OdmIgnoreList ignoreLists, String connectionString, String dbUser, String dbPass) throws TransformerConfigurationException, SQLException {
+    public InformI2b2Processor(OdmIgnoreList ignoreLists, String connectionString, String dbUser, String dbPass, boolean ignoreUnmappedFacts) throws TransformerConfigurationException, SQLException {
         this.odmxslt = new ODMXSLT();
         Connection connection = DriverManager.getConnection(connectionString, dbUser, dbPass);
         this.odmImporter = new ODMImporter(connection);
         this.ignoreLists = ignoreLists;
+        this.ignoreUmappedFacts = ignoreUnmappedFacts;
     }
 
     @Override
@@ -67,7 +70,12 @@ public class InformI2b2Processor implements Processor<InformODMData, SqlCommands
             data.getTransactionRecord().setAuditReport(report);
             OdmTransformReport reporter = new OdmTransformReport(report);
             if(reporter.hasProblem()) {
-                throw new ProcessException("bad report:" + report);
+                if(ignoreUmappedFacts){
+                    log.fatal("WARNING: Unmapped facts found report, configured to continue anyway " + report);
+                }
+                else{
+                    throw new ProcessException("Found unmapped facts in report:" + report);
+                }
             }
 
             return new SqlCommands(siteSqlMap, data.getTransactionRecord());
@@ -99,7 +107,6 @@ public class InformI2b2Processor implements Processor<InformODMData, SqlCommands
                             if(ignoreLists.getItemIgnoreList().contains(itemData.getItemOID())) {
                                 itemDataIterator.remove();
                                 log.info("pruned item: " + itemData.getItemOID());
-                                continue;
                             }
                         }
                     }

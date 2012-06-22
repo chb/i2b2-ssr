@@ -82,7 +82,8 @@ public class ImportPipeline {
         OdmIgnoreList ignoreList = new OdmIgnoreList(new File(formIgnoreListFilename), new File(itemIgnoreListFilename));
 
         FetchFromInform fetcher = new FetchFromInform(informConfig, fetchConfig, transactionStore);
-        Processor processor = new InformI2b2Processor(ignoreList, connectionString, user, passwd);
+        Processor processor = new InformI2b2Processor(ignoreList, connectionString, user,
+                passwd, config.getBoolean(PipelineConfig.ODM_IGNORE_UNMAPPED_FACTS));
         SqlOutputter outputter = new SqlOutputter(fetcher, siteTransactionStore, siteMap);
         outputter.setDoBatch(config.getBoolean(PipelineConfig.SQL_OUTPUTTER_USE_BATCH));
 

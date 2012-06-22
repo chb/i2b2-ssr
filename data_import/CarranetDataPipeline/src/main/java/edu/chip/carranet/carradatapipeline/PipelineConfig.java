@@ -21,6 +21,7 @@ public class PipelineConfig extends BaseConfiguration {
     public static final String INFORM_USERNAME = "InformClient.UserName";
     public static final String INFORM_PASSWORD = "InformClient.Password";
     public static final String INFORM_ENDPOINT = "InformClient.Endpoint";
+    public static final String ODM_IGNORE_UNMAPPED_FACTS = "InformClient.ignoreUnmappedFacts";
     public static final String INFORM_USE_WS_SECURITY = "InformClient.UseWSSecurity";
     public static final String FETCHER_PERIOD = "Fetcher.Period";
     public static final String FETCHER_TIMEUNIT = "Fetcher.TimeUnit";
@@ -46,6 +47,7 @@ public class PipelineConfig extends BaseConfiguration {
         setProperty(INFORM_USERNAME, InformConfig.CHIP_TEST.getUser());
         setProperty(INFORM_ENDPOINT, InformConfig.CHIP_TEST.getEndpoint());
         setProperty(INFORM_USE_WS_SECURITY, InformConfig.CHIP_TEST.isUsingWSSecurity());
+        setProperty(ODM_IGNORE_UNMAPPED_FACTS, false);
 
         // fetcher
         setProperty(FETCHER_PERIOD, FetchConfig.DEFAULT_FETCH_CONFIG.getFetchPeriod());
