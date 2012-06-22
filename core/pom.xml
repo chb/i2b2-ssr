@@ -155,6 +155,7 @@
 
 
     <modules>
+        <module>broadcaster</module>
         <module>carranet-lib</module>
         <module>carranet-data</module>
         <module>client</module>

@@ -109,7 +109,6 @@
         </plugins>
     </build>
     <modules>
-        <module>AdminUI</module>
         <module>KeyStoreCreator</module>
     </modules>
 </project>
