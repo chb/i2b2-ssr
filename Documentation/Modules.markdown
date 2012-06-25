@@ -32,6 +32,8 @@ aggregation point.  In order to meet the needs of CARRAnet registry use case i2b
 spoke single aggregation use case as painless as possible while adding a features which might otherwise be difficult
 to implement in a p2p SHRINE network
 
+![Peergroups](https://raw.github.com/chb/i2b2-ssr/master/Documentation/images/peergroups.jpg)
+
 The hub and spoke topology allows i2b2-ssr to implement:
 
 - Sophsticated access control via standard permissioning system and peergroups
@@ -39,10 +41,8 @@ The hub and spoke topology allows i2b2-ssr to implement:
 - Centralized auditing
 - Centralized certificate provisioning
 
-#Peergroups
- This is typically how an i2b2-ssr network is setup.  The hub and spoke model allows the broadcaster to assign
- users access to different peergroups.
- ![Peergroups](https://raw.github.com/chb/i2b2-ssr/master/Documentation/images/peergroups.jpg)
+
+
 
 
 
