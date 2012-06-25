@@ -1,12 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.chip.carranet</groupId>
     <artifactId>data-import</artifactId>
     <packaging>pom</packaging>
     <version>1.3-SNAPSHOT</version>
     <name>carranet-edu.chip.carranet.data</name>
-		
-		<parent>
+
+    <parent>
         <artifactId>carranet</artifactId>
         <groupId>edu.chip.carranet</groupId>
         <version>1.3-SNAPSHOT</version>
@@ -21,7 +22,8 @@
 
     <scm>
         <connection>https://scm.chip.org/svn/repos/carranet/tags/carranet-1.2/carranet/trunk</connection>
-        <developerConnection>scm:svn:https://scm.chip.org/svn/repos/carranet/tags/carranet-1.2/carranet/trunk</developerConnection>
+        <developerConnection>scm:svn:https://scm.chip.org/svn/repos/carranet/tags/carranet-1.2/carranet/trunk
+        </developerConnection>
         <url>https://scm.chip.org/svn/repos/carranet/tags/carranet-1.2/carranet/trunk</url>
     </scm>
 
