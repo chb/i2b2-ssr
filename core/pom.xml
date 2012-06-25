@@ -17,7 +17,7 @@
         <shrine.version>1.13</shrine.version>
         <spring.version>3.1.1.RELEASE</spring.version>
         <scala.version>2.9.0-1</scala.version>
-        <hibernate.version>4.1.3.FINAL</hibernate.version>
+        <hibernate.version>4.1.4.Final</hibernate.version>
     </properties>
 
     <scm>
