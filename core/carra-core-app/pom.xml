@@ -4,7 +4,7 @@
     <groupId>edu.chip.carranet</groupId>
     <artifactId>carra-core-app</artifactId>
     <packaging>jar</packaging>
-    <name>core-common</name>
+    <name>core-application</name>
     <url>http://maven.apache.org</url>
 
 
