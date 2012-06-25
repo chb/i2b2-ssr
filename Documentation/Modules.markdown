@@ -10,7 +10,7 @@ on the same machine as the i2b2 data source.
 
 
 #Components
-![Alt text](images/Architecture.svg)
+![Alt text](https://raw.github.com/chb/i2b2-ssr/master/Documentation/images/Architecture.svg)
 
 ##Broadcaster
 The broadcaster includes everything needed to start up an i2b2-ssr network including a simple
