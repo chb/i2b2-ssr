@@ -4,7 +4,7 @@ How to build i2b2-ssr
 
 ##Build Requiredments
 1. JDK 1.6 or higher
-2. Maven3 or higher
+2. Maven 3.0 or higher
 
 
 ##How to build
