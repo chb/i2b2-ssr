@@ -10,6 +10,7 @@ public class OverlayResourceEntity {
 
     private Long id;
     private String path;
+    private boolean enabled;
     private byte[] payload;
 
     @Id
@@ -40,5 +41,15 @@ public class OverlayResourceEntity {
 
     public void setPayload(byte[] payload) {
         this.payload = payload;
+    }
+
+    @Basic
+    @Column(name = "enabled")
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

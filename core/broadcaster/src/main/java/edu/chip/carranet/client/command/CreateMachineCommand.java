@@ -11,10 +11,28 @@ public class CreateMachineCommand implements CarraCommand {
 
     private String machineId;
     private String hostname;
+    private String certificate;
+
+    public String getMachineId() {
+        return machineId;
+    }
+
+    public String getHostname() {
+        return hostname;
+    }
+
+    public String getCertificate() {
+        return certificate;
+    }
 
     public CreateMachineCommand(String machineId, String hostname) {
+        this(machineId, hostname, null);
+    }
+
+    public CreateMachineCommand(String machineId, String hostname, String certificate) {
         this.machineId = machineId;
         this.hostname = hostname;
+        this.certificate = certificate;
     }
 
     public void execute() {
@@ -25,12 +43,8 @@ public class CreateMachineCommand implements CarraCommand {
                 new CarraAsyncCallback<Void>(MessageType.MachineCreated, this));
     }
 
-    public String getMachineId() {
-        return machineId;
-    }
 
-    public String getHostname() {
-        return hostname;
-    }
+
+
 }
 

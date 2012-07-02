@@ -17,6 +17,16 @@ public interface ResourceStore {
      */
     public void create(String key, PersistedResource pr) throws ResourceAlreadyExistsException;
 
+    /**
+     * Create a machine
+     * @param key identifies the resource
+     * @param enabled toggles whether the machine is "enabled" which determines whether the resource
+     *        shows up in Peergroup Listing.
+     * @param pr  the persisted resource
+     * @throws ResourceAlreadyExistsException
+     */
+    public void create(String key, boolean enabled, PersistedResource pr) throws ResourceAlreadyExistsException;
+
 
     /**
      * Reads an entry

@@ -6,6 +6,8 @@
         <xsd:sequence>
             <xsd:element name="machineId" minOccurs="1" maxOccurs="1" type="xsd:string"/>
             <xsd:element name="locator" minOccurs="1" maxOccurs="1" type="xsd:anyURI"/>
+
+
         </xsd:sequence>
     </xsd:complexType>
 
@@ -29,6 +31,7 @@
         <xsd:sequence>
             <xsd:element name="studyId" minOccurs="1" maxOccurs="1" type="xsd:string"/>
             <xsd:element name="machineIds" minOccurs="1" maxOccurs="unbounded" type="xsd:string"/>
+            <xsd:element name="certificate" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
     </xsd:complexType>
 

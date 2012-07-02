@@ -11,7 +11,9 @@ import java.util.Arrays;
 public class PersistedResource implements Serializable{
     final static int version = 0x01;
     String owner;
+    boolean enabled;
     byte[] payload;
+
 
     public PersistedResource(String owner, byte[] payload) {
         this.owner = owner;

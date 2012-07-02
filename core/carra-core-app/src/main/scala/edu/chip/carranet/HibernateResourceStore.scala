@@ -10,6 +10,7 @@ import overlay.persistance.{PersistedResource, ResourceStore}
 import scala.collection.JavaConversions._
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Component
+import java.lang.String
 
 @Transactional
 class HibernateResourceStore(@Autowired() val sessionFactory: SessionFactory) extends ResourceStore {
@@ -17,7 +18,11 @@ class HibernateResourceStore(@Autowired() val sessionFactory: SessionFactory) ex
   val log = Logger.getLogger(this.getClass)
 
   def create(key: String, pr: PersistedResource) {
-    //TODO look into whether PeristedResource still needs an "owner" field
+      create(key, true, pr)
+  }
+
+  def create(key: String, enabled: Boolean, pr: PersistedResource) {
+        //TODO look into whether PeristedResource still needs an "owner" field
     //
     val query = sessionFactory.getCurrentSession.createQuery(
       "from OverlayResourceEntity e where e.path = :path")
@@ -28,10 +33,12 @@ class HibernateResourceStore(@Autowired() val sessionFactory: SessionFactory) ex
     }
 
     val entity = new OverlayResourceEntity()
+    entity.setEnabled(enabled)
     entity.setPath(key)
     entity.setPayload(pr.getPayload)
     sessionFactory.getCurrentSession.save(entity)
   }
+
 
   def read(key: String): PersistedResource = {
     val query = sessionFactory.getCurrentSession.createQuery(
@@ -47,6 +54,8 @@ class HibernateResourceStore(@Autowired() val sessionFactory: SessionFactory) ex
 
 
   }
+
+
 
   def update(key: String, pr: PersistedResource): PersistedResource = {
     val query = sessionFactory.getCurrentSession.createQuery(

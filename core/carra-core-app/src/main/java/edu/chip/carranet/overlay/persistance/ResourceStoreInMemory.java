@@ -17,6 +17,8 @@ public class ResourceStoreInMemory implements ResourceStore {
     private ConcurrentHashMap<String,PersistedResource> store;
 
 
+
+
     public ResourceStoreInMemory() {
         this.store = new ConcurrentHashMap<String,PersistedResource>();
     }
@@ -27,6 +29,13 @@ public class ResourceStoreInMemory implements ResourceStore {
             throw new ResourceAlreadyExistsError("Resource already exists");
         }
     }
+
+    public void create(String key, boolean bool, PersistedResource pr) throws ResourceAlreadyExistsException {
+        if(store.putIfAbsent(key, pr) != null) {
+            throw new ResourceAlreadyExistsError("Resource already exists");
+        }
+    }
+
 
     @Override
     public PersistedResource read(String key) {
