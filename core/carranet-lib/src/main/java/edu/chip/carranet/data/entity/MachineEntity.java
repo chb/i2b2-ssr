@@ -1,6 +1,5 @@
 package edu.chip.carranet.data.entity;
 
-import edu.chip.carranet.jaxb.StudyEntry;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -71,16 +70,12 @@ public class MachineEntity {
         this.locater = locater;
     }
 
-        @ManyToMany(
-        cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-        mappedBy = "machines",
-        targetEntity = StudyEntity.class
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy = "machines",
+            targetEntity = StudyEntity.class
     )
     public Set<StudyEntity> getStudies() {
         return studies;
-    }
-
-    public void setStudies(Set<StudyEntity> studies) {
-        this.studies = studies;
     }
 }

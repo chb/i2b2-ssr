@@ -1,10 +1,8 @@
 package edu.chip.carranet.data.entity;
 
-import edu.chip.carranet.jaxb.Machine;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
