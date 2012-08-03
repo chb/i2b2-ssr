@@ -13,7 +13,7 @@ end
 
 first = true;
 header = "";
-CSV.open(ARGV[0], 'r', ',') do |row|
+CSV.foreach(ARGV[0]) do |row|
   if(first)
     # save the header
     header = row.join(",");
