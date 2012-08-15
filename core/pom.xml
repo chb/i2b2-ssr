@@ -155,11 +155,8 @@
 
 
     <modules>
-        <module>broadcaster</module>
         <module>carranet-lib</module>
         <module>carranet-data</module>
-        <module>client</module>
-        <module>carra-core-app</module>
     </modules>
 </project>
 

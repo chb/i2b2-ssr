@@ -3,9 +3,9 @@ package net.shrine.broadcaster.aggregators
 import org.spin.query.message.headers.Result
 import net.shrine.broadcaster.sitemapping.SiteNameMapper
 import net.shrine.aggregation.{SpinResultEntry, ReadInstanceResultsAggregator}
-import com.yammer.metrics.Instrumented
 import org.spin.tools.crypto.signature.Identity
 import net.shrine.protocol.{ReadInstanceResultsResponse, QueryResult}
+import net.shrine.data.UserInfoResponse
 
 /**
  * @author Dave Ortiz
@@ -18,39 +18,33 @@ import net.shrine.protocol.{ReadInstanceResultsResponse, QueryResult}
  * @link http://www.gnu.org/licenses/lgpl.html
  */
 class CarraReadInstanceResultsAggregator(
-    private val instanceId: Long,
-    private val siteNameMapper: SiteNameMapper,
-    private val id: Identity) extends ReadInstanceResultsAggregator(instanceId, true) with Instrumented
-with DataTagging {
+                                          private val instanceId: Long,
+                                          private val siteNameMapper: SiteNameMapper,
+                                          private val userInfoResponse: UserInfoResponse) extends ReadInstanceResultsAggregator(instanceId, true) with DataTagging{
 
   protected def mapper = siteNameMapper
-
-  protected def identity = id
-
-  val aggTimer = metrics.timer("aggregation.readInstanceResults")
-  val aggMeter = metrics.meter("aggregation.meter", "aggregatedItems")
-  val aggCount = metrics.counter("aggCount")
+  protected def userInfo = userInfoResponse
 
   override def aggregate(spinCacheResults: Seq[SpinResultEntry]) = {
-    aggTimer.time {
-      val results = super.aggregate(spinCacheResults).asInstanceOf[ReadInstanceResultsResponse]
-      results.withResults(results.results.filter {x =>
+    val results = super.aggregate(spinCacheResults).asInstanceOf[ReadInstanceResultsResponse]
+    results.withResults(results.results.filter {
+      x =>
         !x.description.getOrElse("").equalsIgnoreCase(DataTagging.UNIDENTIFIED) ||
-            getHomeSites.contains(x.description)
-      })
-    }
+          getHomeSites.contains(x.description)
+    })
 
 
   }
 
   override protected def transformResult(n: QueryResult, metaData: Result) = {
-    aggMeter.mark()
-    aggCount += 1
-    if(canIdenitfySite(metaData.getOrigin.getName)) {
+
+    if (canIdenitfySite(metaData.getOrigin.getName)) {
       n.withDescription(mapper.getSiteIdentifierFromDN(metaData.getOrigin.getName))
     }
     else {
       n.withDescription(DataTagging.UNIDENTIFIED)
     }
+
   }
+
 }

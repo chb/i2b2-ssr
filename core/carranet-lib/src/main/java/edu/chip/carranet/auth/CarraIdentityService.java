@@ -23,14 +23,13 @@ public class CarraIdentityService implements IdentityService {
      * @throws IdentityServiceException
      */
     @Override
-    public Identity certify(String domain, String username, String password) throws IdentityServiceException {
+    public Identity certify(String domain, String username, String password)
+            throws IdentityServiceException {
 
         if (username == null || password == null) {
             throw new IdentityServiceException("No username or password");
         }
-
         try {
-
             Identity id = TokenUtil.convertAuthToIdentity(password);
             if (username.equalsIgnoreCase(id.getUsername())) {
                 return id;
@@ -40,7 +39,5 @@ public class CarraIdentityService implements IdentityService {
         } catch (Exception e) {
             throw new IdentityServiceException("Not authorized");
         }
-
-
     }
 }
