@@ -2,7 +2,7 @@ package edu.chip.carranet.auth.backend;
 
 import edu.chip.carranet.jaxb.CarraUserInfo;
 import org.apache.log4j.Logger;
-import org.restlet.engine.util.Base64;
+import org.bouncycastle.util.encoders.Base64;
 import org.spin.tools.JAXBUtils;
 import org.spin.tools.NetworkTime;
 import org.spin.tools.config.ConfigException;
@@ -175,7 +175,7 @@ public class TokenUtil {
 
 
         String returnString = JAXBUtils.marshalToString(id);
-        return Base64.encode(returnString.getBytes("UTF-8"), false);
+        return Base64.encode(returnString.getBytes("UTF-8")).toString();
     }
 
     /**
@@ -199,7 +199,7 @@ public class TokenUtil {
 
         String idString = JAXBUtils.marshalToString(e);
 
-        String returnString = Base64.encode(idString.getBytes("UTF-8"), false);
+        String returnString = Base64.encode(idString.getBytes("UTF-8")).toString();
         return returnString;
     }
 
@@ -252,7 +252,7 @@ public class TokenUtil {
             log.fatal("Error unmarshalling ID, shouldn't happen");
         }
 
-        String returnString = Base64.encode(xmlString.getBytes(), false);
+        String returnString = Base64.encode(xmlString.getBytes()).toString();
         return returnString;
     }
 

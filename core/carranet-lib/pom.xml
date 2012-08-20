@@ -12,11 +12,7 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>org.restlet.jse</groupId>
-            <artifactId>org.restlet</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.spin</groupId>
             <artifactId>tools</artifactId>

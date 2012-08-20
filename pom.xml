@@ -53,27 +53,8 @@
             <name>open.med snapshots</name>
             <url>http://repo.open.med.harvard.edu/nexus/content/repositories/snapshots</url>
         </repository>
-        <!--metric (profiler)-->
-        <repository>
-            <id>repo.codahale.com</id>
-            <url>http://repo.codahale.com</url>
-        </repository>
     </repositories>
 
-    <distributionManagement>
-        <!--<snapshotRepository>-->
-            <!--<id>nexus</id>-->
-            <!--<name>Nexus Repo</name>-->
-            <!--<url>http://carra-nexus:8081/nexus/content/repositories/snapshots</url>-->
-            <!--&lt;!&ndash; Don't append timestamps to snapshot jars &ndash;&gt;-->
-            <!--<uniqueVersion>false</uniqueVersion>-->
-        <!--</snapshotRepository>-->
-        <!--<repository>-->
-            <!--<id>nexus</id>-->
-            <!--<name>Nexus Repo</name>-->
-            <!--<url>http://carra-nexus:8081/nexus/content/repositories/releases</url>-->
-        <!--</repository>-->
-    </distributionManagement>
 
     <modules>
         <module>core</module>

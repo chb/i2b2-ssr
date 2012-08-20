@@ -130,12 +130,6 @@
 
     <jaxws:endpoint id="spinNodeEndpoint" implementor="#spinNode" address="/aggregate"></jaxws:endpoint>
 
-    <aop:aspectj-autoproxy/>
-    <bean id="aopAdvice" class="edu.carranet.query.InstrumentAdapter">
-        <constructor-arg index="0" ref="graphiteHost"/>
-    </bean>
-
-
     <!-- DAO management-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
