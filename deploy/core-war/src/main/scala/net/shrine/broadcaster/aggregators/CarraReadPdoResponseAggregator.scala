@@ -4,28 +4,21 @@ import org.spin.query.message.headers.Result
 import net.shrine.protocol.{ParamResponse, PatientResponse, ReadPdoResponse}
 import net.shrine.broadcaster.sitemapping.SiteNameMapper
 import org.spin.tools.crypto.signature.Identity
-import net.shrine.aggregation.{SpinResultEntry, ReadPdoResponseAggregator}
-import com.yammer.metrics.Instrumented
+import net.shrine.aggregation.ReadPdoResponseAggregator
 
 
 class CarraReadPdoResponseAggregator(
     val siteNameMapper: SiteNameMapper,
-    val id: Identity) extends ReadPdoResponseAggregator with DataTagging with Instrumented {
+    val id: Identity) extends ReadPdoResponseAggregator with DataTagging {
 
   protected def identity = id
   protected def mapper = siteNameMapper
 
-  val aggTimer = metrics.timer("aggregation.readPdo")
-  val aggMeter = metrics.meter("aggregation.meter", "aggregatedItems")
-  val aggCount = metrics.counter("aggCount")
 
-  override def aggregate(spinCacheResults: Seq[SpinResultEntry]) = {
-    aggTimer.time{super.aggregate(spinCacheResults)}
-  }
+
 
   override protected def transform(response: ReadPdoResponse, metadata: Result) = {
-    aggMeter.mark()
-    aggCount+=1
+
     def createSiteOrigin: ParamResponse = {
       new ParamResponse("siteOrigin", "siteOrigin", mapper.getSiteIdentifierFromDN(metadata.getOrigin.getName))
     }

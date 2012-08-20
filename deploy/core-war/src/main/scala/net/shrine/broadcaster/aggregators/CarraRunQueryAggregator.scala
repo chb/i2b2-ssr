@@ -4,7 +4,6 @@ import net.shrine.broadcaster.sitemapping.SiteNameMapper
 import org.spin.query.message.headers.Result
 import org.spin.tools.crypto.signature.Identity
 import net.shrine.aggregation.{SpinResultEntry, RunQueryAggregator}
-import com.yammer.metrics.Instrumented
 import net.shrine.protocol.{RunQueryResponse, QueryResult}
 
 /**
@@ -26,7 +25,7 @@ class CarraRunQueryAggregator(
     private val map: SiteNameMapper,
     private val id: Identity,
     private val doAggregation: Boolean) extends RunQueryAggregator(queryId, userId, groupId, requestXml, queryInstance, doAggregation)
-with DataTagging with Instrumented {
+with DataTagging  {
 
 
   //give a default implentation, possibly add something to config later
@@ -34,12 +33,8 @@ with DataTagging with Instrumented {
 
   protected def mapper = map;
 
-  val aggTimer = metrics.timer("aggregation.runQuery")
-  val aggMeter = metrics.meter("aggregation.meter", "aggregatedItems")
-  val aggCount = metrics.counter("aggCount")
 
   override def aggregate(spinCacheResults: Seq[SpinResultEntry]) = {
-    aggTimer.time {
       val response: RunQueryResponse = super.aggregate(spinCacheResults).asInstanceOf[RunQueryResponse]
 
       //Filter out results that aren't homesites and
@@ -50,13 +45,10 @@ with DataTagging with Instrumented {
             getHomeSites.contains(x.description)
 
       })
-
-    }
   }
 
   override protected def transformResult(n: QueryResult, metaData: Result) = {
-    aggMeter.mark()
-    aggCount += 1
+
     if(canIdenitfySite(metaData.getOrigin.getName)) {
       n.withDescription(mapper.getSiteIdentifierFromDN(metaData.getOrigin.getName))
     }
