@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:pf="http://www.phaseforward.com/InFormAdapter/ODM/Extensions/2.0">
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.cdisc.org/ns/odm/v1.3"
+                xmlns:pf="http://www.phaseforward.com/InFormAdapter/ODM/Extensions/2.0">
 	<!--===== This template returns the attribute SubjectKey when called =====-->
 	<xsl:template name="SubjectKey">
 		<xsl:value-of select="ancestor::*:SubjectData/@SubjectKey"/>
@@ -208,7 +209,7 @@
 				<xsl:text></xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select='replace(substring(@Value,1,100),"&apos;","&apos;&apos;")'/>
+				<xsl:value-of select='replace(replace(substring(@Value,1,100),"&apos;","&apos;&apos;"),";"," ")'/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
