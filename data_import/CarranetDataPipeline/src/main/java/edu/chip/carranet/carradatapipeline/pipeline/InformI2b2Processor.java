@@ -1,6 +1,5 @@
 package edu.chip.carranet.carradatapipeline.pipeline;
 
-import edu.chip.carranet.carradatapipeline.PipelineConfig;
 import edu.chip.carranet.data.ODMImporter;
 import edu.chip.carranet.data.ODMXSLT;
 import edu.chip.carranet.importpipeline.process.ProcessException;
@@ -8,12 +7,10 @@ import edu.chip.carranet.importpipeline.process.Processor;
 import edu.chip.carranet.inform.InformJAXBContext;
 import org.apache.log4j.Logger;
 import org.cdisc.ns.odm.v1.*;
-import org.jvnet.jaxb2_commons.lang.builder.JAXBToStringBuilder;
 import org.spin.tools.JAXBUtils;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.util.JAXBResult;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.ByteArrayInputStream;
@@ -25,13 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- * Created by IntelliJ IDEA.
- * User: justinquan
- * Date: Oct 22, 2010
- * Time: 3:37:05 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class InformI2b2Processor implements Processor<InformODMData, SqlCommands> {
     private static final Logger log = Logger.getLogger(InformI2b2Processor.class);
     private ODMXSLT odmxslt;
