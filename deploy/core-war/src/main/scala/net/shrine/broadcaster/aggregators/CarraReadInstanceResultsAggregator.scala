@@ -3,8 +3,8 @@ package net.shrine.broadcaster.aggregators
 import org.spin.query.message.headers.Result
 import net.shrine.broadcaster.sitemapping.SiteNameMapper
 import net.shrine.aggregation.{SpinResultEntry, ReadInstanceResultsAggregator}
-import org.spin.tools.crypto.signature.Identity
 import net.shrine.protocol.{ReadInstanceResultsResponse, QueryResult}
+import net.shrine.data.UserInfoResponse
 
 /**
  * @author Dave Ortiz
@@ -19,12 +19,12 @@ import net.shrine.protocol.{ReadInstanceResultsResponse, QueryResult}
 class CarraReadInstanceResultsAggregator(
     private val instanceId: Long,
     private val siteNameMapper: SiteNameMapper,
-    private val id: Identity) extends ReadInstanceResultsAggregator(instanceId, true)
+    private val userInfoResponse: UserInfoResponse) extends ReadInstanceResultsAggregator(instanceId, true)
 with DataTagging {
 
   protected def mapper = siteNameMapper
 
-  protected def identity = id
+  protected def userInfo = userInfoResponse
 
   override def aggregate(spinCacheResults: Seq[SpinResultEntry]) = {
 

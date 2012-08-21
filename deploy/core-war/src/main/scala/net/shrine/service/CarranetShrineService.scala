@@ -11,6 +11,7 @@ import net.shrine.broadcaster.sitemapping.RoutingTableSiteNameMapper
 import net.shrine.broadcaster.aggregators.{CarraReadInstanceResultsAggregator, CarraRunQueryAggregator, CarraReadPdoResponseAggregator}
 import net.shrine.protocol.{ReadApprovedQueryTopicsRequest, DeleteQueryRequest, RenameQueryRequest, ReadPreviousQueriesRequest, ReadQueryInstancesRequest, ReadQueryDefinitionRequest, ReadInstanceResultsRequest, BroadcastMessage, RunQueryRequest, ReadPdoRequest}
 import net.shrine.broadcaster.dao.hibernate.AuditEntry
+import net.shrine.I2b2ssrUserInfoService
 
 /**
  * @author David Ortiz
@@ -29,31 +30,33 @@ class CarranetShrineService(private val auditDao: AuditDAO,
     private val identityService: IdentityService,
     private val shrineConfig: ShrineConfig,
     private val spinClient: SpinAgent,
-    private val olsURI: String) extends ShrineService(auditDao, authorizationService, identityService, shrineConfig, spinClient) {
+    private val olsURI: String,
+    private val userInfoService: I2b2ssrUserInfoService) extends ShrineService(auditDao, authorizationService, identityService, shrineConfig, spinClient) {
 
 
-  lazy val mapper = new RoutingTableSiteNameMapper(olsURI);
+  lazy val mapper = new RoutingTableSiteNameMapper(olsURI)
 
   override def readPdo(request: ReadPdoRequest) =  {
-
+    val info = userInfoService.authorizeRunQueryRequest(request)
     this.executeRequest(request,
-      new CarraReadPdoResponseAggregator(mapper, generateIdentity(request.authn)))
+      new CarraReadPdoResponseAggregator(mapper, info))
   }
 
   @Transactional
   override def runQuery(request: RunQueryRequest) = {
     val message = BroadcastMessage(request)
-    val identity = generateIdentity(request.authn)
+    val info = userInfoService.authorizeRunQueryRequest(request)
     auditDao.addAuditEntry(new AuditEntry(request.projectId, identity.getDomain, identity.getUsername, request.queryDefinitionXml, request.topicId))
     val aggregator = new CarraRunQueryAggregator(message.masterId.get, request.authn.username, request.projectId,
-      request.queryDefinitionXml, message.instanceId.get, mapper, identity, true)
+      request.queryDefinitionXml, message.instanceId.get, mapper, info, true)
 
     executeRequest(identity, message, aggregator)
   }
 
   override def readInstanceResults(request: ReadInstanceResultsRequest) =  {
+    val info = userInfoService.authorizeRunQueryRequest(request)
     executeRequest(request,
-      new CarraReadInstanceResultsAggregator(request.instanceId, mapper, generateIdentity(request.authn)))
+      new CarraReadInstanceResultsAggregator(request.instanceId, mapper,info))
   }
 
   override def readQueryDefinition(request: ReadQueryDefinitionRequest) = {

@@ -2,9 +2,9 @@ package net.shrine.broadcaster.aggregators
 
 import net.shrine.broadcaster.sitemapping.SiteNameMapper
 import org.spin.query.message.headers.Result
-import org.spin.tools.crypto.signature.Identity
 import net.shrine.aggregation.{SpinResultEntry, RunQueryAggregator}
 import net.shrine.protocol.{RunQueryResponse, QueryResult}
+import net.shrine.data.UserInfoResponse
 
 /**
  * @author Dave Ortiz
@@ -23,16 +23,12 @@ class CarraRunQueryAggregator(
     private val requestXml: String,
     private val queryInstance: Long,
     private val map: SiteNameMapper,
-    private val id: Identity,
+    private val userInfoResponse: UserInfoResponse,
     private val doAggregation: Boolean) extends RunQueryAggregator(queryId, userId, groupId, requestXml, queryInstance, doAggregation)
 with DataTagging  {
 
-
-  //give a default implentation, possibly add something to config later
-  protected def identity = id;
-
-  protected def mapper = map;
-
+  protected def userInfo = userInfoResponse
+  protected def mapper = map
 
   override def aggregate(spinCacheResults: Seq[SpinResultEntry]) = {
       val response: RunQueryResponse = super.aggregate(spinCacheResults).asInstanceOf[RunQueryResponse]

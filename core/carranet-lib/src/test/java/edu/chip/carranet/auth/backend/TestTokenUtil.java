@@ -99,7 +99,7 @@ public class TestTokenUtil {
 
 
         String encodedUser1 = Base64.encode(user1.getBytes("UTF-8")).toString();
-        String encodedUser2 = Base64.encode(user2.getBytes("UTF-8")).toString();
+        String encodedUser2 = Base64.encode(user2.getBytes("UTF-8")).toString() ;
 
         String badString = null;
 

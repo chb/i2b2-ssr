@@ -3,15 +3,15 @@ package net.shrine.broadcaster.aggregators
 import org.spin.query.message.headers.Result
 import net.shrine.protocol.{ParamResponse, PatientResponse, ReadPdoResponse}
 import net.shrine.broadcaster.sitemapping.SiteNameMapper
-import org.spin.tools.crypto.signature.Identity
 import net.shrine.aggregation.ReadPdoResponseAggregator
+import net.shrine.data.UserInfoResponse
 
 
 class CarraReadPdoResponseAggregator(
     val siteNameMapper: SiteNameMapper,
-    val id: Identity) extends ReadPdoResponseAggregator with DataTagging {
+    val userInfoResponse: UserInfoResponse) extends ReadPdoResponseAggregator with DataTagging {
 
-  protected def identity = id
+  protected def userInfo = userInfoResponse
   protected def mapper = siteNameMapper
 
 
