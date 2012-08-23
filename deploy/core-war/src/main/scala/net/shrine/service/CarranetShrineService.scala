@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional
 import net.shrine.broadcaster.sitemapping.RoutingTableSiteNameMapper
 import net.shrine.broadcaster.aggregators.{CarraReadInstanceResultsAggregator, CarraRunQueryAggregator, CarraReadPdoResponseAggregator}
 import net.shrine.protocol.{ReadApprovedQueryTopicsRequest, DeleteQueryRequest, RenameQueryRequest, ReadPreviousQueriesRequest, ReadQueryInstancesRequest, ReadQueryDefinitionRequest, ReadInstanceResultsRequest, BroadcastMessage, RunQueryRequest, ReadPdoRequest}
-import net.shrine.broadcaster.dao.hibernate.AuditEntry
 import net.shrine.I2b2ssrUserInfoService
 
 /**
@@ -26,17 +25,17 @@ import net.shrine.I2b2ssrUserInfoService
 
 @Autowired
 class CarranetShrineService(private val auditDao: AuditDAO,
-    private val authorizationService: QueryAuthorizationService,
-    private val identityService: IdentityService,
-    private val shrineConfig: ShrineConfig,
-    private val spinClient: SpinAgent,
-    private val olsURI: String,
-    private val userInfoService: I2b2ssrUserInfoService) extends ShrineService(auditDao, authorizationService, identityService, shrineConfig, spinClient) {
+                            private val authorizationService: QueryAuthorizationService,
+                            private val identityService: IdentityService,
+                            private val shrineConfig: ShrineConfig,
+                            private val spinClient: SpinAgent,
+                            private val olsURI: String,
+                            private val userInfoService: I2b2ssrUserInfoService) extends ShrineService(auditDao, authorizationService, identityService, shrineConfig, spinClient) {
 
 
   lazy val mapper = new RoutingTableSiteNameMapper(olsURI)
 
-  override def readPdo(request: ReadPdoRequest) =  {
+  override def readPdo(request: ReadPdoRequest) = {
     val info = userInfoService.authorizeRunQueryRequest(request)
     this.executeRequest(request,
       new CarraReadPdoResponseAggregator(mapper, info))
@@ -46,17 +45,16 @@ class CarranetShrineService(private val auditDao: AuditDAO,
   override def runQuery(request: RunQueryRequest) = {
     val message = BroadcastMessage(request)
     val info = userInfoService.authorizeRunQueryRequest(request)
-    auditDao.addAuditEntry(new AuditEntry(request.projectId, identity.getDomain, identity.getUsername, request.queryDefinitionXml, request.topicId))
+    // auditDao.addAuditEntry(new AuditEntry(request.projectId, identity.getDomain, identity.getUsername, request.queryDefinitionXml, request.topicId))
     val aggregator = new CarraRunQueryAggregator(message.masterId.get, request.authn.username, request.projectId,
       request.queryDefinitionXml, message.instanceId.get, mapper, info, true)
-
-    executeRequest(identity, message, aggregator)
+    executeRequest(generateIdentity(request.authn), message, aggregator)
   }
 
-  override def readInstanceResults(request: ReadInstanceResultsRequest) =  {
+  override def readInstanceResults(request: ReadInstanceResultsRequest) = {
     val info = userInfoService.authorizeRunQueryRequest(request)
     executeRequest(request,
-      new CarraReadInstanceResultsAggregator(request.instanceId, mapper,info))
+      new CarraReadInstanceResultsAggregator(request.instanceId, mapper, info))
   }
 
   override def readQueryDefinition(request: ReadQueryDefinitionRequest) = {
