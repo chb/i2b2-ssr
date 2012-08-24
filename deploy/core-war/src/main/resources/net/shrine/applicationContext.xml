@@ -77,7 +77,7 @@
         <property name="project" value="Demo"/>
     </bean>
 
-    <bean id="identityService" class="net.shrine.identity.CarraIdentityService"/>
+    <bean id="identityService" class="edu.chip.carranet.auth.I2b2SSRIdentityService"/>
 
     <bean id="pmHttpClient" class="net.shrine.serializers.pm.PMHttpClient">
         <constructor-arg index="0" ref="pmEndpoint"/>
@@ -165,6 +165,10 @@
         </property>
     </bean>
 
+    <bean id="userInfoService" class="net.shrine.I2b2ssrUserInfoService">
+        <constructor-arg index="0" value="http://carra-core:9090/i2b2-ssr-admin/Api/authentication_callback"/>
+    </bean>
+
     <bean id="shrineService" class="net.shrine.service.CarranetShrineService">
         <constructor-arg index="0" ref="hibernateAuditDAO"/>
         <constructor-arg index="1" ref="authservice"/>
@@ -172,6 +176,7 @@
         <constructor-arg index="3" ref="shrineConfig"/>
         <constructor-arg index="4" ref="spinClient"/>
         <constructor-arg index="5" ref="olsURI"/>
+        <constructor-arg index="6" ref="userInfoService"/>
     </bean>
 
 

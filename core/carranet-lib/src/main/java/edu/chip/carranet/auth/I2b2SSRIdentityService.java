@@ -1,9 +1,9 @@
 package edu.chip.carranet.auth;
 
-import edu.chip.carranet.auth.backend.TokenUtil;
 import org.spin.query.message.identity.IdentityService;
 import org.spin.query.message.identity.IdentityServiceException;
 import org.spin.tools.crypto.signature.Identity;
+import org.spin.tools.crypto.signature.XMLSignatureUtil;
 
 
 /**
@@ -12,7 +12,7 @@ import org.spin.tools.crypto.signature.Identity;
  * <p/>
  * AuthString = base64(unmarshal(sign(identity)))
  */
-public class CarraIdentityService implements IdentityService {
+public class I2b2SSRIdentityService implements IdentityService {
 
 
     /**
@@ -26,18 +26,13 @@ public class CarraIdentityService implements IdentityService {
     public Identity certify(String domain, String username, String password)
             throws IdentityServiceException {
 
-        if (username == null || password == null) {
-            throw new IdentityServiceException("No username or password");
-        }
         try {
-            Identity id = TokenUtil.convertAuthToIdentity(password);
-            if (username.equalsIgnoreCase(id.getUsername())) {
-                return id;
-            }
-            throw new IdentityServiceException("Not authorized");
+            Identity id = new Identity(domain,username,password);
+            XMLSignatureUtil.getDefaultInstance().sign(id);
+            return id;
 
         } catch (Exception e) {
-            throw new IdentityServiceException("Not authorized");
+            throw new IdentityServiceException("Not authorized", e);
         }
     }
 }
