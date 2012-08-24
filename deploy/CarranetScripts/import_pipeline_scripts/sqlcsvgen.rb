@@ -1,4 +1,6 @@
+#!/usr/bin/env ruby
 # converts a csv dump (with a header) to executable sql.  helps if the csv matches a table format.
+
 require 'csv'
 
 def isNumeric(s)
