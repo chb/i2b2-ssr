@@ -28,7 +28,7 @@ public class I2b2SSRIdentityService implements IdentityService {
 
         try {
             Identity id = new Identity(domain,username,password);
-            XMLSignatureUtil.getDefaultInstance().sign(id);
+            id = XMLSignatureUtil.getDefaultInstance().sign(id);
             return id;
 
         } catch (Exception e) {
