@@ -2,7 +2,7 @@ package net.shrine.service
 
 import org.springframework.beans.factory.annotation.Autowired
 import net.shrine.broadcaster.dao.AuditDAO
-import net.shrine.authorization.QueryAuthorizationService
+import net.shrine.authorization.{AuthorizationException, QueryAuthorizationService}
 import org.spin.query.message.identity.IdentityService
 import net.shrine.config.ShrineConfig
 import org.spin.query.message.agent.SpinAgent
@@ -37,8 +37,13 @@ class CarranetShrineService(private val auditDao: AuditDAO,
 
   override def readPdo(request: ReadPdoRequest) = {
     val info = userInfoService.authorizeRunQueryRequest(request)
+    if(info.canPdo){
     this.executeRequest(request,
       new CarraReadPdoResponseAggregator(mapper, info))
+    }
+    else{
+      throw new AuthorizationException("User can't perform this query on this project")
+    }
   }
 
   @Transactional

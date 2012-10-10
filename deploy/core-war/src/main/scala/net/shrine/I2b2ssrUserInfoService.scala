@@ -2,7 +2,7 @@ package net.shrine
 
 
 import authorization.AuthorizationException
-import data.UserInfoResponse
+import net.shrine.data.UserInfoResponse
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.DefaultHttpClient
 import protocol.ShrineRequest
@@ -10,6 +10,9 @@ import serializers.crc.CRCRequestType
 import xml.XML
 import java.io.IOException
 import org.apache.http.client.ClientProtocolException
+import org.apache.http.message.BasicNameValuePair
+import org.apache.http.client.utils.URLEncodedUtils
+import scala.collection.JavaConversions._
 
 
 class I2b2ssrUserInfoService(callbackAddress: String) {
@@ -21,17 +24,20 @@ class I2b2ssrUserInfoService(callbackAddress: String) {
    */
   def authorizeRunQueryRequest(request: ShrineRequest): UserInfoResponse = {
     val client = new DefaultHttpClient()
-    val httpGet = new HttpGet(callbackAddress)
 
 
-    httpGet.getParams.setParameter("username", request.authn.username)
-    httpGet.getParams.setParameter("sessionKey", request.authn.credential)
-    httpGet.getParams.setParameter("project", request.projectId)
+   val qparams =  Seq[BasicNameValuePair](new BasicNameValuePair("username", request.authn.username),
+                  new BasicNameValuePair("project", request.projectId),
+                  new BasicNameValuePair("sessionKey", request.authn.credential.value))
+
+
+    val httpGet = new HttpGet(callbackAddress + "?" + URLEncodedUtils.format(qparams.toList, "UTF-8"))
+
 
     try {
       val response = client.execute(httpGet)
 
-      if (response.getStatusLine.getStatusCode == 200) {
+      if (response.getStatusLine.getStatusCode != 200) {
         throw new AuthorizationException("Not Authorized")
       }
       response.getEntity.getContent
