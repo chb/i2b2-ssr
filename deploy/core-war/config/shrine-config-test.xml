@@ -13,5 +13,5 @@
         <Environment name="carranet/olsAddress"
                  override="true"
                  type="java.lang.String"
-                 value="http://carra-core:8183/machines/"/>
+                 value="http://carra-core:9090/i2b2-ssr-admin/Api/machine_list_legacy"/>
 </Context>
