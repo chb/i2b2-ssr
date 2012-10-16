@@ -19,20 +19,20 @@ import net.shrine.data.UserInfoResponse
 class CarraReadInstanceResultsAggregator(
     private val instanceId: Long,
     private val siteNameMapper: SiteNameMapper,
-    private val userInfoResponse: UserInfoResponse) extends ReadInstanceResultsAggregator(instanceId, true)
-with DataTagging {
+    private val userInfoResponse: UserInfoResponse) extends ReadInstanceResultsAggregator(instanceId, true) with DataTagging {
 
   protected def mapper = siteNameMapper
-
   protected def userInfo = userInfoResponse
 
   override def aggregate(spinCacheResults: Seq[SpinResultEntry]) = {
 
     val results = super.aggregate(spinCacheResults).asInstanceOf[ReadInstanceResultsResponse]
     results.withResults(results.results.filter { x =>
-      !x.description.getOrElse("").equalsIgnoreCase(DataTagging.UNIDENTIFIED) ||
-          getHomeSites.contains(x.description)
+       x && (!x.description.getOrElse("").equalsIgnoreCase(DataTagging.UNIDENTIFIED) ||
+          getHomeSites.contains(x.description))
     })
+
+
   }
 
   override protected def transformResult(n: QueryResult, metaData: Result) = {
