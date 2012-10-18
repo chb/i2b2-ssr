@@ -2,7 +2,7 @@ package net.shrine.service
 
 import org.springframework.beans.factory.annotation.Autowired
 import net.shrine.broadcaster.dao.AuditDAO
-import net.shrine.authorization.{AuthorizationException, QueryAuthorizationService}
+import net.shrine.authorization.{I2b2ssrUserInfoService, AuthorizationException, QueryAuthorizationService}
 import org.spin.query.message.identity.IdentityService
 import net.shrine.config.ShrineConfig
 import org.spin.query.message.agent.SpinAgent
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 import net.shrine.broadcaster.sitemapping.RoutingTableSiteNameMapper
 import net.shrine.broadcaster.aggregators.{CarraReadInstanceResultsAggregator, CarraRunQueryAggregator, CarraReadPdoResponseAggregator}
 import net.shrine.protocol.{ReadApprovedQueryTopicsRequest, DeleteQueryRequest, RenameQueryRequest, ReadPreviousQueriesRequest, ReadQueryInstancesRequest, ReadQueryDefinitionRequest, ReadInstanceResultsRequest, BroadcastMessage, RunQueryRequest, ReadPdoRequest}
-import net.shrine.I2b2ssrUserInfoService
+import net.shrine.broadcaster.dao.hibernate.AuditEntry
 
 /**
  * @author David Ortiz
@@ -50,11 +50,12 @@ class CarranetShrineService(private val auditDao: AuditDAO,
   override def runQuery(request: RunQueryRequest) = {
     val message = BroadcastMessage(request)
     val info = userInfoService.authorizeRunQueryRequest(request)
-    // auditDao.addAuditEntry(new AuditEntry(request.projectId, identity.getDomain, identity.getUsername, request.queryDefinitionXml, request.topicId))
+    auditDao.addAuditEntry(new AuditEntry(request.projectId, identity.getDomain, identity.getUsername, request.queryDefinitionXml, request.topicId))
     val aggregator = new CarraRunQueryAggregator(message.masterId.get, request.authn.username, request.projectId,
       request.queryDefinitionXml, message.instanceId.get, mapper, info, true)
     executeRequest(generateIdentity(request.authn), message, aggregator)
   }
+
 
   override def readInstanceResults(request: ReadInstanceResultsRequest) = {
     val info = userInfoService.authorizeRunQueryRequest(request)
