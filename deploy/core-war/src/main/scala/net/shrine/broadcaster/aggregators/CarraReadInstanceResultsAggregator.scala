@@ -28,7 +28,7 @@ class CarraReadInstanceResultsAggregator(
 
     val results = super.aggregate(spinCacheResults).asInstanceOf[ReadInstanceResultsResponse]
     results.withResults(results.results.filter { x =>
-       x && (!x.description.getOrElse("").equalsIgnoreCase(DataTagging.UNIDENTIFIED) ||
+       x != null && (!x.description.getOrElse("").equalsIgnoreCase(DataTagging.UNIDENTIFIED) ||
           getHomeSites.contains(x.description))
     })
 

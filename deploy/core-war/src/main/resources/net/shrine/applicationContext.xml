@@ -165,7 +165,7 @@
         </property>
     </bean>
 
-    <bean id="userInfoService" class="net.shrine.I2b2ssrUserInfoService">
+    <bean id="userInfoService" class="net.shrine.authorization.I2b2ssrUserInfoService">
         <constructor-arg index="0" value="http://carra-core:9090/i2b2-ssr-admin/Api/authentication_callback"/>
     </bean>
 

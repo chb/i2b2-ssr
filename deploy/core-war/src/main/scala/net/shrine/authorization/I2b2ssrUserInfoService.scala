@@ -1,11 +1,8 @@
 package net.shrine.authorization
 
-import authorization.AuthorizationException
 import net.shrine.data.UserInfoResponse
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.DefaultHttpClient
-import protocol.ShrineRequest
-import serializers.crc.CRCRequestType
 import xml.XML
 import java.io.IOException
 import org.apache.http.client.ClientProtocolException
