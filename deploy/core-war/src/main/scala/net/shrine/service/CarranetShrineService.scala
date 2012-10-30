@@ -3,7 +3,7 @@ package net.shrine.service
 import org.springframework.beans.factory.annotation.Autowired
 import net.shrine.broadcaster.dao.AuditDAO
 import net.shrine.authorization.{I2b2ssrUserInfoService, AuthorizationException, QueryAuthorizationService}
-import org.spin.query.message.identity.IdentityService
+import org.spin.query.message.identity.{IdentityServiceException, IdentityService}
 import net.shrine.config.ShrineConfig
 import org.spin.query.message.agent.SpinAgent
 import org.springframework.transaction.annotation.Transactional
@@ -11,6 +11,8 @@ import net.shrine.broadcaster.sitemapping.RoutingTableSiteNameMapper
 import net.shrine.broadcaster.aggregators.{StatusAggregator, CarraReadInstanceResultsAggregator, CarraRunQueryAggregator, CarraReadPdoResponseAggregator}
 import net.shrine.protocol.{ResultOutputType, Credential, AuthenticationInfo, ReadApprovedQueryTopicsRequest, DeleteQueryRequest, RenameQueryRequest, ReadPreviousQueriesRequest, ReadQueryInstancesRequest, ReadQueryDefinitionRequest, ReadInstanceResultsRequest, BroadcastMessage, RunQueryRequest, ReadPdoRequest}
 import net.shrine.broadcaster.dao.hibernate.AuditEntry
+import net.shrine.data.UserInfoResponse
+import org.spin.tools.crypto.signature.{XMLSignatureUtil, Identity}
 
 /**
  * @author David Ortiz
@@ -69,6 +71,26 @@ class CarranetShrineService(private val auditDao: AuditDAO,
 
   lazy val mapper = new RoutingTableSiteNameMapper(olsURI)
 
+  /**
+   * We're generating identities from UserInfo Responses
+   *
+   * @param userInfo
+   */
+  def generateIdentity(userInfo: UserInfoResponse): Identity =  {
+    if(userInfo == null) {
+      throw new AuthorizationException("No user info response")
+    }
+    try {
+      XMLSignatureUtil.getDefaultInstance.sign(new Identity("i2b2ssr", userInfo.userName))
+    }
+    catch {
+      case e: Exception => {
+        throw new IdentityServiceException("Not authorized", e)
+      }
+    }
+
+  }
+
   override def readPdo(request: ReadPdoRequest) = {
     val info = userInfoService.authorizeRunQueryRequest(request)
     if(info.canPdo) {
@@ -84,12 +106,10 @@ class CarranetShrineService(private val auditDao: AuditDAO,
     val request = new RunQueryRequest(peerGroup, 60000,
       new AuthenticationInfo("", userName, new Credential(password, true)),
       "noTopic",
-      Set[ResultOutputType](ResultOutputType.PATIENT_COUNT_XML),
-      query)
+      Set[ResultOutputType](ResultOutputType.PATIENT_COUNT_XML), query)
 
     val message = BroadcastMessage(request)
-    val info = userInfoService.authorizeRunQueryRequest(request)
-    val identity = generateIdentity(request.authn)
+    val identity : Identity = generateIdentity(userInfoService.authorizeRunQueryRequest(request))
     auditDao.addAuditEntry(new AuditEntry(request.projectId, identity.getDomain, identity.getUsername, request.queryDefinitionXml, request.topicId))
     val aggregator = new StatusAggregator(mapper)
     executeRequest(identity, message, aggregator)
@@ -99,8 +119,7 @@ class CarranetShrineService(private val auditDao: AuditDAO,
   override def runQuery(request: RunQueryRequest) = {
     val message = BroadcastMessage(request)
     val info = userInfoService.authorizeRunQueryRequest(request)
-    val identity = generateIdentity(request.authn)
-
+    val identity = generateIdentity(info)
     auditDao.addAuditEntry(new AuditEntry(request.projectId, identity.getDomain, identity.getUsername, request.queryDefinitionXml, request.topicId))
     val aggregator = new CarraRunQueryAggregator(message.masterId.get, request.authn.username, request.projectId,
       request.queryDefinitionXml, message.instanceId.get, mapper, info, true)
@@ -137,4 +156,5 @@ class CarranetShrineService(private val auditDao: AuditDAO,
   override def readApprovedQueryTopics(request: ReadApprovedQueryTopicsRequest) = {
     super.readApprovedQueryTopics(request)
   }
+
 }

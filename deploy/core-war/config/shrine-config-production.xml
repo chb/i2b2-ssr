@@ -14,8 +14,11 @@
                  override="true"
                  type="java.lang.String"
                  value="http://carra-core-production:8183/machines/"/>
-    <Environment name="carranet/graphiteHost"
+
+    <Environment name="carranet/authCallBack"
                  override="true"
                  type="java.lang.String"
-                 value="carra-i2b2-production"/>
+                 value="http://carra-core-production:8443/i2b2-ssr-admin/Api/authentication_callback"/>
+
+
 </Context>

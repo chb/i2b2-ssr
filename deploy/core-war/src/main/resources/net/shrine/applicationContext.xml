@@ -20,6 +20,12 @@
         <property name="defaultObject" value="http://carra-core:8183/machines/"/>
     </bean>
 
+    <bean id="authCallback" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/carranet/authCallBack"/>
+        <property name="defaultObject" value="http://carra-core:9090/i2b2-ssr-admin/Api/authentication_callback"/>
+    </bean>
+
+
     <bean id="pmEndpoint" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:comp/env/shrine/pmEndpoint"/>
         <property name="defaultObject" value="http://webservices.i2b2.org/i2b2/rest/PMService/getServices"/>
@@ -166,7 +172,7 @@
     </bean>
 
     <bean id="userInfoService" class="net.shrine.authorization.I2b2ssrUserInfoService">
-        <constructor-arg index="0" value="http://carra-core:9090/i2b2-ssr-admin/Api/authentication_callback"/>
+        <constructor-arg index="0" ref="authCallback"/>
     </bean>
 
     <bean id="shrineService" class="net.shrine.service.CarranetShrineService">

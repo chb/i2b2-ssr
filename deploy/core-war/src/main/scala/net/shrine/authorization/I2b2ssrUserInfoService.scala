@@ -49,8 +49,8 @@ class I2b2ssrUserInfoService(callbackAddress: String) {
       info
     }
     catch {
-      case e: IOException => throw new AuthorizationException("IOException throw trying to contact the Auth Service at %s")
-      case e: ClientProtocolException => throw new AuthorizationException("ClientProtocolException throw trying to contact the Auth Service at %s")
+      case e: IOException => throw new AuthorizationException("IOException throw trying to contact the Auth Service at " + callbackAddress)
+      case e: ClientProtocolException => throw new AuthorizationException("ClientProtocolException throw trying to contact the Auth Service at " + callbackAddress)
     }
   }
 }

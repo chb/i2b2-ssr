@@ -13,5 +13,10 @@
     <Environment name="carranet/olsAddress"
                  override="true"
                  type="java.lang.String"
-                 value="http://carra-core-staging:8183/machines/"/>
+                 value="https://carra-core-staging:8443/i2b2-ssr-admin/Api/machine_list_legacy"/>
+
+    <Environment name="carranet/authCallBack"
+                 override="true"
+                 type="java.lang.String"
+                 value="https://carra-core-staging:8443/i2b2-ssr-admin/Api/authentication_callback"/>
 </Context>
