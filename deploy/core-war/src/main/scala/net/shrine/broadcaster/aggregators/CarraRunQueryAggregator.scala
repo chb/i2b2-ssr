@@ -37,8 +37,7 @@ with DataTagging  {
       //aren't identified
 
       response.withResults(response.results.filter {x =>
-        !x.description.getOrElse("").equalsIgnoreCase(DataTagging.UNIDENTIFIED) ||
-            getHomeSites.contains(x.description)
+        !x.description.getOrElse("").equalsIgnoreCase(DataTagging.UNIDENTIFIED)
 
       })
   }

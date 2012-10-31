@@ -1,6 +1,5 @@
 package net.shrine.broadcaster.aggregators
 
-import collection.JavaConversions._
 import net.shrine.broadcaster.sitemapping.SiteNameMapper
 import org.bouncycastle.jce.X509Principal
 import org.bouncycastle.asn1.x509.X509Name
@@ -32,7 +31,7 @@ trait DataTagging {
     val values = principal.getValues(X509Name.CN)
     val cn: String = values.get(0).asInstanceOf[String]
 
-    if(canIdentifyAllSites || getHomeSites.contains(cn)) {
+    if(canIdentifyAllSites || getHomeSites.contains(mapper.getSiteIdentifierFromHostname(cn))) {
       true
     }
     else {
