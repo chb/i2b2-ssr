@@ -9,7 +9,7 @@ import org.spin.query.message.agent.SpinAgent
 import org.springframework.transaction.annotation.Transactional
 import net.shrine.broadcaster.sitemapping.RoutingTableSiteNameMapper
 import net.shrine.broadcaster.aggregators.{StatusAggregator, CarraReadInstanceResultsAggregator, CarraRunQueryAggregator, CarraReadPdoResponseAggregator}
-import net.shrine.protocol.{ResultOutputType, Credential, AuthenticationInfo, ReadApprovedQueryTopicsRequest, DeleteQueryRequest, RenameQueryRequest, ReadPreviousQueriesRequest, ReadQueryInstancesRequest, ReadQueryDefinitionRequest, ReadInstanceResultsRequest, BroadcastMessage, RunQueryRequest, ReadPdoRequest}
+import net.shrine.protocol.{ShrineRequest, ResultOutputType, Credential, AuthenticationInfo, ReadApprovedQueryTopicsRequest, DeleteQueryRequest, RenameQueryRequest, ReadPreviousQueriesRequest, ReadQueryInstancesRequest, ReadQueryDefinitionRequest, ReadInstanceResultsRequest, BroadcastMessage, RunQueryRequest, ReadPdoRequest}
 import net.shrine.broadcaster.dao.hibernate.AuditEntry
 import net.shrine.data.UserInfoResponse
 import org.spin.tools.crypto.signature.{XMLSignatureUtil, Identity}
@@ -76,12 +76,12 @@ class CarranetShrineService(private val auditDao: AuditDAO,
    *
    * @param userInfo
    */
-  def generateIdentity(userInfo: UserInfoResponse): Identity =  {
+  def generateIdentity(request: ShrineRequest, userInfo: UserInfoResponse): Identity =  {
     if(userInfo == null) {
       throw new AuthorizationException("No user info response")
     }
     try {
-      XMLSignatureUtil.getDefaultInstance.sign(new Identity("i2b2ssr", userInfo.userName))
+      XMLSignatureUtil.getDefaultInstance.sign(new Identity(request.authn.domain, userInfo.userName))
     }
     catch {
       case e: Exception => {
@@ -104,12 +104,12 @@ class CarranetShrineService(private val auditDao: AuditDAO,
 
   def getStatus(userName: String, password: String, peerGroup: String) = {
     val request = new RunQueryRequest(peerGroup, 60000,
-      new AuthenticationInfo("", userName, new Credential(password, true)),
+      new AuthenticationInfo(peerGroup, userName, new Credential(password, true)),
       "noTopic",
       Set[ResultOutputType](ResultOutputType.PATIENT_COUNT_XML), query)
 
     val message = BroadcastMessage(request)
-    val identity : Identity = generateIdentity(userInfoService.authorizeRunQueryRequest(request))
+    val identity : Identity = generateIdentity(request, userInfoService.authorizeRunQueryRequest(request))
     auditDao.addAuditEntry(new AuditEntry(request.projectId, identity.getDomain, identity.getUsername, request.queryDefinitionXml, request.topicId))
     val aggregator = new StatusAggregator(mapper)
     executeRequest(identity, message, aggregator)
@@ -119,7 +119,7 @@ class CarranetShrineService(private val auditDao: AuditDAO,
   override def runQuery(request: RunQueryRequest) = {
     val message = BroadcastMessage(request)
     val info = userInfoService.authorizeRunQueryRequest(request)
-    val identity = generateIdentity(info)
+    val identity = generateIdentity(request, info)
     auditDao.addAuditEntry(new AuditEntry(request.projectId, identity.getDomain, identity.getUsername, request.queryDefinitionXml, request.topicId))
     val aggregator = new CarraRunQueryAggregator(message.masterId.get, request.authn.username, request.projectId,
       request.queryDefinitionXml, message.instanceId.get, mapper, info, true)
