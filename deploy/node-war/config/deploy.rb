@@ -76,7 +76,7 @@ end
 namespace :i2b2 do
   desc "startup i2b2"
   task :startup do
-    run "nohup #{i2b2_home}bin/run.sh"
+    run  "nohup #{i2b2_home}bin/run.sh"
   end
 
   desc "shutdown i2b2"
