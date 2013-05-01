@@ -127,7 +127,7 @@ public class SqlOutputter implements Outputter<SqlCommands> {
                 if(statement.replace(" ", "").replace("\n", "").replace("\t","").isEmpty()) {
                     continue;
                 }
-                lastStatement = statement.replace(";", "");
+                lastStatement = statement.replace(";", "").replaceAll("\\s+", " ");
                 sqlStatement.execute(lastStatement);
                 connection.commit();
             }
@@ -143,7 +143,7 @@ public class SqlOutputter implements Outputter<SqlCommands> {
                 if(statement.replace(" ", "").replace("\n", "").replace("\t","").isEmpty()) {
                     continue;
                 }
-                sqlStatement.addBatch(statement.replace(";", ""));
+                sqlStatement.addBatch(statement.replace(";", "").replaceAll("\\s+", " "));
             }
             sqlStatement.executeBatch();
             connection.commit();
