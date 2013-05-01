@@ -2,7 +2,7 @@
 #capistrano multistage
 require 'capistrano/ext/multistage'
 set :default_stage, "development"
-set :stages, %w(       production staging development       )
+set :stages, %w(       production staging development group1 group2 group3 ibd     )
 
 load 'deploy'
 
