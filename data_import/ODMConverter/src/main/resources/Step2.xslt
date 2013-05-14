@@ -186,7 +186,7 @@
                             </xsl:when>
                             <xsl:otherwise>'<xsl:value-of select="$Concept_Set"/>'</xsl:otherwise>
                         </xsl:choose>
-                        <xsl:text>,',') str from tblrsltdataimport), xmltable(('"' || replace(str, ',', '","') || '"')));</xsl:text>
+                        <xsl:text>,',') str from tblrsltdataimport), xmltable(TO_CHAR(('"' || replace(str, ',', '","') || '"'))));</xsl:text>
 
                     </xsl:when>
                 </xsl:choose>
