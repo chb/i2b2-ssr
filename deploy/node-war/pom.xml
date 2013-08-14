@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>shrine-integration</artifactId>
         <groupId>edu.chip.carranet</groupId>
@@ -15,119 +16,41 @@
 
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http</artifactId>
-            <version>2.2.9</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-bindings-soap</artifactId>
-            <version>2.2.9</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>2.2.9</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>1.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.ws</groupId>
-            <artifactId>jaxws-rt</artifactId>
-            <version>2.1.4</version>
-        </dependency>
         <dependency>
             <groupId>edu.chip.carranet</groupId>
             <artifactId>carranet-lib</artifactId>
             <version>1.3-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>org.spin</groupId>
+            <artifactId>spin-node-server</artifactId>
+            <version>${spin.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>oracle</artifactId>
+            <version>11.2</version>
+        </dependency>
+
+        <dependency>
+        	<groupId>commons-dbcp</groupId>
+        	<artifactId>commons-dbcp</artifactId>
+        	<version>1.2.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>net.shrine</groupId>
             <artifactId>shrine-adapter</artifactId>
             <version>${shrine.version}</version>
         </dependency>
-
         <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>2.2</version>
-        </dependency>
-        <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-core</artifactId>
-             <version>${spring.version}</version>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-aop</artifactId>
-             <version>${spring.version}</version>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-beans</artifactId>
-             <version>${spring.version}</version>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-context-support</artifactId>
-             <version>${spring.version}</version>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-context</artifactId>
-             <version>${spring.version}</version>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-jdbc</artifactId>
-             <version>${spring.version}</version>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-orm</artifactId>
-             <version>${spring.version}</version>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-test</artifactId>
-             <version>${spring.version}</version>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-tx</artifactId>
-             <version>${spring.version}</version>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-web</artifactId>
-             <version>${spring.version}</version>
-         </dependency>
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-            <version>2.9.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.spin</groupId>
-            <artifactId>query-agent</artifactId>
-            <version>${spin.version}</version>
-            <type>jar</type>
-        </dependency>
-
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-            <version>2.9.1</version>
+            <groupId>net.shrine</groupId>
+            <artifactId>shrine-commons</artifactId>
+            <version>${shrine.version}</version>
+            <type>test-jar</type>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -135,6 +58,19 @@
             <version>1.3.154</version>
             <scope>runtime</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.spin</groupId>
+            <artifactId>spin-node-core</artifactId>
+            <version>${spin.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.spin</groupId>
+            <artifactId>spin-client</artifactId>
+            <version>${spin.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>aspectj</groupId>

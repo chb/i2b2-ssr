@@ -2,6 +2,6 @@
 <Context swallowOutput="true">
     <Resource name="jdbc/shrineDB" auth="Container" type="javax.sql.DataSource"
               maxActive="100" maxIdle="30" maxWait="10000"
-              username="root" password="" driverClassName="org.h2.Driver"
-              url="jdbc:h2:file:~/db/hsql/shrine"/>
+              username="rc_carra_vm1_project1" password="KZe8LO9a" driverClassName="oracle.jdbc.driver.OracleDriver"
+              url="jdbc:oracle:thin:@oraprod-scan:1521/PRDTAF<"/>
 </Context>

@@ -256,7 +256,7 @@ select nvl((SELECT MAX(ENCOUNTER_NUM) FROM VISIT_DIMENSION),0) +
 	           FROM TBLRSLTDATAIMPORT tbl WHERE tbl.patient_num = di.patient_num
              and tbl.location_path = di.location_path
              and tbl.sourcesystem_cd = di.sourcesystem_cd
-             and tbl.ITEM ='frVIS.frVIS.VISDT.VISDT' and ROWNUM=1 and tbl.hasval=1) as START_DATE,
+             and tbl.ITEM in ('frVIS.frVIS.VISDT.VISDT','DateOfVisit.DateOfVisit.DOV.DOV','FMO.SurgerySection.SurgerySection.SURGERYDATE.SURGERYDATE','FMP.HospitalizationSection.HospitalizationSection.HOSPDATE.HOSPDATE') and ROWNUM=1 and tbl.hasval=1 and tbl.tval_char != null) as START_DATE,
        <!--null as START_DATE,-->
        <!--TO_DATE(SUBSTR(max(START_DATE),1,4) || '-' ||-->
                <!--SUBSTR(max(START_DATE),6,2) || '-' ||-->

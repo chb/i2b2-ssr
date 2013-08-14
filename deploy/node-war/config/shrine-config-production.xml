@@ -4,8 +4,4 @@
               maxActive="100" maxIdle="30" maxWait="10000"
               username="root" password="" driverClassName="org.h2.Driver"
               url="jdbc:h2:file:~/db/hsql/shrine"/>
-    <Environment name="carranet/graphiteHost"
-                 override="true"
-                 type="java.lang.String"
-                 value="carra-i2b2-production"/>
 </Context>

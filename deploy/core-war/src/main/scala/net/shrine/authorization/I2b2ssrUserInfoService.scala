@@ -9,8 +9,7 @@ import org.apache.http.client.ClientProtocolException
 import org.apache.http.message.BasicNameValuePair
 import org.apache.http.client.utils.URLEncodedUtils
 import scala.collection.JavaConversions._
-import net.shrine.protocol.ShrineRequest
-import net.shrine.serializers.crc.CRCRequestType
+import net.shrine.protocol.{CrcRequestType, ShrineRequest}
 
 
 class I2b2ssrUserInfoService(callbackAddress: String) {
@@ -42,7 +41,7 @@ class I2b2ssrUserInfoService(callbackAddress: String) {
       val info = UserInfoResponse.fromXml(XML.load(response.getEntity.getContent))
 
       //If the request is a PDO and the user can't PDO, throw an exception
-      if(request.requestType == CRCRequestType.GetPDOFromInputListRequestType && !info.canPdo){
+      if(request.requestType == CrcRequestType.GetPDOFromInputListRequestType && !info.canPdo){
         throw new AuthorizationException("User sending PDO request on project they can't PDO")
       }
 

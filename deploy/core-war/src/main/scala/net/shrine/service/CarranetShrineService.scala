@@ -1,18 +1,21 @@
 package net.shrine.service
 
 import org.springframework.beans.factory.annotation.Autowired
-import net.shrine.broadcaster.dao.AuditDAO
 import net.shrine.authorization.{I2b2ssrUserInfoService, AuthorizationException, QueryAuthorizationService}
-import org.spin.query.message.identity.{IdentityServiceException, IdentityService}
-import net.shrine.config.ShrineConfig
-import org.spin.query.message.agent.SpinAgent
-import org.springframework.transaction.annotation.Transactional
+
+
 import net.shrine.broadcaster.sitemapping.RoutingTableSiteNameMapper
-import net.shrine.broadcaster.aggregators.{StatusAggregator, CarraReadInstanceResultsAggregator, CarraRunQueryAggregator, CarraReadPdoResponseAggregator}
-import net.shrine.protocol.{ShrineRequest, ResultOutputType, Credential, AuthenticationInfo, ReadApprovedQueryTopicsRequest, DeleteQueryRequest, RenameQueryRequest, ReadPreviousQueriesRequest, ReadQueryInstancesRequest, ReadQueryDefinitionRequest, ReadInstanceResultsRequest, BroadcastMessage, RunQueryRequest, ReadPdoRequest}
-import net.shrine.broadcaster.dao.hibernate.AuditEntry
+import net.shrine.protocol.{ShrineRequest, ReadApprovedQueryTopicsRequest, DeleteQueryRequest, RenameQueryRequest, ReadPreviousQueriesRequest, ReadQueryInstancesRequest, ReadQueryDefinitionRequest, ReadInstanceResultsRequest, BroadcastMessage, RunQueryRequest, ReadPdoRequest}
 import net.shrine.data.UserInfoResponse
-import org.spin.tools.crypto.signature.{XMLSignatureUtil, Identity}
+import org.spin.tools.crypto.signature.Identity
+import net.shrine.broadcaster.BroadcastService
+import net.shrine.broadcaster.dao.AuditDao
+import net.shrine.aggregation.{CarraReadPdoResponseAggregator, CarraReadInstanceResultsAggregator, CarraRunQueryAggregator}
+import org.spin.identity.{IdentityServiceException, IdentityService}
+import org.spin.tools.crypto.XMLSignatureUtil
+import scala.concurrent.duration._
+
+
 
 /**
  * @author David Ortiz
@@ -27,16 +30,15 @@ import org.spin.tools.crypto.signature.{XMLSignatureUtil, Identity}
 
 
 @Autowired
-class CarranetShrineService(private val auditDao: AuditDAO,
-    private val authorizationService: QueryAuthorizationService,
-    private val identityService: IdentityService,
-    private val shrineConfig: ShrineConfig,
-    private val spinClient: SpinAgent,
-    private val olsURI: String,
-    private val userInfoService: I2b2ssrUserInfoService) extends ShrineService(auditDao, authorizationService, identityService, shrineConfig, spinClient) {
+class CarranetShrineService(private val auditDao: AuditDao,
+                            private val authorizationService: QueryAuthorizationService,
+                            private val identityService: IdentityService,
+                            private val broadcastService: BroadcastService,
+                            private val olsURI: String,
+                            private val userInfoService: I2b2ssrUserInfoService) extends ShrineService(auditDao, authorizationService, true, broadcastService, 30 minutes) {
 
 
-
+  import broadcastService.sendAndAggregate
   lazy val mapper = new RoutingTableSiteNameMapper(olsURI)
 
   /**
@@ -44,8 +46,8 @@ class CarranetShrineService(private val auditDao: AuditDAO,
    *
    * @param userInfo
    */
-  def generateIdentity(request: ShrineRequest, userInfo: UserInfoResponse): Identity =  {
-    if(userInfo == null) {
+  def generateIdentity(request: ShrineRequest, userInfo: UserInfoResponse): Identity = {
+    if (userInfo == null) {
       throw new AuthorizationException("No user info response")
     }
     try {
@@ -59,10 +61,10 @@ class CarranetShrineService(private val auditDao: AuditDAO,
 
   }
 
-  override def readPdo(request: ReadPdoRequest) = {
+  override def readPdo(request: ReadPdoRequest, shouldBroadcast: Boolean) = {
     val info = userInfoService.authorizeRunQueryRequest(request)
-    if(info.canPdo) {
-      this.executeRequest(request, new CarraReadPdoResponseAggregator(mapper, info))
+    if (info.canPdo) {
+      waitFor(sendAndAggregate(request, new CarraReadPdoResponseAggregator(mapper, info), shouldBroadcast))
     }
     else {
       throw new AuthorizationException("User can't perform this query on this project")
@@ -70,45 +72,44 @@ class CarranetShrineService(private val auditDao: AuditDAO,
   }
 
 
-  @Transactional
-  override def runQuery(request: RunQueryRequest) = {
+  override def runQuery(request: RunQueryRequest, shouldBroadcast: Boolean) = {
     val message = BroadcastMessage(request)
     val info = userInfoService.authorizeRunQueryRequest(request)
     val identity = generateIdentity(request, info)
-    auditDao.addAuditEntry(new AuditEntry(request.projectId, identity.getDomain, identity.getUsername, request.queryDefinitionXml, request.topicId))
-    val aggregator = new CarraRunQueryAggregator(message.masterId.get, request.authn.username, request.projectId,
-      request.queryDefinitionXml, message.instanceId.get, mapper, info, true)
-    executeRequest(identity, message, aggregator)
+    auditDao.addAuditEntry(request.projectId, identity.getDomain, identity.getUsername, request.toI2b2String, request.topicId)
+    val aggregator = new CarraRunQueryAggregator(message.requestId, request.authn.username, request.projectId,
+      request.queryDefinition, mapper, info, true)
+    waitFor(sendAndAggregate(request, aggregator, shouldBroadcast))
   }
 
 
-  override def readInstanceResults(request: ReadInstanceResultsRequest) = {
+  override def readInstanceResults(request: ReadInstanceResultsRequest, shouldBroadcast: Boolean) = {
     val info = userInfoService.authorizeRunQueryRequest(request)
-    executeRequest(request,
-      new CarraReadInstanceResultsAggregator(request.instanceId, mapper, info))
+    waitFor(sendAndAggregate(request,
+      new CarraReadInstanceResultsAggregator(request.shrineNetworkQueryId, mapper, info), true))
   }
 
-  override def readQueryDefinition(request: ReadQueryDefinitionRequest) = {
+  override def readQueryDefinition(request: ReadQueryDefinitionRequest, shouldBroadcast: Boolean) = {
     super.readQueryDefinition(request)
   }
 
-  override def readQueryInstances(request: ReadQueryInstancesRequest) = {
+  override def readQueryInstances(request: ReadQueryInstancesRequest, shouldBroadcast: Boolean) = {
     super.readQueryInstances(request)
   }
 
-  override def readPreviousQueries(request: ReadPreviousQueriesRequest) = {
+  override def readPreviousQueries(request: ReadPreviousQueriesRequest, shouldBroadcast: Boolean) = {
     super.readPreviousQueries(request)
   }
 
-  override def renameQuery(request: RenameQueryRequest) = {
+  override def renameQuery(request: RenameQueryRequest, shouldBroadcast: Boolean) = {
     super.renameQuery(request)
   }
 
-  override def deleteQuery(request: DeleteQueryRequest) = {
+  override def deleteQuery(request: DeleteQueryRequest, shouldBroadcast: Boolean) = {
     super.deleteQuery(request)
   }
 
-  override def readApprovedQueryTopics(request: ReadApprovedQueryTopicsRequest) = {
+  override def readApprovedQueryTopics(request: ReadApprovedQueryTopicsRequest, shouldBroadcast: Boolean) = {
     super.readApprovedQueryTopics(request)
   }
 

@@ -1,28 +1,26 @@
-package net.shrine.broadcaster.aggregators
+package net.shrine.aggregation
 
-import org.spin.query.message.headers.Result
 import net.shrine.protocol.{ParamResponse, PatientResponse, ReadPdoResponse}
 import net.shrine.broadcaster.sitemapping.SiteNameMapper
-import net.shrine.aggregation.ReadPdoResponseAggregator
 import net.shrine.data.UserInfoResponse
+import org.spin.message.Result
 
 
 class CarraReadPdoResponseAggregator(
-    val siteNameMapper: SiteNameMapper,
-    val userInfoResponse: UserInfoResponse) extends ReadPdoResponseAggregator with DataTagging {
+                                      val siteNameMapper: SiteNameMapper,
+                                      val userInfoResponse: UserInfoResponse) extends ReadPdoResponseAggregator(true) with DataTagging {
 
   protected def userInfo = userInfoResponse
+
   protected def mapper = siteNameMapper
 
 
-
-
-  override protected def transform(response: ReadPdoResponse, metadata: Result) = {
+  override protected[aggregation] def transform(response: ReadPdoResponse, metadata: Result): ReadPdoResponse = {
 
     def createSiteOrigin: ParamResponse = {
       new ParamResponse("siteOrigin", "siteOrigin", mapper.getSiteIdentifierFromDN(metadata.getOrigin.getName))
     }
-    if(canIdenitfySite(metadata.getOrigin.getName)) {
+    if (canIdenitfySite(metadata.getOrigin.getName)) {
       new ReadPdoResponse(
         response.events,
         response.patients map (patient =>

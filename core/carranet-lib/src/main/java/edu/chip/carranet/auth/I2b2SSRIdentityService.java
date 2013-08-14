@@ -1,10 +1,10 @@
 package edu.chip.carranet.auth;
 
-import org.spin.query.message.identity.IdentityService;
-import org.spin.query.message.identity.IdentityServiceException;
-import org.spin.tools.crypto.signature.Identity;
-import org.spin.tools.crypto.signature.XMLSignatureUtil;
 
+import org.spin.identity.IdentityService;
+import org.spin.identity.IdentityServiceException;
+import org.spin.tools.crypto.XMLSignatureUtil;
+import org.spin.tools.crypto.signature.Identity;
 
 /**
  * This is an identity service implementation that takes a user name

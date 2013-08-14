@@ -1,4 +1,4 @@
-package net.shrine.broadcaster.aggregators
+package net.shrine.aggregation
 
 import net.shrine.broadcaster.sitemapping.SiteNameMapper
 import org.bouncycastle.jce.X509Principal

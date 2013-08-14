@@ -14,12 +14,12 @@
     <dependencies>
         <dependency>
             <groupId>org.spin</groupId>
-            <artifactId>tools</artifactId>
+            <artifactId>spin-tools</artifactId>
             <version>${spin.tools.version}</version>
         </dependency>
         <dependency>
             <groupId>org.spin</groupId>
-            <artifactId>identity-service</artifactId>
+            <artifactId>spin-identity-service</artifactId>
             <version>${spin.tools.version}</version>
         </dependency>
 

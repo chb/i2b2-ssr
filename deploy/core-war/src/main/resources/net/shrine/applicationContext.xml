@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:jaxws="http://cxf.apache.org/jaxws"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-            http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+            http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+             http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>
@@ -15,192 +16,290 @@
 
     <context:component-scan base-package="net.shrine"/>
 
-    <bean id="olsURI" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/carranet/olsAddress"/>
-        <property name="defaultObject" value="http://carra-core:8183/machines/"/>
+    <!--define default properties and JNDI name that will override them-->
+    <jee:jndi-lookup id="olsURI" jndi-name="java:comp/env/carranet/olsAddress"
+                     default-value="http://carra-core:8183/machines/"/>
+
+    <jee:jndi-lookup id="authCallback" jndi-name="java:comp/env/carranet/authCallBack"
+                     default-value="http://carra-core:9090/i2b2-ssr-admin/Api/authentication_callback"/>
+
+    <jee:jndi-lookup id="pmEndpoint" jndi-name="java:comp/env/shrine/pmEndpoint"
+                     default-value="http://services.i2b2.org/i2b2/rest/PMService/getServices"/>
+
+    <jee:jndi-lookup id="shrineEndpoint" jndi-name="java:comp/env/shrine/shrineEndpoint"
+                     default-value="https://localhost:8081/shrine-cell/soap/aggregate?wsdl"/>
+    <jee:jndi-lookup id="shrineEndpointType" jndi-name="java:comp/env/shrine/shrineEndpointType"
+                     default-value="SOAP"/>
+    <jee:jndi-lookup id="aggregatorEndpoint" jndi-name="java:comp/env/shrine/aggregatorEndpoint"
+                     default-value="https://localhost:8081/shrine-cell/soap/aggregate?wsdl"/>
+    <jee:jndi-lookup id="aggregatorEndpointType" jndi-name="java:comp/env/shrine/aggregatorEndpointType"
+                     default-value="SOAP"/>
+
+    <jee:jndi-lookup id="broadcasterPeerGroupToQuery" jndi-name="java:comp/env/shrine/broadcasterPeerGroupToQuery"
+                     default-value="LOCAL"/>
+    <jee:jndi-lookup id="humanReadableNodeName" jndi-name="java:comp/env/shrine/humanReadableNodeName"
+                     default-value="SHRINE Cell"/>
+
+    <jee:jndi-lookup id="isAdapter" jndi-name="java:comp/env/shrine/isAdapter" default-value="false"/>
+    <jee:jndi-lookup id="isBroadcaster" jndi-name="java:comp/env/shrine/isBroadcaster" default-value="true"/>
+    <jee:jndi-lookup id="isIncludeAggregateResults" jndi-name="java:comp/env/shrine/isIncludeAggregateResults"
+                     default-value="true"/>
+    <jee:jndi-lookup id="adapterLockoutAttemptsThreshold"
+                     jndi-name="java:comp/env/shrine/adapterLockoutAttemptsThreshold" default-value="10"/>
+    <jee:jndi-lookup id="queryTTL" jndi-name="java:comp/env/shrine/queryTTL" default-value="270000"/>
+    <jee:jndi-lookup id="adapterStatusQuery" jndi-name="java:comp/env/shrine/adapterStatusQuery"
+                     default-value="\\SHRINE\SHRINE\Diagnoses\Mental Illness\Disorders usually diagnosed in infancy, childhood, or adolescence\Pervasive developmental disorders\Infantile autism, current or active state\"/>
+    <jee:jndi-lookup id="adapterMappingsFileName" jndi-name="java:comp/env/shrine/adapterMappingsFileName"
+                     default-value="AdapterMappings.xml"/>
+    <jee:jndi-lookup id="shouldTrustAllSslCerts" jndi-name="java:comp/env/shrine/shouldTrustAllSslCerts"
+                     default-value="false"/>
+    <jee:jndi-lookup id="shrineDatabaseType" jndi-name="java:comp/env/shrine/shrineDatabaseType" default-value="mysql"/>
+
+    <bean id="aggregatorEndpointTypeEnumValue" class="org.spin.tools.config.EndpointType" factory-method="valueOf">
+        <constructor-arg ref="aggregatorEndpointType"/>
     </bean>
 
-    <bean id="authCallback" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/carranet/authCallBack"/>
-        <property name="defaultObject" value="http://carra-core:9090/i2b2-ssr-admin/Api/authentication_callback"/>
+    <bean id="shrineEndpointTypeEnumValue" class="org.spin.tools.config.EndpointType" factory-method="valueOf">
+        <constructor-arg ref="shrineEndpointType"/>
+    </bean>
+
+    <bean id="aggregatorEndpointConfigMaker" class="net.shrine.spring.EndpointConfigMaker">
+        <constructor-arg ref="aggregatorEndpointTypeEnumValue"/>
+    </bean>
+
+    <bean id="shrineEndpointEndpointConfigMaker" class="net.shrine.spring.EndpointConfigMaker">
+        <constructor-arg ref="shrineEndpointTypeEnumValue"/>
+    </bean>
+
+    <bean id="aggregatorEndpointOption" class="scala.Option" factory-method="apply">
+        <constructor-arg ref="aggregatorEndpoint"/>
+    </bean>
+
+    <bean id="shrineEndpointEndpointConfig" factory-bean="shrineEndpointEndpointConfigMaker" factory-method="apply">
+        <constructor-arg ref="shrineEndpoint"/>
     </bean>
 
 
-    <bean id="pmEndpoint" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/shrine/pmEndpoint"/>
-        <property name="defaultObject" value="http://webservices.i2b2.org/i2b2/rest/PMService/getServices"/>
+    <bean id="aggregatorEndpointConfigOption" factory-bean="aggregatorEndpointOption" factory-method="map">
+        <constructor-arg ref="shrineEndpointEndpointConfigMaker"/>
     </bean>
 
-    <bean id="realCRCEndpoint" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/shrine/realCRCEndpoint"/>
-        <property name="defaultObject" value="http://localhost:9090/i2b2/rest/QueryToolService/"/>
-    </bean>
+    <bean id="shrineQueryActionMap" class="net.shrine.adapter.query.ShrineQueryActionMap">
+          <constructor-arg>
+              <map/>
+          </constructor-arg>
+      </bean>
 
-    <bean id="aggregatorEndpoint" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/shrine/aggregatorEndpoint"/>
-        <property name="defaultObject"
-                  value="https://carra-core-production:8081/shrine-cell/QueryToolService/aggregate?wsdl"/>
-    </bean>
-
-    <bean id="shrineEndpoint" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/shrine/shrineEndpoint"/>
-        <property name="defaultObject" value="https://localhost:8081/shrine-cell/QueryToolService/"/>
-    </bean>
-
-    <bean id="humanReadableNodeName" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/shrine/humanReadableNodeName"/>
-        <property name="defaultObject" value="Children's Hospital Boston"/>
-    </bean>
-
-    <bean id="i2b2HiveDomain" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/shrine/i2b2HiveDomain"/>
-        <property name="defaultObject" value="i2b2demo"/>
-    </bean>
-
-    <bean id="i2b2HiveUsername" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/shrine/i2b2HiveUsername"/>
-        <property name="defaultObject" value="demo"/>
-    </bean>
-
-    <bean id="i2b2HivePassword" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/shrine/i2b2HivePassword"/>
-        <property name="defaultObject" value="demouser"/>
-    </bean>
-
-    <bean id="passwordType" class="edu.harvard.i2b2.crc.datavo.i2b2message.PasswordType">
-        <property name="value" ref="i2b2HivePassword"/>
-    </bean>
-
-    <bean id="setSizeObfuscation" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/shrine/setSizeObfuscation"/>
-        <property name="defaultObject" value="false"/>
-    </bean>
-
-    <bean id="i2b2HiveCredentials" class="net.shrine.config.I2B2HiveCredentials">
-        <property name="domain" ref="i2b2HiveDomain"/>
-        <property name="username" ref="i2b2HiveUsername"/>
-        <property name="password" ref="passwordType"/>
-        <property name="project" value="Demo"/>
-    </bean>
-
-    <bean id="identityService" class="edu.chip.carranet.auth.I2b2SSRIdentityService"/>
-
-    <bean id="pmHttpClient" class="net.shrine.serializers.pm.PMHttpClient">
-        <constructor-arg index="0" ref="pmEndpoint"/>
-    </bean>
-
-    <bean id="shrineConfig" class="net.shrine.config.ShrineConfig">
-        <property name="adapter" value="false"/>
-        <property name="adapterLockoutAttemptsThreshold" value="0"/>
-        <property name="adapterRequireExplicitMappings" value="false"/>
-        <property name="broadcasterAggregator" value="true"/>
-        <property name="cacheTTL" value="3600000"/>
-        <property name="certificationTTL" value="3600000"/>
-        <property name="queryTTL" value="3600000"/>
-        <property name="databasePropertiesFile" value="jdbc-derby.properties"/>
-        <property name="humanReadableNodeName" ref="humanReadableNodeName"/>
-        <property name="pmEndpoint" ref="pmEndpoint"/>
-        <property name="realCRCEndpoint" ref="realCRCEndpoint"/>
-        <property name="aggregatorEndpoint" ref="aggregatorEndpoint"/>
-        <property name="shrineEndpoint" ref="shrineEndpoint"/>
-        <property name="ontEndpoint" value=""/>
-        <property name="sheriffEndpoint" value=""/>
-        <property name="queryActionMapClassName" value="net.shrine.adapter.query.ShrineQueryActionMap"/>
-        <property name="setSizeObfuscationEnabled" ref="setSizeObfuscation"/>
-    </bean>
-
-    <bean id="authservice" class="net.shrine.authorization.AllowsAllAuthorizationService"/>
-
-
-    <bean id="agentConfig" factory-bean="shrineConfig" factory-method="generateAgentConfig"/>
-
-    <bean id="nodeConfig" factory-bean="shrineConfig" factory-method="generateNodeConfig"/>
-
-    <bean id="spinClient" class="org.spin.query.message.agent.Agent">
-        <constructor-arg index="0" ref="agentConfig"/>
-    </bean>
 
     <bean id="spinNode" class="org.spin.node.SpinNodeImpl">
         <constructor-arg ref="shrineQueryActionMap"/>
         <constructor-arg ref="nodeConfig"/>
     </bean>
 
-    <!--note that the implementer value references an already defined bean.  the bean is loaded via annotation config-->
-    <!--<jaxws:endpoint-->
-    <!--id="broadcasterAggregatorSOAPEndpoint"-->
-    <!--implementor="#broadcasterAggregatorSOAP"-->
-    <!--address="/">-->
-    <!--<jaxws:properties>-->
-    <!--<entry key="jaxb.additionalContextClasses">-->
-    <!--<bean class="net.shrine.broadcaster.JAXBContextResolver"/>-->
-    <!--</response>-->
-    <!--</jaxws:properties>-->
-    <!--</jaxws:endpoint>-->
 
-    <jaxws:endpoint
-            id="spinNodeEndpoint"
-            implementor="#spinNode"
-            address="/aggregate">
+    <jaxws:endpoint id="spinNodeEndpoint" implementor="#spinNode" address="/aggregate">
     </jaxws:endpoint>
 
-    <!-- DAO management-->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!--<bean id="aggregatorEndpointConfigOption" class="scala.Option" factory-method="apply">-->
+    <!--<constructor-arg>-->
+    <!--<null/>-->
+    <!--</constructor-arg>-->
+    <!--</bean>-->
 
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="sessionFactory" ref="sessionFactory"/>
+    <bean id="aggregatorEndpointConfig" class="net.shrine.spring.ToNullShim" factory-method="orNull">
+        <constructor-arg ref="aggregatorEndpointConfigOption"/>
     </bean>
+
+    <bean id="httpClient" class="net.shrine.util.JerseyHttpClient">
+        <constructor-arg ref="shouldTrustAllSslCerts"/>
+    </bean>
+
+
+
+    <bean id="happyShrineConfig" class="net.shrine.config.HappyShrineConfig">
+        <constructor-arg index="0" ref="isAdapter"/>
+        <constructor-arg index="1" ref="pmEndpoint"/>
+        <constructor-arg index="2" ref="broadcasterPeerGroupToQuery"/>
+        <constructor-arg index="3" ref="adapterStatusQuery"/>
+    </bean>
+
+    <bean id="spinPollingFrequency" class="java.lang.Float" factory-method="valueOf">
+        <constructor-arg>
+            <!-- Use higher value - 5Hz instead of 1Hz - for more responsive network queries -->
+            <value>5.0F</value>
+        </constructor-arg>
+    </bean>
+
+    <bean id="identityService" class="edu.chip.carranet.auth.I2b2SSRIdentityService"/>
+
+    <!-- TODO: Needed for now, need to revisit Spin client config to properly make credentials optional, or use some other solution that doesn't require dummy values -->
+    <bean id="dummySpinCredentials" class="org.spin.client.Credentials">
+        <constructor-arg index="0" value="some-domain"/>
+        <constructor-arg index="1" value="some-user"/>
+        <constructor-arg index="2" value="some-password"/>
+    </bean>
+
+    <!-- UGH: Need to use this bean to access static fields, gah -->
+    <bean id="spinEncryptionParams" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+        <property name="staticField" value="org.spin.message.EncryptionParams.NoEncryption"/>
+    </bean>
+
+    <bean id="spinClientConfig" class="org.spin.client.SpinClientConfig">
+        <constructor-arg index="0">
+                   <null/>
+                </constructor-arg>
+        <!-- TODO: Needed for now, need to revisit Spin client config to properly make credentials optional, or use some other solution that doesn't require dummy values -->
+        <constructor-arg index="1" ref="dummySpinCredentials"/>
+        <constructor-arg index="2" ref="shrineEndpointEndpointConfig"/>
+        <constructor-arg index="3" ref="aggregatorEndpointConfigOption"/>
+        <constructor-arg index="4" ref="queryTTL"/>
+        <constructor-arg index="5" ref="spinEncryptionParams"/>
+        <constructor-arg index="6" ref="identityService"/>
+        <constructor-arg index="7" ref="spinPollingFrequency"/>
+    </bean>
+
+
+    <!-- Use the Scala standard lib's default ExecutionContext, based on java.util.concurrent.ForkJoinPool, for Future-related tasks -->
+    <bean id="executionContext" class="org.spin.client.SpinClientDefaults" factory-method="forkJoinExecutionContext"/>
+
+
+    <bean id="spinClient" class="org.spin.client.RemoteSpinClient">
+        <constructor-arg index="0" ref="spinClientConfig"/>
+        <constructor-arg index="1" ref="executionContext"/>
+    </bean>
+
+    <bean id="broadcastService" class="net.shrine.broadcaster.spin.SpinBroadcastService">
+        <constructor-arg index="0" ref="spinClient"/>
+        <constructor-arg index="1" ref="executionContext"/>
+    </bean>
+
+
+    <!-- 5 seconds, Spin's default -->
+    <bean id="broadcasterTimeoutPeriod" class="org.spin.tools.Interval" factory-method="seconds">
+        <constructor-arg value="5"/>
+    </bean>
+
+    <bean id="nodeConfig" class="org.spin.tools.config.NodeConfig">
+        <constructor-arg index="0" ref="humanReadableNodeName"/>
+        <constructor-arg index="1" value="true"/>
+        <constructor-arg index="2" ref="isBroadcaster"/>
+        <constructor-arg index="3" value="false"/>
+        <constructor-arg index="4" ref="isAdapter"/>
+        <constructor-arg index="5">
+            <null/>
+        </constructor-arg>
+        <constructor-arg index="6" value="3600000"/>
+        <constructor-arg index="7" value="3600000"/>
+        <constructor-arg index="8" ref="broadcasterTimeoutPeriod"/>
+        <constructor-arg index="9" value="net.shrine.adapter.query.ShrineQueryActionMap"/>
+        <constructor-arg index="10">
+            <null/>
+        </constructor-arg>
+    </bean>
+
 
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:comp/env/jdbc/shrineDB"/>
     </bean>
 
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="annotatedClasses">
-            <list>
-                <value>net.shrine.broadcaster.dao.hibernate.AuditEntry</value>
-            </list>
-        </property>
 
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
-            </props>
-        </property>
+    <bean id="squerylAdapter" class="org.squeryl.adapters.MySQLAdapter"/>
+
+    <bean id="squerylInitializer" class="net.shrine.dao.squeryl.DataSourceSquerylInitializer">
+        <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="squerylAdapter"/>
     </bean>
+
+
+    <bean id="squerylAuditTables" class="net.shrine.broadcaster.dao.squeryl.tables.Tables"/>
+
+    <bean id="auditDao" class="net.shrine.broadcaster.dao.squeryl.SquerylAuditDao">
+        <constructor-arg ref="squerylInitializer"/>
+        <constructor-arg ref="squerylAuditTables"/>
+    </bean>
+
+    <bean id="squerylAdapterTables" class="net.shrine.adapter.dao.squeryl.tables.Tables"/>
+
+    <bean id="adapterDao" class="net.shrine.adapter.dao.squeryl.SquerylAdapterDao">
+        <constructor-arg ref="squerylInitializer"/>
+        <constructor-arg ref="squerylAdapterTables"/>
+    </bean>
+
+    <bean id="i2b2AdminDao" class="net.shrine.adapter.dao.squeryl.SquerylI2b2AdminPreviousQueriesDao">
+        <constructor-arg ref="squerylInitializer"/>
+        <constructor-arg ref="squerylAdapterTables"/>
+    </bean>
+
+
+
+
+    <bean id="adapterMappingsSource" class="net.shrine.config.ClasspathAdapterMappingsSource">
+   	   <constructor-arg ref="adapterMappingsFileName"/>
+   	</bean>
+
+   	<bean id="adapterMappings" factory-bean="adapterMappingsSource" factory-method="load"/>
+
+    <bean id="expressionTranslator" class="net.shrine.adapter.translators.ExpressionTranslator" factory-method="apply">
+        <constructor-arg ref="adapterMappings"/>
+    </bean>
+
+    <bean id="queryDefinitionTranslator" class="net.shrine.adapter.translators.QueryDefinitionTranslator">
+        <constructor-arg ref="expressionTranslator"/>
+    </bean>
+
+
+
+
+    <bean id="mastersByUserQuery" class="net.shrine.adapter.ReadPreviousQueriesAdapter">
+        <constructor-arg index="0" ref="adapterDao"/>
+    </bean>
+
+    <bean id="masterDeleteQuery" class="net.shrine.adapter.DeleteQueryAdapter">
+        <constructor-arg index="0" ref="adapterDao"/>
+    </bean>
+
+    <bean id="masterRenameQuery" class="net.shrine.adapter.RenameQueryAdapter">
+        <constructor-arg index="0" ref="adapterDao"/>
+    </bean>
+
+    <bean id="getRequestXmlQuery" class="net.shrine.adapter.ReadQueryDefinitionAdapter">
+        <constructor-arg index="0" ref="adapterDao"/>
+    </bean>
+
+    <bean id="authorizationService" class="net.shrine.authorization.AllowsAllAuthorizationService"/>
+
+
+    <!-- UGH: Need to use this bean to access static fields, gah -->
+    <bean id="queryTimeoutTimeUnit" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+        <property name="staticField" value="java.util.concurrent.TimeUnit.MILLISECONDS"/>
+    </bean>
+
+    <!--<bean id="queryTimeoutDuration" class="scala.concurrent.duration.FiniteDuration">-->
+        <!--<constructor-arg index="0" ref="queryTTL"/>-->
+        <!--&lt;!&ndash; TODO: is this right? &ndash;&gt;-->
+        <!--<constructor-arg index="1" ref="queryTimeoutTimeUnit"/>-->
+    <!--</bean>-->
 
     <bean id="userInfoService" class="net.shrine.authorization.I2b2ssrUserInfoService">
         <constructor-arg index="0" ref="authCallback"/>
     </bean>
 
+
     <bean id="shrineService" class="net.shrine.service.CarranetShrineService">
-        <constructor-arg index="0" ref="hibernateAuditDAO"/>
-        <constructor-arg index="1" ref="authservice"/>
+        <constructor-arg index="0" ref="auditDao"/>
+        <constructor-arg index="1" ref="authorizationService"/>
         <constructor-arg index="2" ref="identityService"/>
-        <constructor-arg index="3" ref="shrineConfig"/>
-        <constructor-arg index="4" ref="spinClient"/>
-        <constructor-arg index="5" ref="olsURI"/>
-        <constructor-arg index="6" ref="userInfoService"/>
+        <constructor-arg index="3" ref="broadcastService"/>
+        <constructor-arg index="4" ref="olsURI"/>
+        <constructor-arg index="5" ref="userInfoService"/>
     </bean>
 
-
-    <bean id="shrineQueryActionMap" class="net.shrine.adapter.query.ShrineQueryActionMap">
-        <constructor-arg>
-            <map>
-                <entry key="RunQueryInstanceFromQueryDefinition" value-ref="nullQueryAction"/>
-                <entry key="GetRequestXml" value-ref="nullQueryAction"/>
-                <entry key="UserRequestType" value-ref="nullQueryAction"/>
-                <entry key="MasterRequestType" value-ref="nullQueryAction"/>
-                <entry key="InstanceRequestType" value-ref="nullQueryAction"/>
-                <entry key="ResultRequestType" value-ref="nullQueryAction"/>
-                <entry key="GetPDOFromInputListRequestType" value-ref="nullQueryAction"/>
-            </map>
-        </constructor-arg>
+    <bean id="i2b2AdminService" class="net.shrine.adapter.service.I2b2AdminService">
+        <constructor-arg index="0" ref="adapterDao"/>
+        <constructor-arg index="1" ref="i2b2AdminDao"/>
+        <constructor-arg index="2" ref="httpClient"/>
+        <constructor-arg index="3" ref="pmEndpoint"/>
     </bean>
 
-    <!--Map this query to something stupid since the broadcaster won't call it anyways -->
-    <bean id="nullQueryAction" class="org.spin.node.actions.EchoQueryAction"/>
 
 </beans>

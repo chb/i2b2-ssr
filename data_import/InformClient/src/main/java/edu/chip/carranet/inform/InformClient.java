@@ -12,10 +12,7 @@ import com.phaseforward.informadapter.odm._1.GetTransactionsResult;
 import com.phaseforward.informadapter.odm._1.InFormODM;
 import com.phaseforward.informadapter.odm._1.InFormODMSoap;
 import com.phaseforward.informadapter.odm._1.Node;
-import com.phaseforward.informadapter.odm._2.DownloadAdminDataODM;
-import com.phaseforward.informadapter.odm._2.DownloadMetadataODM;
-import com.phaseforward.informadapter.odm._2.DownloadTransactionODM;
-import com.phaseforward.informadapter.odm._2.ResponseODM;
+import com.phaseforward.informadapter.odm._2.*;
 import org.apache.log4j.Logger;
 import org.spin.tools.JAXBUtils;
 
@@ -149,7 +146,10 @@ public class InformClient implements InformClientAPI {
         try {
             DownloadMetadataODM request = new DownloadMetadataODM();
             request.setTrial(trial);
-            request.setUserName(INFORM_USER);
+            request.setUserName("system");
+            request.setMappingVersion("2.0");
+            request.setComplianceMode(ODMComplianceMode.LOOSE);
+            request.setFileType(FileType.TRANSACTIONAL);
             Node node = new Node();
             node.setAny(request);
 
@@ -226,13 +226,16 @@ public class InformClient implements InformClientAPI {
 
     public static void main(String[] args) throws Exception {
         disableSSLTrust();
-//        InformClient client = new InformClient("carranet", "http://informadapterdev.chboston.org/informadapter/odm/informodm.asmx");
-        InformClient client = new InformClient("test", "adapter_test", "adapter_test", "http://informadapterqa/informadapter/odm/informodm.asmx");
+       //InformClient client = new InformClient("ibdregistry", "http://informadapterqa/informadapter/odm/informodm.asmx");
+        InformClient client = new InformClient("ibdregistry",
+//                                                "adapter_test",
+//                                                "adapter_test",
+                                                "http://informadapterqa/informadapter/odm/informodm.asmx");
 
-       //System.out.println(client.getSiteList());
+       System.out.println(client.getSiteList());
        //System.out.println(client.getPatientList("1"));
 //        System.out.println(client.getPatientForms("1"));
-//        System.out.println(client.getMetadata());
+       //System.out.println(client.getMetadata());
 //        System.out.println(client.getAdminMetadata());
 
         String oldBookmark = "";
@@ -256,7 +259,7 @@ public class InformClient implements InformClientAPI {
             StringWriter sw = new StringWriter();
             m.marshal(response, sw);
             System.out.println(sw.toString());
-            File f = new File("/tmp/inform-"+i);
+            File f = new File("/Users/davidortiz/ibd_inform_dump/inform-"+i);
             FileWriter fw = new FileWriter(f);
             fw.write(sw.toString());
             fw.flush();
@@ -266,6 +269,6 @@ public class InformClient implements InformClientAPI {
             nextBookmark = response.getBookmark();
             System.out.println("response contains bookmark: " + nextBookmark);
         } while (!oldBookmark.equals(nextBookmark));
-
+//
     }
 }

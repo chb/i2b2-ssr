@@ -6,8 +6,9 @@ import org.bouncycastle.util.encoders.Base64;
 import org.spin.tools.JAXBUtils;
 import org.spin.tools.NetworkTime;
 import org.spin.tools.config.ConfigException;
+import org.spin.tools.crypto.XMLSignatureUtil;
 import org.spin.tools.crypto.signature.Identity;
-import org.spin.tools.crypto.signature.XMLSignatureUtil;
+
 
 import javax.xml.bind.JAXBException;
 import javax.xml.crypto.dsig.XMLSignatureException;
