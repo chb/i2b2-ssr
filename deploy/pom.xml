@@ -7,9 +7,9 @@
     <packaging>pom</packaging>
     <version>1.3-SNAPSHOT</version>
     <properties>
-        <spin.tools.version>1.19</spin.tools.version>
-        <spin.version>1.19</spin.version>
-        <shrine.version>1.13</shrine.version>
+        <spin.tools.version>1.18.1</spin.tools.version>
+        <spin.version>1.18.1</spin.version>
+        <shrine.version>1.13.1</shrine.version>
         <spring.version>3.0.1.RELEASE</spring.version>
         <scala.version>2.9.0-1</scala.version>
     </properties>

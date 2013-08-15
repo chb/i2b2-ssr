@@ -11,10 +11,10 @@
         <!--<jaxb.version>2.1.12</jaxb.version>-->
         <log4j.version>1.2.14</log4j.version>
         <junit.version>4.8.1</junit.version>
-        <spin.tools.version>1.19</spin.tools.version>
-        <spin.version>1.19</spin.version>
+        <spin.tools.version>1.18.1</spin.tools.version>
+        <spin.version>1.18.1</spin.version>
         <restlet.version>2.0.5</restlet.version>
-        <shrine.version>1.13</shrine.version>
+        <shrine.version>1.13.1</shrine.version>
         <spring.version>3.1.1.RELEASE</spring.version>
         <scala.version>2.9.0-1</scala.version>
         <hibernate.version>4.1.4.Final</hibernate.version>
@@ -67,6 +67,7 @@
         <!--<snapshotRepository>-->
             <!--<id>nexus</id>-->
             <!--<name>Nexus Repo</name>-->
+
             <!--<url>http://carra-nexus:8081/nexus/content/repositories/snapshots</url>-->
             <!--&lt;!&ndash; Don't append timestamps to snapshot jars &ndash;&gt;-->
             <!--<uniqueVersion>false</uniqueVersion>-->
