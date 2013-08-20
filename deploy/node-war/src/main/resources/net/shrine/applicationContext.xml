@@ -13,6 +13,9 @@
 
     <context:component-scan base-package="net.shrine"/>
 
+    <context:property-placeholder location="file:///home/carra/jdbc.properties" ignore-resource-not-found="false"/>
+
+
     <!--define default properties and JNDI name that will override them-->
     <bean id="graphiteHost" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:comp/env/shrine/graphiteHost"/>
@@ -223,12 +226,16 @@
         <constructor-arg index="2" ref="i2b2HiveCredentials"/>
     </bean>
 
-    <bean id="runPdoQuery" class="net.shrine.adapter.ReadPdoAdapter">
+
+    <bean id="runPdoQuery" class="net.shrine.adapter.JDBCReadPdoAdapter">
         <constructor-arg index="0" value="#{ realCRCEndpoint.concat('pdorequest')}"/>
         <constructor-arg index="1" ref="hibernateAdapterDAO"/>
         <constructor-arg index="2" ref="i2b2HiveCredentials"/>
+        <constructor-arg index="3" value="${jdbc.driverClassName}"/>
+        <constructor-arg index="4" value="${jdbc.url}"/>
+        <constructor-arg index="5" value="${jdbc.username}"/>
+        <constructor-arg index="6" value="${jdbc.password}"/>
     </bean>
-
 
     <bean id="simpleConceptTranslator" class="net.shrine.adapter.translators.SimpleConceptTranslator"/>
 
