@@ -235,6 +235,9 @@
         <constructor-arg index="4" value="${jdbc.url}"/>
         <constructor-arg index="5" value="${jdbc.username}"/>
         <constructor-arg index="6" value="${jdbc.password}"/>
+        <constructor-arg index="7" value="${jdbc.minIdle}"/>
+        <constructor-arg index="8" value="${jdbc.maxIdle}"/>
+        <constructor-arg index="9" value="${jdbc.maxActive}"/>
     </bean>
 
     <bean id="simpleConceptTranslator" class="net.shrine.adapter.translators.SimpleConceptTranslator"/>

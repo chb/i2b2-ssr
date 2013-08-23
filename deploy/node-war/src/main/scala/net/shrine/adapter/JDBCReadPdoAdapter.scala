@@ -6,7 +6,7 @@ import net.shrine.config.I2B2HiveCredentials
 import scala.xml.{XML, NodeSeq}
 import org.spin.tools.crypto.signature.Identity
 import net.shrine.serializers.HTTPClient
-import net.noerd.prequel.{StringFormattable, LongFormattable, DatabaseConfig}
+import net.noerd.prequel.{PoolConfig, StringFormattable, LongFormattable, DatabaseConfig}
 import scala.None
 import java.text.{ParseException, SimpleDateFormat}
 import org.joda.time.format.ISODateTimeFormat
@@ -35,7 +35,10 @@ class JDBCReadPdoAdapter[T <: ReadPdoRequest, V <: ReadPdoResponse](
                                                                      protected val driverName: String,
                                                                      protected val jdbcUrl: String,
                                                                      protected val username: String,
-                                                                     protected val password: String) extends Adapter(crcUrl, dao, hiveCredentials) {
+                                                                     protected val password: String,
+                                                                     protected val minIdle: Int,
+                                                                     protected val maxIdle: Int,
+                                                                     protected val maxActive: Int) extends Adapter(crcUrl, dao, hiveCredentials) {
 
   import JDBCReadPdoAdapter._
 
@@ -44,7 +47,8 @@ class JDBCReadPdoAdapter[T <: ReadPdoRequest, V <: ReadPdoResponse](
     driver = driverName,
     jdbcURL = jdbcUrl,
     username = username,
-    password = password
+    password = password,
+    poolConfig = PoolConfig(minIdle = minIdle, maxIdle = maxIdle, maxActive = maxActive)
   )
 
 
