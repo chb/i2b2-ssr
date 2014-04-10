@@ -56,6 +56,7 @@ public class InformI2b2Processor implements Processor<InformODMData, SqlCommands
 
             // update audit
             String xml = marshalToString(data.getOdm());
+            log.debug("Inform Data is: " + xml);
             ByteArrayInputStream bais = new ByteArrayInputStream(xml.getBytes());
             String report = odmImporter.getReport(bais);
             data.getTransactionRecord().setAuditReport(report);

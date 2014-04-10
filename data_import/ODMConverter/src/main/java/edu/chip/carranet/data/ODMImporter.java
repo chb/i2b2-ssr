@@ -47,6 +47,7 @@ public class ODMImporter {
         String report = null;
         String[] sqlList = sqlStatements.split(";");
         for (int i = 0; i < sqlList.length; i++) {
+
             Statement statement = con.createStatement();
             String sql = sqlList[i].replace(";", "");
 
@@ -54,17 +55,25 @@ public class ODMImporter {
                 continue;
             }
 
-            // select statement is special
-            if(sql.replace(" ", "").startsWith("SELECT")) {
-                ResultSet rSet = statement.executeQuery(sql);
-                if (rSet.next()) {
-                    report = rSet.getString(1);
+            try {
+                // select statement is special
+                if(sql.replace(" ", "").startsWith("SELECT")) {
+                    ResultSet rSet = statement.executeQuery(sql);
+                    if (rSet.next()) {
+                        report = rSet.getString(1);
+                    }
+                } else {
+                    statement.execute(sql);
                 }
-            } else {
-                statement.execute(sql);
+                con.commit();
             }
-            statement.close();
-            con.commit();
+            catch (SQLException e) {
+                log.error("Failed to run SQL: " + sql);
+                throw e;
+            }
+            finally {
+                statement.close();
+            }
         }
 
         return report;
