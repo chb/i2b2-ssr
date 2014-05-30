@@ -45,7 +45,7 @@ public class ODMImporter {
 
     protected static String runStepOne(String sqlStatements, Connection con) throws SQLException {
         String report = null;
-        String[] sqlList = sqlStatements.split(";");
+        String[] sqlList = sqlStatements.split("(?<=(INSERT|TRUNCATE|SELECT).*;)");
         for (int i = 0; i < sqlList.length; i++) {
 
             Statement statement = con.createStatement();
