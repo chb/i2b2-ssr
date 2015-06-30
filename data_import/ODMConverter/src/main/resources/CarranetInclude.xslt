@@ -149,7 +149,7 @@
 	</xsl:template>
 	<!--===== This template returns the attribute StudyOID when called =====-->
 	<xsl:template name="ReasonForChange">
-		<xsl:value-of select='replace(*:AuditRecord/*:ReasonForChange,"&apos;","&apos;&apos;")'/>
+		<xsl:value-of select='replace(replace(*:AuditRecord/*:ReasonForChange,"&apos;","&apos;&apos;"), ";", ",")'/>
 	</xsl:template>
 	<!--===== This template returns the attribute StudyOID when called =====-->
 	<xsl:template name="MetaDataVersionOID">

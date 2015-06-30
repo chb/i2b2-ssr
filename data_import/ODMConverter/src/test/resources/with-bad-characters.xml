@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:ODM Originator="soatest" ODMVersion="1.3" PriorFileOID="{FD1F743F-E291-4A16-9206-E1D7C1147017}" CreationDateTime="2014-04-10T14:20:53+00:00" FileOID="{1AFE79B5-A9CB-4FB7-91CB-22DEDF6A649C}" FileType="Transactional" Description="CRNT_REGST" xmlns:ns2="http://www.phaseforward.com/InFormAdapter/ODM/1.0" xmlns="http://www.phaseforward.com/AdapterFramework/Export/1.0" xmlns:ns4="http://www.cdisc.org/ns/odm/v1.3" xmlns:ns3="http://www.phaseforward.com/InFormAdapter/ODM/2.0" xmlns:ns5="http://www.phaseforward.com/InFormAdapter/ODM/Extensions/2.0" xmlns:ns6="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:ns7="http://www.w3.org/2000/09/xmldsig#" xmlns:ns8="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+    <ns4:ClinicalData MetaDataVersionOID="CRN_REGST 1.1.7 en-US" StudyOID="CRNT_REGST">
+        <ns4:SubjectData TransactionType="Upsert" SubjectKey="298600">
+            <ns4:SiteRef LocationOID="232665"/>
+            <ns4:StudyEventData StudyEventRepeatKey="338810162621031" StudyEventOID="evFU">
+                <ns4:FormData FormOID="frVIS">
+                    <ns4:ItemGroupData ItemGroupOID="frVIS.frVIS">
+                        <ns4:ItemData Value="" ItemOID="frVIS.frVIS.HTDONE.HTDONE">
+                            <ns4:AuditRecord>
+                                <ns4:UserRef UserOID="mbrocato"/>
+                                <ns4:LocationRef LocationOID="232665"/>
+                                <ns4:DateTimeStamp>2013-11-20T22:06:50+00:00</ns4:DateTimeStamp>
+                                <ns4:ReasonForChange>visit done by phone; not 'needed', visit deleted</ns4:ReasonForChange>
+                                <ns4:SourceID>IS46AP08</ns4:SourceID>
+                            </ns4:AuditRecord>
+                        </ns4:ItemData>
+                    </ns4:ItemGroupData>
+                </ns4:FormData>
+            </ns4:StudyEventData>
+        </ns4:SubjectData>
+    </ns4:ClinicalData>
+    <ns4:ClinicalData MetaDataVersionOID="CRN_REGST 1.1.7 en-US" StudyOID="CRNT_REGST">
+        <ns4:SubjectData TransactionType="Upsert" SubjectKey="298600">
+            <ns4:SiteRef LocationOID="232665"/>
+            <ns4:StudyEventData StudyEventRepeatKey="338810162621031" StudyEventOID="evFU">
+                <ns4:FormData FormOID="frVIS">
+                    <ns4:ItemGroupData ItemGroupOID="frVIS.frVIS">
+                        <ns4:ItemData Value="" ItemOID="frVIS.frVIS.cpBPDONE.cpBPDONE.BPDONE">
+                            <ns4:AuditRecord>
+                                <ns4:UserRef UserOID="mbrocato"/>
+                                <ns4:LocationRef LocationOID="232665"/>
+                                <ns4:DateTimeStamp>2013-11-20T22:07:22+00:00</ns4:DateTimeStamp>
+                                <ns4:ReasonForChange>totally normal, look away...</ns4:ReasonForChange>
+                                <ns4:SourceID>IS46AP08</ns4:SourceID>
+                            </ns4:AuditRecord>
+                        </ns4:ItemData>
+                    </ns4:ItemGroupData>
+                </ns4:FormData>
+            </ns4:StudyEventData>
+        </ns4:SubjectData>
+    </ns4:ClinicalData>
+</ns4:ODM>

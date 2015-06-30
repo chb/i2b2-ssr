@@ -13,8 +13,8 @@ import static org.junit.Assert.*;
 
 @Ignore
 public class ODMImporterTest {
-    private final static String connectionString = "jdbc:oracle:thin:@chdev1:1521/CHRACDEV";
-    private final static String userName = "rc_carra_vm001";
+    private final static String connectionString = "jdbc:oracle:thin:@oradev3:1521/CHRACDEV";
+    private final static String userName = "RC_CARRA_VM1_PROJECT1";
     private final static String password = "chracdev";
     private final static String[] tables = new String[]{"observation_fact", "visit_dimension", "patient_dimension", "TBLRSLTDATAIMPORT", "tmp_EncTable"};
     private static boolean doDrop;
@@ -58,6 +58,21 @@ public class ODMImporterTest {
         }
     }
 
+
+    @Test
+    public void testBadODMImport() throws Exception {
+        final ODMImporter importer = new ODMImporter(this.connection);
+        final FileInputStream fis = new FileInputStream(new File(getClass().getClassLoader().getResource("with-bad-characters.xml").toURI()));
+        final String sql = importer.getReport(fis);
+
+        /**
+         * Yeah, sorry, no automated tests here because they're not possible. Please run the above
+         * code, setting a breakpoint on the line gets the sqlStatements in ODMImport.processData()
+         * and take a look at the SQL. You should see the semicolons changed to commas and a pair
+         * of single quotes where there used to be a single one.
+         */
+
+    }
 
 
     @Test
